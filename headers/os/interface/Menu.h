@@ -172,6 +172,7 @@ public:
 
 private:
 	friend class BMenuBar;
+	friend class BSeparatorItem;
 	friend class BPrivate::MenuPrivate;
 	friend status_t _init_interface_kit_();
 	friend status_t	set_menu_info(menu_info* info);
@@ -191,6 +192,15 @@ private:
 									bool keyDown = false);
 			void				_Hide();
 			BMenuItem*			_Track(int* action, long start = -1);
+			void				_ScriptReceived(BMessage* message);
+			void				_ItemScriptReceived(BMessage* message,
+									BMenuItem* item);
+			status_t			_ResolveItemSpecifier(const BMessage& specifier,
+									int32 what, BMenuItem*& item,
+									int32 *index = NULL);
+			status_t			_InsertItemAtSpecifier(
+									const BMessage& specifier, int32 what,
+									BMenuItem* item);
 
 			void				_UpdateNavigationArea(BPoint position,
 									BRect& navAreaRectAbove,

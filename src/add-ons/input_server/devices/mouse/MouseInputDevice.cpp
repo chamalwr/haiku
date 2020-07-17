@@ -183,9 +183,8 @@ MouseDevice::MouseDevice(MouseInputDevice& target, const char* driverPath)
 	fDeviceRef.cookie = this;
 
 #ifdef HAIKU_TARGET_PLATFORM_HAIKU
-	fSettings.map.button[0] = B_PRIMARY_MOUSE_BUTTON;
-	fSettings.map.button[1] = B_SECONDARY_MOUSE_BUTTON;
-	fSettings.map.button[2] = B_TERTIARY_MOUSE_BUTTON;
+	for (int i = 0; i < B_MAX_MOUSE_BUTTONS; i++)
+		fSettings.map.button[i] = B_MOUSE_BUTTON(i + 1);
 #endif
 };
 
@@ -324,7 +323,10 @@ MouseDevice::_BuildShortName() const
 	else
 		name.Capitalize();
 
-	if (deviceName.FindFirst("touchpad") >= 0) {
+	// Check the whole string for "touchpad" because it's a different directory
+	// FIXME use MS_IS_TOUCHPAD ioctl instead (or fIsTouchpad which caches its
+	// result) but this can only be done after the control thread is running
+	if (string.FindFirst("touchpad") >= 0) {
 		name << " Touchpad ";
 	} else if (deviceName.FindFirst("trackpoint") >= 0) {
 		// That's always PS/2, so don't keep the bus name

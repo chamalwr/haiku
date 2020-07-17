@@ -152,9 +152,9 @@ ExpanderWindow::ExpanderWindow(BRect frame, const entry_ref* ref,
 					.Add(fStatusView = new StatusView())
 					.End()
 				.End()
-			.Add(fScrollView)
 			.SetInsets(B_USE_WINDOW_SPACING)
-			.End();
+			.End()
+		.Add(fScrollView);
 
 	pathLayout->SetExplicitMaxSize(BSize(B_SIZE_UNLIMITED, B_SIZE_UNSET));
 	size = GetLayout()->View()->PreferredSize();
@@ -634,7 +634,7 @@ ExpanderWindow::_CreateMenuBar()
 	menu = new BMenu(B_TRANSLATE("Settings"));
 	menu->AddItem(fPreferencesItem
 		= new BMenuItem(B_TRANSLATE("Settings" B_UTF8_ELLIPSIS),
-			new BMessage(MSG_PREFERENCES), 'S'));
+			new BMessage(MSG_PREFERENCES), ','));
 	fBar->AddItem(menu);
 }
 

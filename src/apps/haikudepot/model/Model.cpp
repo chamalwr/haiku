@@ -1,7 +1,7 @@
 /*
  * Copyright 2013-2014, Stephan Aßmus <superstippi@gmx.de>.
  * Copyright 2014, Axel Dörfler <axeld@pinc-software.de>.
- * Copyright 2016-2019, Andrew Lindesay <apl@lindesay.co.nz>.
+ * Copyright 2016-2020, Andrew Lindesay <apl@lindesay.co.nz>.
  * All rights reserved. Distributed under the terms of the MIT License.
  */
 
@@ -9,7 +9,6 @@
 
 #include <ctime>
 #include <stdarg.h>
-#include <stdio.h>
 #include <time.h>
 
 #include <Autolock.h>
@@ -34,6 +33,10 @@
 #undef B_TRANSLATION_CONTEXT
 #define B_TRANSLATION_CONTEXT "Model"
 
+
+#define KEY_STORE_IDENTIFIER_PREFIX "hds.password."
+	// this prefix is added before the nickname in the keystore
+	// so that HDS username/password pairs can be identified.
 
 static const char* kHaikuDepotKeyring = "HaikuDepot";
 
@@ -183,13 +186,9 @@ public:
 		if (package.Get() == NULL)
 			return false;
 
-		printf("TEST %s\n", package->Name().String());
-
 		for (int32 i = 0; i < fPackageLists.CountItems(); i++) {
-			if (fPackageLists.ItemAtFast(i)->Contains(package)) {
-				printf("  contained in %" B_PRId32 "\n", i);
+			if (fPackageLists.ItemAtFast(i)->Contains(package))
 				return false;
-			}
 		}
 		return true;
 	}
@@ -282,19 +281,6 @@ private:
 };
 
 
-class IsFeaturedFilter : public PackageFilter {
-public:
-	IsFeaturedFilter()
-	{
-	}
-
-	virtual bool AcceptsPackage(const PackageInfoRef& package) const
-	{
-		return package.Get() != NULL && package->IsProminent();
-	}
-};
-
-
 static inline bool
 is_source_package(const PackageInfoRef& package)
 {
@@ -334,14 +320,12 @@ Model::Model()
 	fCategoryFilter(PackageFilterRef(new AnyFilter(), true)),
 	fDepotFilter(""),
 	fSearchTermsFilter(PackageFilterRef(new AnyFilter(), true)),
-	fIsFeaturedFilter(),
-	fShowFeaturedPackages(true),
+	fPackageListViewMode(PROMINENT),
 	fShowAvailablePackages(true),
 	fShowInstalledPackages(true),
 	fShowSourcePackages(false),
 	fShowDevelopPackages(false)
 {
-	_UpdateIsFeaturedFilter();
 }
 
 
@@ -364,29 +348,19 @@ Model::AddListener(const ModelListenerRef& listener)
 }
 
 
-PackageList
-Model::CreatePackageList() const
+// TODO; part of a wider change; cope with the package being in more than one
+// depot
+PackageInfoRef
+Model::PackageForName(const BString& name)
 {
-	// Iterate all packages from all depots.
-	// If configured, restrict depot, filter by search terms, status, name ...
-	PackageList resultList;
-
-	for (int32 i = 0; i < fDepots.CountItems(); i++) {
-		const DepotInfo& depot = fDepots.ItemAtFast(i);
-
-		if (fDepotFilter.Length() > 0 && fDepotFilter != depot.Name())
-			continue;
-
-		const PackageList& packages = depot.Packages();
-
-		for (int32 j = 0; j < packages.CountItems(); j++) {
-			const PackageInfoRef& package = packages.ItemAtFast(j);
-			if (MatchesFilter(package))
-				resultList.Add(package);
-		}
+	DepotList depots = Depots();
+	for (int32 d = 0; d < depots.CountItems(); d++) {
+		const DepotInfo& depot = depots.ItemAtFast(d);
+		int32 packageIndex = depot.PackageIndexByName(name);
+		if (packageIndex >= 0)
+			return depot.Packages().ItemAtFast(packageIndex);
 	}
-
-	return resultList;
+	return PackageInfoRef();
 }
 
 
@@ -395,7 +369,7 @@ Model::MatchesFilter(const PackageInfoRef& package) const
 {
 	return fCategoryFilter->AcceptsPackage(package)
 			&& fSearchTermsFilter->AcceptsPackage(package)
-			&& fIsFeaturedFilter->AcceptsPackage(package)
+			&& (fDepotFilter.IsEmpty() || fDepotFilter == package->DepotName())
 			&& (fShowAvailablePackages || package->State() != NONE)
 			&& (fShowInstalledPackages || package->State() != ACTIVATED)
 			&& (fShowSourcePackages || !is_source_package(package))
@@ -439,6 +413,18 @@ Model::SyncDepot(const DepotInfo& depot)
 			fDepots.Replace(i, mergedDepot);
 			return true;
 		}
+	}
+	return false;
+}
+
+
+bool
+Model::HasAnyProminentPackages()
+{
+	for (int32 i = fDepots.CountItems() - 1; i >= 0; i--) {
+		const DepotInfo& existingDepot = fDepots.ItemAtFast(i);
+		if (existingDepot.HasAnyProminentPackages())
+			return true;
 	}
 	return false;
 }
@@ -539,7 +525,6 @@ Model::SetSearchTerms(const BString& searchTerms)
 		filter = new SearchTermsFilter(searchTerms);
 
 	fSearchTermsFilter.SetTo(filter, true);
-	_UpdateIsFeaturedFilter();
 }
 
 
@@ -555,10 +540,9 @@ Model::SearchTerms() const
 
 
 void
-Model::SetShowFeaturedPackages(bool show)
+Model::SetPackageListViewMode(package_list_view_mode mode)
 {
-	fShowFeaturedPackages = show;
-	_UpdateIsFeaturedFilter();
+	fPackageListViewMode = mode;
 }
 
 
@@ -616,7 +600,7 @@ Model::PopulatePackage(const PackageInfoRef& package, uint32 flags)
 			fPopulatedPackages.Add(package);
 	}
 
-	if ((flags & POPULATE_CHANGELOG) != 0) {
+	if ((flags & POPULATE_CHANGELOG) != 0 && package->HasChangelog()) {
 		_PopulatePackageChangelog(package);
 	}
 
@@ -660,8 +644,8 @@ Model::PopulatePackage(const PackageInfoRef& package, uint32 flags)
 
 					BString code;
 					if (item.FindString("code", &code) != B_OK) {
-						printf("corrupt user rating at index %" B_PRIi32 "\n",
-							index);
+						HDERROR("corrupt user rating at index %" B_PRIi32,
+							index)
 						continue;
 					}
 
@@ -669,8 +653,8 @@ Model::PopulatePackage(const PackageInfoRef& package, uint32 flags)
 					BMessage userInfo;
 					if (item.FindMessage("user", &userInfo) != B_OK
 						|| userInfo.FindString("nickname", &user) != B_OK) {
-						printf("ignored user rating [%s] without a user "
-							"nickname\n", code.String());
+						HDERROR("ignored user rating [%s] without a user "
+							"nickname", code.String())
 						continue;
 					}
 
@@ -683,8 +667,8 @@ Model::PopulatePackage(const PackageInfoRef& package, uint32 flags)
 					if (item.FindDouble("rating", &rating) != B_OK)
 						rating = -1;
 					if (comment.Length() == 0 && rating == -1) {
-						printf("rating [%s] has no comment or rating so will be"
-							"ignored\n", code.String());
+						HDERROR("rating [%s] has no comment or rating so will"
+							" be ignored", code.String())
 						continue;
 					}
 
@@ -728,22 +712,15 @@ Model::PopulatePackage(const PackageInfoRef& package, uint32 flags)
 						comment, languageCode, versionString,
 						(uint64) createTimestamp);
 					package->AddUserRating(userRating);
-
-					if (Logger::IsDebugEnabled()) {
-						printf("rating [%s] retrieved from server\n",
-							code.String());
-					}
+					HDDEBUG("rating [%s] retrieved from server", code.String())
 				}
-
-				if (Logger::IsDebugEnabled()) {
-					printf("did retrieve %" B_PRIi32 " user ratings for [%s]\n",
-						index - 1, packageName.String());
-				}
+				HDDEBUG("did retrieve %" B_PRIi32 " user ratings for [%s]",
+						index - 1, packageName.String())
 			} else {
 				_MaybeLogJsonRpcError(info, "retrieve user ratings");
 			}
 		} else {
-			printf("unable to retrieve user ratings\n");
+			HDERROR("unable to retrieve user ratings")
 		}
 	}
 
@@ -784,22 +761,46 @@ Model::_PopulatePackageChangelog(const PackageInfoRef& package)
 				&& 0 != content.Length()) {
 				BAutolock locker(&fLock);
 				package->SetChangelog(content);
-				if (Logger::IsDebugEnabled()) {
-					fprintf(stdout, "changelog populated for [%s]\n",
-						packageName.String());
-				}
+				HDDEBUG("changelog populated for [%s]", packageName.String())
 			} else {
-				if (Logger::IsDebugEnabled()) {
-					fprintf(stdout, "no changelog present for [%s]\n",
-						packageName.String());
-				}
+				HDDEBUG("no changelog present for [%s]", packageName.String())
 			}
 		} else {
 			_MaybeLogJsonRpcError(info, "populate package changelog");
 		}
 	} else {
-		fprintf(stdout, "unable to obtain the changelog for the package"
-			" [%s]\n", packageName.String());
+		HDERROR("unable to obtain the changelog for the package [%s]",
+			packageName.String())
+	}
+}
+
+
+static void
+model_remove_key_for_user(const BString& nickname)
+{
+	if (nickname.IsEmpty())
+		return;
+	BKeyStore keyStore;
+	BPasswordKey key;
+	BString passwordIdentifier = BString(KEY_STORE_IDENTIFIER_PREFIX)
+		<< nickname;
+	status_t result = keyStore.GetKey(kHaikuDepotKeyring, B_KEY_TYPE_PASSWORD,
+			passwordIdentifier, key);
+
+	switch (result) {
+		case B_OK:
+			result = keyStore.RemoveKey(kHaikuDepotKeyring, key);
+			if (result != B_OK) {
+				HDERROR("error occurred when removing password for nickname "
+					"[%s] : %s", nickname.String(), strerror(result))
+			}
+			break;
+		case B_ENTRY_NOT_FOUND:
+			return;
+		default:
+			HDERROR("error occurred when finding password for nickname "
+				"[%s] : %s", nickname.String(), strerror(result))
+			break;
 	}
 }
 
@@ -808,16 +809,27 @@ void
 Model::SetNickname(BString nickname)
 {
 	BString password;
+	BString existingNickname = Nickname();
+
+	// this happens when the user is logging out.  Best to remove the password
+	// stored for the existing user since it is no longer required.
+
+	if (!existingNickname.IsEmpty() && nickname.IsEmpty())
+		model_remove_key_for_user(existingNickname);
+
 	if (nickname.Length() > 0) {
 		BPasswordKey key;
 		BKeyStore keyStore;
-		if (keyStore.GetKey(kHaikuDepotKeyring, B_KEY_TYPE_PASSWORD, nickname,
-				key) == B_OK) {
+		BString passwordIdentifier = BString(KEY_STORE_IDENTIFIER_PREFIX)
+			<< nickname;
+		if (keyStore.GetKey(kHaikuDepotKeyring, B_KEY_TYPE_PASSWORD,
+				passwordIdentifier, key) == B_OK) {
 			password = key.Password();
-		} else {
-			nickname = "";
 		}
+		if (password.IsEmpty())
+			nickname = "";
 	}
+
 	SetAuthorization(nickname, password, false);
 }
 
@@ -833,47 +845,35 @@ void
 Model::SetAuthorization(const BString& nickname, const BString& passwordClear,
 	bool storePassword)
 {
-	if (storePassword && nickname.Length() > 0 && passwordClear.Length() > 0) {
-		BPasswordKey key(passwordClear, B_KEY_PURPOSE_WEB, nickname);
-		BKeyStore keyStore;
-		keyStore.AddKeyring(kHaikuDepotKeyring);
-		keyStore.AddKey(kHaikuDepotKeyring, key);
+	BString existingNickname = Nickname();
+
+	if (storePassword) {
+		// no point continuing to store the password for the previous user.
+
+		if (!existingNickname.IsEmpty())
+			model_remove_key_for_user(existingNickname);
+
+		// adding a key that is already there does not seem to override the
+		// existing key so the old key needs to be removed first.
+
+		if (!nickname.IsEmpty())
+			model_remove_key_for_user(nickname);
+
+		if (!nickname.IsEmpty() && !passwordClear.IsEmpty()) {
+			BString keyIdentifier = BString(KEY_STORE_IDENTIFIER_PREFIX)
+				<< nickname;
+			BPasswordKey key(passwordClear, B_KEY_PURPOSE_WEB, keyIdentifier);
+			BKeyStore keyStore;
+			keyStore.AddKeyring(kHaikuDepotKeyring);
+			keyStore.AddKey(kHaikuDepotKeyring, key);
+		}
 	}
 
 	BAutolock locker(&fLock);
 	fWebAppInterface.SetAuthorization(UserCredentials(nickname, passwordClear));
 
-	_NotifyAuthorizationChanged();
-}
-
-
-status_t
-Model::_LocalDataPath(const BString leaf, BPath& path) const
-{
-	BPath resultPath;
-	status_t result = B_OK;
-
-	if (result == B_OK)
-		result = find_directory(B_USER_CACHE_DIRECTORY, &resultPath);
-
-	if (result == B_OK)
-		result = resultPath.Append("HaikuDepot");
-
-	if (result == B_OK)
-		result = create_directory(resultPath.Path(), 0777);
-
-	if (result == B_OK)
-		result = resultPath.Append(leaf);
-
-	if (result == B_OK)
-		path.SetTo(resultPath.Path());
-	else {
-		path.Unset();
-		fprintf(stdout, "unable to find the user cache file for "
-			"[%s] data; %s\n", leaf.String(), strerror(result));
-	}
-
-	return result;
+	if (nickname != existingNickname)
+		_NotifyAuthorizationChanged();
 }
 
 
@@ -888,8 +888,8 @@ Model::DumpExportRepositoryDataPath(BPath& path) const
 {
 	BString leaf;
 	leaf.SetToFormat("repository-all_%s.json.gz",
-		LanguageModel().PreferredLanguage().Code());
-	return _LocalDataPath(leaf, path);
+		LanguageModel().PreferredLanguage()->Code());
+	return StorageUtils::LocalWorkingFilesPath(leaf, path);
 }
 
 
@@ -903,38 +903,15 @@ Model::DumpExportReferenceDataPath(BPath& path) const
 {
 	BString leaf;
 	leaf.SetToFormat("reference-all_%s.json.gz",
-		LanguageModel().PreferredLanguage().Code());
-	return _LocalDataPath(leaf, path);
+		LanguageModel().PreferredLanguage()->Code());
+	return StorageUtils::LocalWorkingFilesPath(leaf, path);
 }
 
 
 status_t
 Model::IconStoragePath(BPath& path) const
 {
-	BPath iconStoragePath;
-	status_t result = B_OK;
-
-	if (result == B_OK)
-		result = find_directory(B_USER_CACHE_DIRECTORY, &iconStoragePath);
-
-	if (result == B_OK)
-		result = iconStoragePath.Append("HaikuDepot");
-
-	if (result == B_OK)
-		result = iconStoragePath.Append("__allicons");
-
-	if (result == B_OK)
-		result = create_directory(iconStoragePath.Path(), 0777);
-
-	if (result == B_OK)
-		path.SetTo(iconStoragePath.Path());
-	else {
-		path.Unset();
-		fprintf(stdout, "unable to find the user cache directory for "
-			"icons; %s\n", strerror(result));
-	}
-
-	return result;
+	return StorageUtils::LocalWorkingDirectoryPath("__allicons", path);
 }
 
 
@@ -944,18 +921,8 @@ Model::DumpExportPkgDataPath(BPath& path,
 {
 	BString leaf;
 	leaf.SetToFormat("pkg-all-%s-%s.json.gz", repositorySourceCode.String(),
-		LanguageModel().PreferredLanguage().Code());
-	return _LocalDataPath(leaf, path);
-}
-
-
-void
-Model::_UpdateIsFeaturedFilter()
-{
-	if (fShowFeaturedPackages && SearchTerms().IsEmpty())
-		fIsFeaturedFilter = PackageFilterRef(new IsFeaturedFilter(), true);
-	else
-		fIsFeaturedFilter = PackageFilterRef(new AnyFilter(), true);
+		LanguageModel().PreferredLanguage()->Code());
+	return StorageUtils::LocalWorkingFilesPath(leaf, path);
 }
 
 
@@ -966,15 +933,21 @@ Model::_PopulatePackageScreenshot(const PackageInfoRef& package,
 	// See if there is a cached screenshot
 	BFile screenshotFile;
 	BPath screenshotCachePath;
+
+	status_t result = StorageUtils::LocalWorkingDirectoryPath(
+		"Screenshots", screenshotCachePath);
+
+	if (result != B_OK) {
+		HDERROR("unable to get the screenshot dir - unable to proceed")
+		return;
+	}
+
 	bool fileExists = false;
 	BString screenshotName(info.Code());
 	screenshotName << "@" << scaledWidth;
 	screenshotName << ".png";
 	time_t modifiedTime;
-	if (find_directory(B_USER_CACHE_DIRECTORY, &screenshotCachePath) == B_OK
-		&& screenshotCachePath.Append("HaikuDepot/Screenshots") == B_OK
-		&& create_directory(screenshotCachePath.Path(), 0777) == B_OK
-		&& screenshotCachePath.Append(screenshotName) == B_OK) {
+	if (screenshotCachePath.Append(screenshotName) == B_OK) {
 		// Try opening the file in read-only mode, which will fail if its
 		// not a file or does not exist.
 		fileExists = screenshotFile.SetTo(screenshotCachePath.Path(),
@@ -1016,9 +989,9 @@ Model::_PopulatePackageScreenshot(const PackageInfoRef& package,
 			screenshotFile.Write(buffer.Buffer(), buffer.BufferLength());
 		}
 	} else {
-		fprintf(stderr, "Failed to retrieve screenshot for code '%s' "
-			"at %" B_PRIi32 "x%" B_PRIi32 ".\n", info.Code().String(),
-			scaledWidth, scaledHeight);
+		HDERROR("Failed to retrieve screenshot for code '%s' "
+			"at %" B_PRIi32 "x%" B_PRIi32 ".", info.Code().String(),
+			scaledWidth, scaledHeight)
 	}
 }
 
@@ -1050,19 +1023,19 @@ Model::_NotifyCategoryListChanged()
 
 
 /*! This method will find the stored 'DepotInfo' that correlates to the
-    supplied 'url' and will invoke the mapper function in order to get a
-    replacement for the 'DepotInfo'.  The 'url' is a unique identifier
-    for the repository that holds across mirrors.
+    supplied 'identifier' and will invoke the mapper function in order
+    to get a replacement for the 'DepotInfo'.  The 'identifier' holds
+    across mirrors.
 */
 
 void
-Model::ReplaceDepotByUrl(const BString& URL, DepotMapper* depotMapper,
-	void* context)
+Model::ReplaceDepotByIdentifier(const BString& identifier,
+	DepotMapper* depotMapper, void* context)
 {
 	for (int32 i = 0; i < fDepots.CountItems(); i++) {
 		DepotInfo depotInfo = fDepots.ItemAtFast(i);
 
-		if (RepositoryUrlUtils::EqualsNormalized(URL, depotInfo.URL())) {
+		if (identifier == depotInfo.URL()) {
 			BAutolock locker(&fLock);
 			fDepots.Replace(i, depotMapper->MapDepot(depotInfo, context));
 		}
@@ -1079,13 +1052,15 @@ Model::LogDepotsWithNoWebAppRepositoryCode() const
 		const DepotInfo& depot = fDepots.ItemAt(i);
 
 		if (depot.WebAppRepositoryCode().Length() == 0) {
-			printf("depot [%s]", depot.Name().String());
-
-			if (depot.URL().Length() > 0)
-				printf(" (%s)", depot.URL().String());
-
-			printf(" correlates with no repository in the haiku"
-				"depot server system\n");
+			if (depot.URL().Length() > 0) {
+				HDINFO("depot [%s] (%s) correlates with no repository in the"
+					" the haiku depot server system", depot.Name().String(),
+					depot.URL().String())
+			}
+			else {
+				HDINFO("depot [%s] correlates with no repository in the"
+					" the haiku depot server system", depot.Name().String())
+			}
 		}
 	}
 }
@@ -1102,11 +1077,10 @@ Model::_MaybeLogJsonRpcError(const BMessage &responsePayload,
 	if (responsePayload.FindMessage("error", &error) == B_OK
 		&& error.FindString("message", &errorMessage) == B_OK
 		&& error.FindDouble("code", &errorCode) == B_OK) {
-		printf("[%s] --> error : [%s] (%f)\n", sourceDescription,
-			errorMessage.String(), errorCode);
-
+		HDERROR("[%s] --> error : [%s] (%f)", sourceDescription,
+			errorMessage.String(), errorCode)
 	} else {
-		printf("[%s] --> an undefined error has occurred\n", sourceDescription);
+		HDERROR("[%s] --> an undefined error has occurred", sourceDescription)
 	}
 }
 

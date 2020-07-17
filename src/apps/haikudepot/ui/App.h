@@ -1,6 +1,6 @@
 /*
  * Copyright 2013, Stephan Aßmus <superstippi@gmx.de>.
- * Copyright 2018, Andrew Lindesay <apl@lindesay.co.nz>
+ * Copyright 2018-2020, Andrew Lindesay <apl@lindesay.co.nz>
  * All rights reserved. Distributed under the terms of the MIT License.
  */
 #ifndef APP_H
@@ -21,6 +21,8 @@ public:
 
 	virtual	bool				QuitRequested();
 	virtual	void				ReadyToRun();
+			bool				IsFirstRun();
+
 	virtual	void				MessageReceived(BMessage* message);
 	virtual void				RefsReceived(BMessage* message);
 	virtual void				ArgvReceived(int32 argc, char* argv[]);
@@ -36,12 +38,17 @@ private:
 			void				_CheckPackageDaemonRuns();
 			bool				_LaunchPackageDaemon();
 
+			bool				_CheckTestFile();
+	static	bool				_CheckIsFirstRun();
+
 private:
 			MainWindow*			fMainWindow;
 			int32				fWindowCount;
 
 			BMessage			fSettings;
 			bool				fSettingsRead;
+
+			bool				fIsFirstRun;
 };
 
 

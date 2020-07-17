@@ -7,11 +7,11 @@ Download folder:	Settings Window		Cartella dei file scaricati:
 Close window	WebPositive Window		Chiudi finestra
 Find:	WebPositive Window		Trova:
 Script console	WebPositive Window		Console
-Fonts	Settings Window		Caratteri
+Fonts	Settings Window		Tipi di caratteri
 Path	Cookie Manager		Percorso:
 of	Download Window	...as in '12kB of 256kB'	di
 Bookmarks	WebPositive Window		Segnalibri
-Use proxy server to connect to the internet	Settings Window		Utilizza un server proxy per connettersi a Internet
+Use proxy server to connect to the internet	Settings Window		Utilizza un server proxy per la connessione a Internet
 %url finished	WebPositive Window	Loading URL finished. Don't translate variable %url.	%url completato
 Auto-hide interface in full screen mode	Settings Window		Nasconti automaticamente l'interfaccia in modalità a schermo intero
 There was an error retrieving the bookmark folder.\n\nError: %error	WebPositive Window	Don't translate the variable %error	C'è stato un errore nell'accedere alla dei segnalibri.\n\nErrore: %error
@@ -39,7 +39,7 @@ Proxy server port:	Settings Window		Porta del server proxy:
 Error opening downloads folder	Download Window		Errore nell'apertura della cartella dei file scaricati
 Show bookmark bar	WebPositive Window		Mostra barra dei segnalibri
 Find	WebPositive Window		Trova
-Standard font:	Settings Window		Carattere predefinito:
+Standard font:	Settings Window		Tipo di carattere predefinito:
 Open download error	Download Window		Errore nell'apertura del file scaricato
 General	Settings Window		Generali
 New tabs:	Settings Window		Nuove tab:
@@ -48,8 +48,8 @@ Open downloads folder	Download Window		Apri cartella dei file scaricati
 Proxy server	Settings Window		Server proxy
 Decrease size	WebPositive Window		Diminuisci dimensioni
 Default fixed font size:	Settings Window		Dimensione predefinita caratteri a spaziatura fissa:
-Sans serif font:	Settings Window		Carattere sans serif:
-Clear	WebPositive Window		Pulisci
+Sans serif font:	Settings Window		Tipo di carattere senza grazie:
+Clear	WebPositive Window		Cancella
 Cookies for %s	Cookie Manager		Cookie per %s
 The download could not be opened.	Download Window		La cartella dei file scaricati non può essere aperta.
 Close	Download Window		Chiudi
@@ -72,7 +72,7 @@ Download aborted	Download Window		Download interrotto
 Number of days to keep links in History menu:	Settings Window		Numero di giorni in cui mantenere i collegamenti nel menu Cronologia:
 Password:	Authentication Panel		Password:
 Forward	WebPositive Window		Avanti
-Clear	Console Window		Pulisci
+Clear	Console Window		Cancella Console
 Cut	URL Bar		Taglia
 View	WebPositive Window		Vista
 Paste	URL Bar		Incolla
@@ -95,7 +95,7 @@ Proxy username:	Settings Window		Nome utente server proxy:
 Manage bookmarks	WebPositive Window		Gestisci segnalibri
 /s)	Download Window	...as in 'per second'	/s)
 Restart	Download Window		Riavvia
-Serif font:	Settings Window		Carattere serif:
+Serif font:	Settings Window		Tipo di carattere con grazie:
 Apply	Settings Window		Applica
 There was an error trying to show the Bookmarks folder.\n\nError: %error	WebPositive Window	Don't translate variable %error	C'è stato un errore nel tentativo di mostrare la cartella dei segnalibri.\n\nErrore: %error
 Revert	Settings Window		Ripristina
@@ -114,7 +114,7 @@ History	WebPositive Window		Cronologia
 Reset size	WebPositive Window		Reimposta dimensioni
 Do you really want to clear the browsing history?	WebPositive Window		Sei sicuro di voler cancellare la cronologia del browser?
 Find next occurrence of search terms	WebPositive Window	find bar next button tooltip	Trova la prossima occorrenza dei termini di ricerca
-Fixed font:	Settings Window		Carattere a spaziatura fissa:
+Fixed font:	Settings Window		Tipo di carattere a spaziatura fissa:
 Quit	WebPositive Window		Esci
 Find previous occurrence of search terms	WebPositive Window	find bar previous button tooltip	Cerca la precedente occorrenza dei termini di ricerca
 Remember username and password for this site	Authentication Panel		Ricorda nome utente e password per questo sito
@@ -141,7 +141,7 @@ Window	WebPositive Window		Finestra
 Proxy server address:	Settings Window		Indirizzo del server proxy:
 Search page:	Settings Window		Cerca nella pagina:
 Settings	WebPositive Window		Impostazioni
-Clear	URL Bar		Pulisci
+Clear	URL Bar		Cancella
 Loading %url	WebPositive Window		Caricamento %url
 The quick brown fox jumps over the lazy dog.	Font Selection view	Don't translate this literally ! Use a phrase showing all chars from A to Z.	La vispa Teresa avea tra l’erbetta a volo sorpresa gentil farfalletta.
 Start up:	Settings Window		Avvio:

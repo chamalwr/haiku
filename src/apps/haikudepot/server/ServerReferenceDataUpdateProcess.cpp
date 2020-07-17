@@ -1,5 +1,5 @@
 /*
- * Copyright 2019, Andrew Lindesay <apl@lindesay.co.nz>.
+ * Copyright 2019-2020, Andrew Lindesay <apl@lindesay.co.nz>.
  * All rights reserved. Distributed under the terms of the MIT License.
  */
 
@@ -66,7 +66,7 @@ ServerReferenceDataUpdateProcess::UrlPathComponent()
 	BString result;
 	AutoLocker<BLocker> locker(fModel->Lock());
 	result.SetToFormat("/__reference/all-%s.json.gz",
-		fModel->Language().PreferredLanguage().Code());
+		fModel->Language().PreferredLanguage()->Code());
 	return result;
 }
 
@@ -121,8 +121,8 @@ status_t
 ServerReferenceDataUpdateProcess::_ProcessNaturalLanguages(
 	DumpExportReference* data)
 {
-	printf("[%s] will populate %" B_PRId32 " natural languages\n",
-		Name(), data->CountNaturalLanguages());
+	HDINFO("[%s] will populate %" B_PRId32 " natural languages",
+		Name(), data->CountNaturalLanguages())
 
 	LanguageList result;
 
@@ -143,8 +143,8 @@ ServerReferenceDataUpdateProcess::_ProcessNaturalLanguages(
 		fModel->Language().AddSupportedLanguages(result);
 	}
 
-	printf("[%s] did add %" B_PRId32 " supported languages\n",
-		Name(), result.CountItems());
+	HDINFO("[%s] did add %" B_PRId32 " supported languages",
+		Name(), result.CountItems())
 
 	return B_OK;
 }
@@ -154,8 +154,8 @@ status_t
 ServerReferenceDataUpdateProcess::_ProcessPkgCategories(
 	DumpExportReference* data)
 {
-	printf("[%s] will populate %" B_PRId32 " pkg categories\n",
-		Name(), data->CountPkgCategories());
+	HDINFO("[%s] will populate %" B_PRId32 " pkg categories",
+		Name(), data->CountPkgCategories())
 
 	CategoryList result;
 

@@ -1,6 +1,5 @@
-1	slovak	x-vnd.Haiku-HaikuDepot	1135431705
+1	slovak	x-vnd.Haiku-HaikuDepot	1991884741
 Uninstall	PackageManager		Odinštalovať
-(%Votes%)	FeaturedPackagesView		(%Votes%)
 Uninstalled	PackageListView		Odinštalované
 Available packages	MainWindow		Dostupné balíky
 Create account	UserLoginWindow		Vytvoriť účet
@@ -13,8 +12,8 @@ No user ratings available.	PackageInfoView		Používateľské hodnotenie nie je 
 Rating	PackageListView		Hodnotenie
 Does not start	RatePackageWindow		Nespúšťa sa
 Show	MainWindow		Zobraziť
-Not specified	RatePackageWindow		Neuvedené
 Unstable but usable	RatePackageWindow		Nestabilný, ale použiteľný
+Not specified	RatePackageWindow		Neuvedené
 Active	PackageListView		Aktívny
 Login or Create account	MainWindow		Prihlásiť sa alebo Vytvoriť účet
 <Package contents not available for remote packages>	PackageContentsView		<Pri vzdialených balíkoch obsah balíka nie je k dispozícii>
@@ -26,7 +25,6 @@ Rate %Package%	RatePackageWindow		Ohodnotiť %Package%
 Quit HaikuDepot	App		Ukončiť HaikuDepot
 Category	FilterView		Kategória
 Installed packages	MainWindow		Nainštalované balíky
-Other users can see this rating	RatePackageWindow		Toto hodnotenie uvidia aj iní používatelia
 Stable	RatePackageWindow		Stabilný
 Fatal error	PackageManager		Kritická chyba
 Package action failed	PackageInfoView		Operácia s balíkom zlyhala

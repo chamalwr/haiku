@@ -1,4 +1,4 @@
-1	danish	x-vnd.Haiku-libtracker	176213216
+1	danish	x-vnd.Haiku-libtracker	858481545
 Created	ContainerWindow		Oprettet
 Icon	AttributesView		Ikon
 Open and make preferred	OpenWithWindow		Åbn og lav foretrukket
@@ -7,7 +7,7 @@ Open with…	ContainerWindow		Åbn med…
 Error moving \"%name\" to Trash. (%error)	FSUtils		Fejl ved flytning af \"%name\" til papirkurven. (%error)
 Or	FindPanel		Eller
 before	FindPanel		før
-Volume icons	TrackerSettingsWindow		Diskområdeikoner
+Volume icons	TrackerSettingsWindow		Ikoner for diskområder
 Ignore case	SelectionWindow		Skel ikke mellem store og små bogstaver
 Current folder	ContainerWindow		Nuværende mappe
 Finish: %time - Over %finishtime left	StatusWindow		Færdig: %time - Over %finishtime tilbage
@@ -21,7 +21,6 @@ contains	FindPanel		indeholder
 Open	FilePanelPriv		Åbn
 Bitmap icon	AttributesView		Bitmap-ikon
 You can't replace a folder with one of its sub-folders.	FSUtils		Du kan ikke erstatte en mappe med dets undermapper.
-<%ld dates>	AttributesView		<%ld datoer>
 Select…	VirtualDirectoryWindow		Vælg …
 Name	Default Query Columns		Navn
 Unmount	ContainerWindow		Afmonter
@@ -41,6 +40,7 @@ Small bitmap icon	AttributesView		Lille bitmap-ikon
 Would you like to find a suitable application to open the file?	FSUtils		Vil du finde et egnet program til at åbne filen?
 64 x 64	ContainerWindow		64 x 64
 You cannot replace a folder or a symbolic link with a file.	FSUtils		Du kan ikke erstatte en mappe eller symbolsk lænke med en fil.
+{0, plural, other{<# dates>}}	AttributesView		{0, plural, other{<# datoer>}}
 Trailing \\.	libtracker		Efterstillede \\.
 At %func \nfind_directory() failed. \nReason: %error	Email Query Columns		Ved %func \nfind_directory() mislykkede. \nÅrsag: %error
 Handles any file	OpenWithWindow		Håndterer enhver fil
@@ -50,7 +50,6 @@ Preparing to move items…	StatusWindow		Forbereder flytning af elementerne…
 Size	ContainerWindow		Størrelse
 Select…	ContainerWindow		Vælg…
 Show shared volumes on Desktop	SettingsView		Vis delte diskområder på skrivebordet
-<%ld values>	AttributesView		<%ld værdier>
 Size	PoseView		Størrelse
 matches wildcard expression	SelectionWindow		matcher jokertegnudtryk
 96 x 96	ContainerWindow		96 x 96
@@ -58,7 +57,7 @@ Title	Bookmark Query Columns		Titel
 Identify	ContainerWindow		Identificer
 You can't move or copy items to read-only volumes.	FSUtils		Du kan ikke flytte eller kopiere elementer til skrivebeskyttede diskområder.
 Create link	ContainerWindow		Opret lænke
-starts with	FindPanel		starter med
+starts with	FindPanel		begynder med
 Replace	FSUtils		Erstat
 ?+* follows nothing.	libtracker		?+* efterfølger ikke noget.
 Rectangle	AttributesView		Rektangel
@@ -83,7 +82,7 @@ OK	OpenWithWindow		OK
 Include trash	FindPanel		Inkluder papirkurven
 GiB	WidgetAttributeText		GiB
 Clean up	ContainerWindow		Ryd op
-Modified	FindPanel		Modificeret
+Modified	FindPanel		Ændret
 Select all	QueryContainerWindow		Vælg alt
 Select…	FilePanelPriv		Vælg…
 preferences	B_PREFERENCES_DIRECTORY		præferencer
@@ -111,8 +110,9 @@ Edit templates…	TemplatesMenu		Rediger skabeloner…
 {0, plural, one{# byte} other{# bytes}}	FSUtils		{0, plural, one{# byte} other{# bytes}}
 8-bit integer	AttributesView		8-bit heltal
 8-bit unsigned integer	AttributesView		8-bit heltal uden fortegn
+%s info	InfoWindow	window title	%s info
 %capacity (%used used -- %free free)	InfoWindow		%capacity (%used brugt -- %free ledig)
-Hide dotfiles	SettingsView		Skjul dot-filer
+Hide dotfiles	SettingsView		Skjul punktumfiler
 Trash	Model		Papirkurv
 Enable type-ahead filtering	SettingsView		Aktivér forudskrivningsfiltrering
 copy	FSUtils	filename copy	kopiér
@@ -134,7 +134,7 @@ Move to Trash	ContainerWindow		Flyt til papirkurven
 All files and folders	FindPanel		Alle filer og mapper
 Add-ons	ContainerWindow		Tilføjelser
 Too many parenthesis.	libtracker		For mange parenteser.
-Increase size	ContainerWindow		Forøg størrelse
+Increase size	ContainerWindow		Større
 \nShould this be fixed?	FSUtils		\nSkal dette ordnes?
 URL	Bookmark Query Columns		URL
 Move	PoseView		Flyt
@@ -182,6 +182,7 @@ MIME Type	AttributesView		MIME-type
 Show folder location in title tab	SettingsView		Vis mappeplacering i fanebladstitlen
 There was an error resolving the link.	Tracker		Der opstod en fejl ved løsning af linket.
 There was a problem trying to save in the folder you specified. Please try another one.	FilePanelPriv		Der opstod et problem under forsøget i at gemme i den mappe du angav. Prøv venligst en anden.
+{0, plural, other{<# values>}}	AttributesView		{0, plural, other{<# værdier>}}
 Desktop	TrackerSettingsWindow		Skrivebord
 Nested *?+.	libtracker		Indlejret *?+.
 Move	FSUtils	button label	Flyt
@@ -195,7 +196,6 @@ contains	SelectionWindow		indeholder
 Replace	FilePanelPriv		Erstat
 is not	FindPanel		er ikke
 Icon view	DeskWindow		Ikonvisning
-<%ld rectangles>	AttributesView		<%ld rektangler>
 Mount settings…	ContainerWindow		Monteringsindstillinger…
 Keywords	Bookmark Query Columns		Nøgleord
 Media parameter web	AttributesView		Medieparameterweb
@@ -214,11 +214,11 @@ Unknown	WidgetAttributeText		Ukendt
 32-bit integer	AttributesView		32-bit heltal
 The specified name is already used as the name of a folder. Please choose another name.	FilePanelPriv		Det specificerede navn bliver allerede brugt som navnet på en mappe. Vælg venligst et andet navn.
 48 x 48	ContainerWindow		48 x 48
-Modified	ContainerWindow		Modificeret
+Modified	ContainerWindow		Ændret
 Mini icon view	ContainerWindow		Miniikonvisning
 File	FilePanelPriv		Fil
 Search	FindPanel		Søg
-Modified:	InfoWindow		Modificeret:
+Modified:	InfoWindow		Ændret:
 Cancel	FilePanelPriv		Annuller
 Sorry, you cannot edit that attribute.	WidgetAttributeText		Beklager, du kan ikke redigere den attribut.
 Memory pointer	AttributesView		Hukommelsespointer
@@ -244,7 +244,7 @@ Copying: 	StatusWindow		Kopiere:
 Show navigator	SettingsView		Vis navigatør
 Select all	DeskWindow		Vælg alt
 Double-precision floating point number	AttributesView		Flydende kommatal med dobbelt præcision
-Decrease size	ContainerWindow		Formindsk størrelse
+Decrease size	ContainerWindow		Mindre
 Recent queries	FindPanel		Nylige forespørgsler
 Mount all	MountMenu		Monter alle
 128 x 128	DeskWindow		128 x 128
@@ -258,15 +258,16 @@ Tracker status	StatusWindow		Trackerstatus
 Handles any %type	OpenWithWindow		Håndterer alle %type
 The mount server could not be contacted.	AutoMounterSettings		Monteringsserveren kunne ikke blive kontaktet.
 Query template	FindPanel		Forespørgselsskabelon
-ends with	SelectionWindow		ender med
+ends with	SelectionWindow		slutter med
 Open	OpenWithWindow		Åbn
 You must have at least one attribute showing.	PoseView		Du skal have mindst én egenskab vist.
 Cut	FilePanelPriv		Klip
+Finish: after several years	StatusWindow		Færdig: efter flere år
 Favorites	FilePanelPriv		Favoritter
 Point	AttributesView		Punkt
 home	B_USER_DIRECTORY		hjem
 Tracker New Templates	B_USER_SETTINGS_DIRECTORY/Tracker/Tracker New Templates		Tracker nye skabeloner
-Disk mounting during boot	AutoMounterSettings		Disk monterer under opstart
+Disk mounting during boot	AutoMounterSettings		Diskmontering under opstart
 Don't automount	AutoMounterSettings		Automonter ikke
 Could not find application \"%appname\"	OpenWithWindow		Kunne ikke finde programmet \"%appname\"
 Unmatched parenthesis.	libtracker		Ikke-matchede parenteser.
@@ -286,6 +287,7 @@ Error creating link to \"%name\".	FSUtils		Fejl ved at lave et link til \"%name\
 Unknown	FilePermissionsView		Ukendt
 Paste links	ContainerWindow		Indsæt lænker
 Restoring: 	StatusWindow		Gendanner: 
+The Tracker must be running to set the default printer.	PoseView		Trackeren skal køre for at kunne sætte standardprinteren.
 calculating…	InfoWindow		udregner…
 Preferred for file	OpenWithWindow		Anbefalet til fil
 OK	AutoMounterSettings		OK
@@ -306,7 +308,6 @@ Delete	FSUtils		Slet
 Edit name	ContainerWindow		Rediger navn
 Could not open \"%document\" (Missing symbol: %symbol). \n	FSUtils		Kunne ikke åbne \"%document\" (Manglende symbol: %symbol). \n
 ASCII Text	AttributesView		ASCII-tekst
-More options	FindPanel		Flere indstillinger
 Atom reference	AttributesView		Atom-reference
 config	B_USER_CONFIG_DIRECTORY		opsætning
 Error moving \"%name\".	FSUtils		Fejl ved flytning af \"%name\".
@@ -314,8 +315,8 @@ Select…	QueryContainerWindow		Vælg…
 Open	ContainerWindow		Åbn
 Settings…	MountMenu		Indstillinger…
 You cannot put the selected item(s) into the trash.	FSUtils		Du kan ikke lægge de valgte elementer i papirkurven.
-Increase size	DeskWindow		Forøg størrelse
-starts with	SelectionWindow		starter med
+Increase size	DeskWindow		Større
+starts with	SelectionWindow		begynder med
 Any	AttributesView		Enhver
 New	DeskWindow		Ny
 Invert	SelectionWindow		Omvend
@@ -340,9 +341,7 @@ Make active printer	ContainerWindow		Gør til aktiv printer
 Copy to	ContainerWindow		Kopiér til
 Name	SelectionWindow		Navn
 by attribute	FindPanel		efter attribut
- info	InfoWindow		 info
 Write	FilePermissionsView		Skriv
-<%ld bytes of data>	AttributesView		<%ld bytes data>
 If you alter the system folder or its contents, you won't be able to boot %osName!\n\nAre you sure you want to do this?\n\nTo alter the system folder or its contents anyway, hold down the Shift key and click \"I know what I'm doing\".	FSUtils		Hvis du ændre systemmappen eller dens indhold, så vil du ikke være i stand til at opstarte %osName!\n\nEr du sikker på, at du vil gøre det?\n\nFor alligevel at ændre systemmappen eller dens indhold, hold Skift-tasten nede og klik på \"Jeg ved hvad jeg gør\".
 Save	FilePanelPriv		Gem
 Could not open \"%document\" with application \"%app\" (Missing libraries: %library). \n	FSUtils		Kunne ikke åbne \"%document\" med programmet \"%app\" (Manglende biblioteker: %library). \n
@@ -385,7 +384,7 @@ moving	FSUtils		flytter
 Single window navigation	SettingsView		Enkelt vinduesnavigation
 greater than	FindPanel		større end
 Add	FindPanel		Tilføj
-Created:	InfoWindow		Lavet:
+Created:	InfoWindow		Oprettet:
 Edit Query template	FindPanel		Rediger forespørgselsskabelon
 Save query as template…	FindPanel		Gem forespørgsel som skabelon…
 All disks	AutoMounterSettings		Alle diske
@@ -395,7 +394,6 @@ Proceed	FSUtils		Fortsæt
 Edit favorites…	FilePanelPriv		Rediger favoritter…
 You can't move a folder into itself or any of its own sub-folders.	FSUtils		Du kan ikke flytte en mappe ind i sig selv eller en af sine egne undermapper.
 New	ContainerWindow		Ny
-Fewer options	FindPanel		Færre valgmuligheder
 You must drop items on one of the disk icons in the \"Disks\" window.	FSClipBoard		Du skal slippe elementer på et af diskikonerne i \"Diske\"-vinduet.
 If you alter %target, %osName may not behave properly!\n\nAre you sure you want to do this?	FSUtils		Hvis du ændre %target, så vil %osName måske ikke opføre sig korrekt!\n\nEr du sikker på, at du vil gøre det?
 Sorry, you can't copy items to the Trash.	FSClipBoard		Beklager, du kan ikke kopiere elementer til papirkurven.
@@ -414,7 +412,7 @@ There was a problem trying to replace \"%name\". The item might be open or busy.
 Windows	TrackerSettingsWindow		Vinduer
 Show space bars on volumes	SettingsView		Vis ledig plads på diskområder
 Could not update permissions of file \"%name\". %error	FSUtils		Kunne ikke opdatere tilladelser for filen \"%name\". %error
-Decrease size	DeskWindow		Formindsk størrelse
+Decrease size	DeskWindow		Mindre
 Emptying Trash… 	StatusWindow		Tømmer papirkurven… 
 {0, plural, one{for # file} other{for # files}}	InfoWindow		{0, plural, one{for # fil} other{for # filer}}
 KiB	WidgetAttributeText		KiB
@@ -448,14 +446,13 @@ Rename	FSUtils	button label	Omdøb
 Clean up all	ContainerWindow		Opryd alle
 Add current folder	FilePanelPriv		Tilføj nuværende mappe
 Description:	InfoWindow		Beskrivelse:
-The Tracker must be running to see set the default printer.	PoseView		Trackeren skal køre for at kunne se indstil standardprinteren.
 Are you sure you want to delete the selected item(s)? This operation cannot be reverted.	FSUtils		Er du sikker på, at du vil slette de valgte elementer? Handlingen kan ikke fortrydes.
 Grayscale picture	AttributesView		Gråtone billede
 Mount	DeskWindow		Monter
-ends with	FindPanel		ender med
+ends with	FindPanel		slutter med
 Show Disks icon	SettingsView		Vis diskikoner
 Outline selection rectangle only	SettingsView		Omrids markering kun for rektanglen
-by formula	FindPanel		af formlen
+by formula	FindPanel		efter formular
 Resize to fit	VirtualDirectoryWindow		Tilpas størrelse til at passe
 Move to Trash	FilePanelPriv		Flyt til papirkurven
 is	FindPanel		er

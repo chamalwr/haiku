@@ -1,6 +1,6 @@
 /*
  * Copyright 2014, Stephan Aßmus <superstippi@gmx.de>.
- * Copyright 2019, Andrew Lindesay <apl@lindesay.co.nz>.
+ * Copyright 2019-2020, Andrew Lindesay <apl@lindesay.co.nz>.
  * All rights reserved. Distributed under the terms of the MIT License.
  */
 
@@ -8,7 +8,6 @@
 
 #include <algorithm>
 #include <ctype.h>
-#include <stdio.h>
 
 #include <mail_encoding.h>
 
@@ -29,6 +28,7 @@
 #include "HaikuDepotConstants.h"
 #include "LanguageMenuUtils.h"
 #include "LinkView.h"
+#include "LocaleUtils.h"
 #include "Logger.h"
 #include "Model.h"
 #include "ServerHelper.h"
@@ -146,7 +146,7 @@ UserLoginWindow::UserLoginWindow(BWindow* parent, BRect frame, Model& model)
 
 	{
 		AutoLocker<BLocker> locker(fModel.Lock());
-		fPreferredLanguageCode = fModel.Language().PreferredLanguage().Code();
+		fPreferredLanguageCode = fModel.Language().PreferredLanguage()->Code();
 		// Construct languages popup
 		BPopUpMenu* languagesMenu = new BPopUpMenu(B_TRANSLATE("Language"));
 		fLanguageCodeField = new BMenuField("language",
@@ -157,8 +157,8 @@ UserLoginWindow::UserLoginWindow(BWindow* parent, BRect frame, Model& model)
 			languagesMenu);
 		languagesMenu->SetTargetForItems(this);
 
-		printf("using preferred language code [%s]\n",
-			fPreferredLanguageCode.String());
+		HDINFO("using preferred language code [%s]",
+			fPreferredLanguageCode.String())
 		LanguageMenuUtils::MarkLanguageInMenu(fPreferredLanguageCode,
 			languagesMenu);
 	}
@@ -298,7 +298,7 @@ UserLoginWindow::MessageReceived(BMessage* message)
 		}
 
 		case MSG_CREATE_ACCOUNT_SETUP_ERROR:
-			printf("failed to setup for account setup - window must quit\n");
+			HDERROR("failed to setup for account setup - window must quit")
 			BMessenger(this).SendMessage(B_QUIT_REQUESTED);
 			break;
 
@@ -370,8 +370,8 @@ UserLoginWindow::QuitRequested()
 
 	if (fWorkerThread >= 0) {
 		if (Logger::IsDebugEnabled())
-			printf("quit requested while worker thread is operating -- will "
-				"try again once the worker thread has completed\n");
+			HDINFO("quit requested while worker thread is operating -- will "
+				"try again once the worker thread has completed")
 		fQuitRequestedDuringWorkerThread = true;
 		return false;
 	}
@@ -530,9 +530,9 @@ UserLoginWindow::_AuthenticateThread(UserCredentials& userCredentials)
 
 		if (Logger::IsDebugEnabled()) {
 			if (token.IsEmpty())
-				printf("authentication failed\n");
+				HDINFO("authentication failed")
 			else
-				printf("authentication successful\n");
+				HDINFO("authentication successful")
 		}
 
 		BMessenger messenger(this);
@@ -750,9 +750,8 @@ UserLoginWindow::_CreateAccountSetupThreadEntry(void* data)
 			}
 		}
 		if (result == B_OK) {
-			if (Logger::IsDebugEnabled())
-				printf("successfully completed collection of create account "
-					"data from the server in background thread\n");
+			HDDEBUG("successfully completed collection of create account "
+				"data from the server in background thread")
 			messenger.SendMessage(&message);
 		} else {
 			debugger("unable to configure the "
@@ -886,9 +885,7 @@ UserLoginWindow::_UnpackCaptcha(BMessage& responsePayload, Captcha& captcha)
 void
 UserLoginWindow::_HandleCreateAccountSetupSuccess(BMessage* message)
 {
-	if (Logger::IsDebugEnabled())
-		printf("handling account setup success\n");
-
+	HDDEBUG("handling account setup success")
 	BMessage captchaMessage;
 	BMessage userUsageConditionsMessage;
 
@@ -908,8 +905,7 @@ UserLoginWindow::_HandleCreateAccountSetupSuccess(BMessage* message)
 void
 UserLoginWindow::_SetCaptcha(Captcha* captcha)
 {
-	if (Logger::IsDebugEnabled())
-		printf("setting captcha\n");
+	HDDEBUG("setting captcha")
 	if (fCaptcha != NULL)
 		delete fCaptcha;
 	fCaptcha = captcha;
@@ -935,20 +931,15 @@ void
 UserLoginWindow::_SetUserUsageConditions(
 	UserUsageConditions* userUsageConditions)
 {
-	if (Logger::IsDebugEnabled())
-		printf("setting user usage conditions\n");
+	HDDEBUG("setting user usage conditions")
 	if (fUserUsageConditions != NULL)
 		delete fUserUsageConditions;
 	fUserUsageConditions = userUsageConditions;
 
 	if (fUserUsageConditions != NULL) {
-		BString minimumAgeString;
-		minimumAgeString.SetToFormat("%" B_PRId8,
-			fUserUsageConditions->MinimumAge());
-		BString label = B_TRANSLATE(
-			"I am %MinimumAgeYears% years of age or older");
-		label.ReplaceAll("%MinimumAgeYears%", minimumAgeString);
-		fConfirmMinimumAgeCheckBox->SetLabel(label);
+		fConfirmMinimumAgeCheckBox->SetLabel(
+    		LocaleUtils::CreateTranslatedIAmMinimumAgeSlug(
+    			fUserUsageConditions->MinimumAge()));
 	} else {
 		fConfirmMinimumAgeCheckBox->SetLabel(PLACEHOLDER_TEXT);
 		fConfirmMinimumAgeCheckBox->SetValue(0);
@@ -1146,15 +1137,15 @@ UserLoginWindow::_CreateAlertTextFromValidationFailure(
 
 	if (property == "nickname" && message == "notunique") {
 		return B_TRANSLATE("The nickname must be unique, but the supplied "
-			"nickname is already taken.  Choose a different nickname.");
+			"nickname is already taken. Choose a different nickname.");
 	}
 
 	if (property == "nickname" && message == "required")
 		return B_TRANSLATE("The nickname is required.");
 
 	if (property == "nickname" && message == "malformed") {
-		return B_TRANSLATE("The nickname is malformed.  The nickname may only "
-			"contain digits and lower case latin characters.  The nickname "
+		return B_TRANSLATE("The nickname is malformed. The nickname may only "
+			"contain digits and lower case latin characters. The nickname "
 			"must be between four and sixteen characters in length.");
 	}
 
@@ -1189,7 +1180,7 @@ UserLoginWindow::_CreateAlertTextFromValidationFailure(
 
 	if (property == "captchaResponse" && message == "captchabadresponse") {
 		return B_TRANSLATE("The supplied response to the captcha is "
-			"incorrect.  A new captcha will be generated; try again.");
+			"incorrect. A new captcha will be generated; try again.");
 	}
 
 	BString result = B_TRANSLATE("An unexpected error '%Message%' has arisen "
@@ -1278,8 +1269,8 @@ UserLoginWindow::_CreateAccountThread(CreateUserDetail* detail)
 					BString debugString;
 					_ValidationFailuresToString(validationFailures,
 						debugString);
-					printf("create account validation issues; %s\n",
-						debugString.String());
+					HDDEBUG("create account validation issues; %s",
+						debugString.String())
 				}
 				BMessage validationFailuresMessage;
 				validationFailures.Archive(&validationFailuresMessage);
@@ -1308,8 +1299,8 @@ UserLoginWindow::_HandleCreateAccountSuccess(
 	const UserCredentials& credentials)
 {
 	BString message = B_TRANSLATE("The user %Nickname% has been successfully "
-		"created in the HaikuDepotServer system.  You can administer your user "
-		"details by using the web interface.  You are now logged-in as this "
+		"created in the HaikuDepotServer system. You can administer your user "
+		"details by using the web interface. You are now logged-in as this "
 		"new user.");
 	message.ReplaceAll("%Nickname%", credentials.Nickname());
 

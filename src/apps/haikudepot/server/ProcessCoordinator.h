@@ -1,5 +1,5 @@
 /*
- * Copyright 2018, Andrew Lindesay <apl@lindesay.co.nz>.
+ * Copyright 2018-2020, Andrew Lindesay <apl@lindesay.co.nz>.
  * All rights reserved. Distributed under the terms of the MIT License.
  */
 
@@ -9,9 +9,10 @@
 
 #include "ProcessCoordinator.h"
 
+#include <ObjectList.h>
+
 #include "AbstractProcess.h"
 #include "ProcessNode.h"
-#include "List.h"
 
 
 class ProcessCoordinator;
@@ -74,7 +75,9 @@ public:
 class ProcessCoordinator : public AbstractProcessListener {
 public:
 								ProcessCoordinator(
-									ProcessCoordinatorListener* listener);
+									const char* name,
+									ProcessCoordinatorListener* listener,
+									BMessage* message = NULL);
 	virtual						~ProcessCoordinator();
 
 			void				AddNode(ProcessNode* nodes);
@@ -91,6 +94,9 @@ public:
 
 			float				Progress();
 
+	const	BString&			Name() const;
+			BMessage*			Message() const;
+
 private:
 			bool				_IsRunning(ProcessNode* node);
 			void				_CoordinateAndCallListener();
@@ -103,11 +109,14 @@ private:
 			void				_StopSuccessorNodesToErroredOrStoppedNodes();
 			void				_StopSuccessorNodes(ProcessNode* node);
 
+private:
+			BString				fName;
 			BLocker				fLock;
-			List<ProcessNode*, true>
+			BObjectList<ProcessNode>
 								fNodes;
 			ProcessCoordinatorListener*
 								fListener;
+			BMessage*			fMessage;
 			bool				fWasStopped;
 };
 

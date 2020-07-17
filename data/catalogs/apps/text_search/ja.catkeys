@@ -1,4 +1,4 @@
-1	japanese	x-vnd.Haiku.TextSearch	1867528375
+1	japanese	x-vnd.Haiku.TextSearch	3859480651
 Please select the files you wish to have selected for you in Tracker.	GrepWindow		Tracker で選択するファイルを選んでください。
 %appname% : %path%	GrepWindow		%appname% : %path%
 Failed to start xargs program!	Grepper		xargs プログラムを開けませんでした!
@@ -19,20 +19,20 @@ Show files in Tracker	GrepWindow		ファイルの場所を表示
 Please select the files you wish to keep searching.	GrepWindow		検索したいファイルを選択してください。
 Trim to selection	GrepWindow		選択部のみ残す
 Set target…	GrepWindow		ターゲットの指定…
-TextSearch	GrepWindow		テキスト検索
 Failed to open input pipe!	Grepper		入力パイプを開けませんでした!
 Search	GrepWindow		検索開始
 Copy text to clipboard	GrepWindow		テキストをクリップボードにコピー
 Show lines	GrepWindow		行を表示
 Failed to open errors pipe!	Grepper		エラーパイプを開けませんでした!
 The unselected files will be removed from the list.	GrepWindow		選択されなかったファイルはリストから除かれます。
-Skip folders starting with a dot	GrepWindow		ドットで始まるフォルダーを無視する
+Skip folders starting with a dot	GrepWindow		ドットで始まるフォルダーを無視
 Open files in code editor	GrepWindow		コードエディターでファイルを開く
 Failed to open output pipe!	Grepper		出力パイプを開けませんでした!
 Cancel	GrepWindow		検索中止
 History	GrepWindow		検索履歴
+TextSearch	System name		テキスト検索
 File	GrepWindow		ファイル
-Case-sensitive	GrepWindow		大文字と小文字を区別する
+Case-sensitive	GrepWindow		大文字小文字を区別
 Select all	GrepWindow		すべて選択
 %APP_NAME couldn't open one or more folders.	GrepWindow		%APP_NAME は１つ以上のフォルダーを開けませんでした。
 Settings	GrepWindow		設定

@@ -80,6 +80,10 @@ public:
 protected:
 	C			*fObject;
 	DeleteFunc	fDelete;
+
+private:
+	AutoDeleter(const AutoDeleter&);
+	AutoDeleter& operator=(const AutoDeleter&);
 };
 
 
@@ -118,6 +122,11 @@ struct ArrayDeleter : AutoDeleter<C, ArrayDelete<C> >
 {
 	ArrayDeleter() : AutoDeleter<C, ArrayDelete<C> >() {}
 	ArrayDeleter(C *array) : AutoDeleter<C, ArrayDelete<C> >(array) {}
+
+	inline C& operator[](size_t index) const
+	{
+		return this->Get()[index];
+	}
 };
 
 
@@ -252,6 +261,11 @@ struct FileDescriptorCloser {
 	inline void Unset()
 	{
 		SetTo(-1);
+	}
+
+	inline int Get()
+	{
+		return fDescriptor;
 	}
 
 	inline int Detach()

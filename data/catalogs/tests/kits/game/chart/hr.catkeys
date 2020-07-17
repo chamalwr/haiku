@@ -13,7 +13,7 @@ Yellow	ChartWindow		Žuto
 Chaos	ChartWindow		Kaos
 Full screen	ChartWindow		Cijeli zaslon
 Slow motion	ChartWindow		Usporena slika
- 5% (low)	ChartWindow		  5% (nisko)
+ 5% (low)	ChartWindow		 5% (nisko)
 Fast motion	ChartWindow		Ubrzana slika
 Status	ChartWindow		Stanje
 600.0 f/s	ChartWindow		600.0 f/s

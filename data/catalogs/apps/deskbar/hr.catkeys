@@ -4,12 +4,12 @@ Sort applications by name	PreferencesWindow		Sortiraj programe po imenu
 Suspend	DeskbarMenu		Suspendiraj
 Hide clock	TimeView		Sakrij sat
 Applications	PreferencesWindow		Programi
-Time preferences…	TimeView		Osobitosti vremena...
+Time preferences…	TimeView		Osobitosti vremena…
 About Haiku	DeskbarMenu		O Haiku
 Recent documents:	PreferencesWindow		Nedavni dokumenti:
 Recent applications	DeskbarMenu		Nedavni programi
 Applications	B_USER_DESKBAR_DIRECTORY/Applications		Programi
-Find…	DeskbarMenu		Nađi...
+Find…	DeskbarMenu		Nađi…
 Show clock	Tray		Pokaži sat
 Window	PreferencesWindow		Prozor
 Defaults	PreferencesWindow		Zadano
@@ -32,7 +32,7 @@ Mount	DeskbarMenu		Montiraj
 Revert	PreferencesWindow		Vrati izvorno
 Small	PreferencesWindow		Malen
 Recent applications:	PreferencesWindow		Nedavni programi:
-Shutdown…	DeskbarMenu		Isključivanje...
+Shutdown…	DeskbarMenu		Isključivanje…
 Tracker always first	PreferencesWindow		Tracker uvijek prvi
 Preferences	B_USER_DESKBAR_DIRECTORY/Preferences		Osobitosti
 Recent folders	DeskbarMenu		Nedavne mape

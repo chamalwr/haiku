@@ -1,7 +1,6 @@
-1	english	x-vnd.Haiku-HaikuDepot	1994401258
+1	english	x-vnd.Haiku-HaikuDepot	2850854294
 Check for updates…	MainWindow		检查更新…
 Uninstall	PackageManager		卸载
-(%Votes%)	FeaturedPackagesView		（%Votes%）
 Uninstalled	PackageListView		已卸载
 Available packages	MainWindow		可用软件包
 Create account	UserLoginWindow		创建账号
@@ -14,8 +13,8 @@ No user ratings available.	PackageInfoView		未发现用户评分。
 Rating	PackageListView		评级
 Does not start	RatePackageWindow		未开始
 Show	MainWindow		显示
-Not specified	RatePackageWindow		未指定
 Unstable but usable	RatePackageWindow		不稳定，但是可用
+Not specified	RatePackageWindow		未指定
 Active	PackageListView		激活
 Login or Create account	MainWindow		登录或者新建账户
 <Package contents not available for remote packages>	PackageContentsView		<软件包内容对于远程包不可用>
@@ -28,7 +27,6 @@ Quit HaikuDepot	App		退出 HaikuDepot
 Category	FilterView		分类
 User rating	RatePackageWindow		用户评分
 Installed packages	MainWindow		已安装软件包
-Other users can see this rating	RatePackageWindow		其他用户可以看到该评级
 Stable	RatePackageWindow		稳定
 Fatal error	PackageManager		严重错误
 Package action failed	PackageInfoView		软件包操作失败

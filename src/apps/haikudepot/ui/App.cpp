@@ -1,6 +1,6 @@
 /*
  * Copyright 2013, Stephan Aßmus <superstippi@gmx.de>.
- * Copyright 2017-2018, Andrew Lindesay <apl@lindesay.co.nz>.
+ * Copyright 2017-2020, Andrew Lindesay <apl@lindesay.co.nz>.
  * All rights reserved. Distributed under the terms of the MIT License.
  */
 
@@ -29,6 +29,7 @@
 #include "ServerHelper.h"
 #include "ServerSettings.h"
 #include "ScreenshotWindow.h"
+#include "StorageUtils.h"
 
 
 #undef B_TRANSLATION_CONTEXT
@@ -42,7 +43,9 @@ App::App()
 	fWindowCount(0),
 	fSettingsRead(false)
 {
+	srand((unsigned int) time(NULL));
 	_CheckPackageDaemonRuns();
+	fIsFirstRun = _CheckIsFirstRun();
 }
 
 
@@ -83,8 +86,21 @@ App::ReadyToRun()
 	BMessage settings;
 	_LoadSettings(settings);
 
+	if (!_CheckTestFile())
+	{
+		Quit();
+		return;
+	}
+
 	fMainWindow = new MainWindow(settings);
 	_ShowWindow(fMainWindow);
+}
+
+
+bool
+App::IsFirstRun()
+{
+	return fIsFirstRun;
 }
 
 
@@ -506,3 +522,62 @@ App::_LaunchPackageDaemon()
 	return true;
 }
 
+
+/*static*/ bool
+App::_CheckIsFirstRun()
+{
+	BPath testFilePath;
+	bool exists = false;
+	status_t status = StorageUtils::LocalWorkingFilesPath("testfile.txt",
+		testFilePath, false);
+	if (status != B_OK) {
+		HDERROR("unable to establish the location of the test file")
+	}
+	else
+		status = StorageUtils::ExistsObject(testFilePath, &exists, NULL, NULL);
+	return !exists;
+}
+
+
+/*! \brief Checks to ensure that a working file is able to be written.
+    \return false if the startup should be stopped and the application should
+            quit.
+*/
+
+bool
+App::_CheckTestFile()
+{
+	BPath testFilePath;
+	BString pathDescription = "???";
+	status_t result = StorageUtils::LocalWorkingFilesPath("testfile.txt",
+		testFilePath, false);
+
+	if (result == B_OK) {
+		pathDescription = testFilePath.Path();
+		result = StorageUtils::CheckCanWriteTo(testFilePath);
+	}
+
+	if (result != B_OK) {
+		StorageUtils::SetWorkingFilesUnavailable();
+
+		BString msg = B_TRANSLATE("This application writes and reads some"
+			" working files on your computer in order to function. It appears"
+			" that there are problems writing a test file at [%TestFilePath%]."
+			" Check that there are no issues with your local disk or"
+			" permissions that might prevent this application from writing"
+			" files into that directory location. You may choose to acknowledge"
+			" this problem and continue, but some functionality may be"
+			" disabled.");
+		msg.ReplaceAll("%TestFilePath%", pathDescription);
+
+		BAlert* alert = new(std::nothrow) BAlert(
+			B_TRANSLATE("Problem with working files"),
+			msg,
+			B_TRANSLATE("Quit"), B_TRANSLATE("Continue"));
+
+		if (alert->Go() == 0)
+			return false;
+	}
+
+	return true;
+}

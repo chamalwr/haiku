@@ -27,7 +27,7 @@ Save changes to this signature?	Mail		İmzaya yapılan değişiklikler kaydedils
 Save attachment…	Mail		Eki kaydet…
 Paste	Mail		Yapıştır
 E-mail draft could not be saved!	Mail		E-posta taslağı kaydedilemedi!
-Don't send	Mail		Gönderme!
+Don't send	Mail		Gönderme
 sent	B_USER_DIRECTORY/mail/sent		gönderilen
 Only files can be added as attachments.	Mail		Yalnızca dosyalar eklenebilir.
 Close	Mail		Kapat
@@ -165,5 +165,5 @@ Spam	Mail		İstenmeyen
 Couldn't open this signature. Sorry.	Mail		Üzgünüm, bu imza açılamadı.
 Revert	Mail		Eski haline döndür
 Unknown	Mail		Bilinmeyen
-Increase quote level	Mail		Alıntı düzeyini arttır
+Increase quote level	Mail		Alıntı düzeyini artır
 Add enclosure…	Mail		İlişik ekle…

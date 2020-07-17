@@ -1,0 +1,48 @@
+1	swedish	x-vnd.Haiku-Input	1910113385
+Defaults	InputMouse		Förvalt
+Scrolling	TouchpadPrefView		Rulla
+Long	KeyboardView		Lång
+Normal	SettingsView		Normal
+Cancel	TouchpadPrefView		Avbryt
+Slow	TouchpadPrefView		Långsam
+Warp	SettingsView		Varp
+Device List	InputWindow		Enhetslista
+Double-click speed	SettingsView		Dubbelklicks hastighet
+5-Button	SettingsView		5-Knappar
+Typing test area	KeyboardView		Test skrivnings område
+Fast	KeyboardView		Snabb
+Please confirm	TouchpadPrefView		Var god bekräfta
+Mouse speed	SettingsView		Mushastighet
+Horizontal scrolling	TouchpadPrefView		Horisontell rullning
+Input	System name		Inmatning
+Short	KeyboardView		Kort
+Revert	InputMouse		Återställ
+Slow	KeyboardView		Långsam
+2-Button	SettingsView		2-Knappar
+Click to focus and raise	SettingsView		Klicka för att fokusera och höja
+Vertical	TouchpadPrefView		Vertikal
+Double-click test area	SettingsView		Dubbelklick testområde
+Focus follows mouse	SettingsView		Fokus följer musen
+Focus mode:	SettingsView		Fokuserat läge:
+Revert	TouchpadPrefView		Återställ
+4-Button	SettingsView		4-Knappa
+Instant warp	SettingsView		Omedelbar varp
+Revert	InputKeyboard		Återställ
+Mouse type:	SettingsView		Mus typ:
+Off	TouchpadPrefView		Av
+Fast	TouchpadPrefView		Snabb
+Click to focus	SettingsView		Klicka för att fokusera
+Acceleration	TouchpadPrefView		Acceleration
+Accept first click	SettingsView		Acceptera vid första klickningen
+OK	TouchpadPrefView		OK
+Delay until key repeat	KeyboardView		Fördröjning tills upprepning av tangent
+Two finger scrolling	TouchpadPrefView		Rulla med två fingrar
+The new scroll area is very large and may impede normal mouse operation. Do you really want to change it?	TouchpadPrefView		Den nya rullnings området är stort och kommer påverka vanliga mus operationer. Vill du verkligen ändra den?
+Mouse acceleration	SettingsView		Mus acceleration
+Defaults	TouchpadPrefView		Förvalt
+High	TouchpadPrefView		Hög
+1-Button	SettingsView		1-Knapp
+Defaults	InputKeyboard		Standard
+Key repeat rate	KeyboardView		Tangent upprepningsfrekvens
+Horizontal	TouchpadPrefView		Horisontell
+3-Button	SettingsView		3-Knappar

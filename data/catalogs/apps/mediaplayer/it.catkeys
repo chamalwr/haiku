@@ -1,11 +1,11 @@
-1	italian	x-vnd.Haiku-MediaPlayer	1313616492
+1	italian	x-vnd.Haiku-MediaPlayer	1961774506
 Remove Entry into Trash	MediaPlayer-RemovePLItemsCmd		Sposta elemento nel Cestino
 Close	MediaPlayer-PlaylistWindow		Chiudi
 Volume of background clips	MediaPlayer-SettingsWindow		Volume delle clip di sottofondo
 Use hardware video overlays if available	MediaPlayer-SettingsWindow		Usa gli overlay video hardware, se disponibili
 Audio	MediaPlayer-InfoWin		Audio
 Subtitle placement:	MediaPlayer-SettingsWindow		Posizione dei sottotitoli:
-MediaPlayer	System name		MediaPlayer
+MediaPlayer	System name		Lettore Multimediale
 Audio track	MediaPlayer-Main		Traccia audio
 Muted	MediaPlayer-SettingsWindow		Muto
 OK	MediaPlayer-RemovePLItemsCmd		OK
@@ -35,6 +35,7 @@ Full volume	MediaPlayer-SettingsWindow		Volume massimo
 Start media server	MediaPlayer-Main		Avvia il media server
 It appears the media server is not running.\nWould you like to start it ?	MediaPlayer-Main		Sembra che il media server non sia in esecuzione.\nAvviarlo?
 Location	MediaPlayer-InfoWin		Luogo
+Opening '%s'.	MediaPlayer-Main		Apertura di '%s' in corso.
 Medium	MediaPlayer-SettingsWindow		Medi
 Play mode	MediaPlayer-SettingsWindow		Modalità di riproduzione
 Playlist	MediaPlayer-PlaylistWindow		Elenco di riproduzione
@@ -44,7 +45,7 @@ Close	MediaPlayer-Main		Chiudi
 Save error	MediaPlayer-PlaylistWindow		Errore durante il salvataggio
 Attributes	MediaPlayer-Main		Attributi
 Bottom of screen	MediaPlayer-SettingsWindow		Parte inferiore dello schermo
-MediaPlayer settings	MediaPlayer-SettingsWindow		Impostazioni di MediaPlayer
+MediaPlayer settings	MediaPlayer-SettingsWindow		Impostazioni di Lettore Multimediale
 Copyright	MediaPlayer-InfoWin		Copyright
 Invalid URL inserted!	MediaPlayer-NetworkStream		Immesso URL invalido!
 Aspect ratio	MediaPlayer-Main		Proporzioni

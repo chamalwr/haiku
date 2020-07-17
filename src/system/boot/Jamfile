@@ -101,6 +101,18 @@ rule BuildEFILoader {
 	local bootLoader = $(2) ;
 
 	Depends $(efiLoader) : $(bootLoader) ;
+
+	switch $(TARGET_ARCH) {
+		case x86_64 :
+			OUTPUT_TARGET on $(efiLoader) = efi-app-x86_64 ;
+		case arm :
+			OUTPUT_TARGET on $(efiLoader) = binary ;
+		case arm64 :
+			OUTPUT_TARGET on $(efiLoader) = binary ;
+		case * :
+			Exit "Currently unsupported arch:" $(TARGET_ARCH) ;
+	}
+
 	MakeLocateDebug $(efiLoader) ;
 }
 
@@ -109,8 +121,7 @@ actions BuildEFILoader
 	rm -f $(1)
 	$(TARGET_OBJCOPY_$(TARGET_PACKAGING_ARCH)) -j .text -j .sdata -j .data \
 		-j .dynamic -j .dynsym -j .rel -j .rela -j .reloc -j .dynstr \
-		--input-target=efi-app-x86_64 --output-target=efi-app-x86_64 \
-		$(2) $(1)
+		--output-target=$(OUTPUT_TARGET) $(2) $(1)
 }
 
 
@@ -132,22 +143,23 @@ actions BuildUImage1
     mkimage $(MKIMAGE_ARGS) -d $(>:J=$(colon)) $(<)
 }
 
-rule BuildUImageScript script : content
+#
+# Given a txt, generate a binary u-boot script
+#
+rule BuildUImageScript script : source
 {
-    LocalClean clean : $(script) ;
-    SCRIPTCONTENT on $(script) = $(content) ;
-    SCRIPTNAME on $(script) = $(script) ;
-    FAKEOS on $(script) = "linux" ;
-    BuildUImageScript1 $(script) : $(content) ;
+	Depends $(script) : $(source) ;
+	LocalClean clean : $(script) ;
+	SCRIPTNAME on $(script) = $(script) ;
+	FAKEOS on $(script) = "linux" ;
+	BuildUImageScript1 $(script) : $(source) ;
 }
 
 actions BuildUImageScript1
 {
-    rm -f $(<) $(<).txt
-    echo '$(SCRIPTCONTENT)' > $(<).txt
-    mkimage -A $(TARGET_ARCH) -O $(FAKEOS) -T script -C none -n $(SCRIPTNAME) \
-        -d $(<).txt $(<)
-    rm -f $(<).txt
+	rm -f $(1)
+	mkimage -A $(TARGET_ARCH) -O $(FAKEOS) -T script -C none -n $(SCRIPTNAME) \
+		-d $(2) $(1)
 }
 
 # the bootsector on haiku_loader.amiga_m68k must be checksummed
@@ -274,6 +286,7 @@ for platform in [ MultiBootSubDirSetup ] {
 		# efi loader needs to be shared.
 		if $(TARGET_BOOT_PLATFORM) = efi {
 			ldflags += -shared ;
+			ldflags += -Map=efi.map ;
 		}
 
 		BootLd boot_loader_$(platform:G=) :
@@ -308,6 +321,14 @@ for platform in [ MultiBootSubDirSetup ] {
 		switch $(TARGET_BOOT_PLATFORM) {
 			case efi :
 				BuildEFILoader haiku_loader.$(TARGET_BOOT_PLATFORM) : boot_loader_$(TARGET_BOOT_PLATFORM) ;
+				if $(TARGET_ARCH) = arm || $(TARGET_ARCH) = arm64 {
+					# These platforms sometimes need u-boot to get them going
+					BuildUImage haiku-floppyboot.tgz.$(TARGET_BOOT_PLATFORM) : haiku-floppyboot.tgz :
+						-A $(TARGET_ARCH) -O linux -T ramdisk -C none
+						-n 'Haiku $(TARGET_KERNEL_ARCH) floppyboot' ;
+					BuildUImageScript boot.scr
+						: [ FDirName $(HAIKU_TOP) data boot u-boot boot-$(TARGET_ARCH).scr.txt ] ;
+				}
 
 			case bios_ia32 :
 				BuildBiosLoader haiku_loader.$(TARGET_BOOT_PLATFORM) : boot_loader_$(TARGET_BOOT_PLATFORM) ;
@@ -328,7 +349,8 @@ for platform in [ MultiBootSubDirSetup ] {
 				BuildUImage haiku-floppyboot.tgz.$(TARGET_BOOT_PLATFORM) : haiku-floppyboot.tgz :
 					-A $(TARGET_ARCH) -O linux -T ramdisk -C none
 					-n 'Haiku $(TARGET_KERNEL_ARCH) floppyboot' ;
-				BuildUImageScript boot.scr : $(HAIKU_MMC_UBOOT_SCRIPT) ;
+				BuildUImageScript boot.scr
+					: [ FDirName $(HAIKU_TOP) data boot u-boot boot-$(TARGET_ARCH).scr.txt ] ;
 
 			case amiga_m68k :
 				BuildBiosLoader haiku_loader.$(TARGET_BOOT_PLATFORM) : boot_loader_$(TARGET_BOOT_PLATFORM) ;

@@ -1,6 +1,5 @@
-1	portuguese (brazil)	x-vnd.Haiku-HaikuDepot	1859905157
+1	portuguese (brazil)	x-vnd.Haiku-HaikuDepot	1649805476
 Uninstall	PackageManager		Desinstalar
-(%Votes%)	FeaturedPackagesView		(%Votes%)
 Uninstalled	PackageListView		Não instalado
 Available packages	MainWindow		Pacotes disponíveis
 Create account	UserLoginWindow		Criar conta
@@ -13,8 +12,8 @@ No user ratings available.	PackageInfoView		Nenhuma avaliação de usuário disp
 Rating	PackageListView		Avaliação
 Does not start	RatePackageWindow		Não iniciar
 Show	MainWindow		Exibir
-Not specified	RatePackageWindow		Não especificado
 Unstable but usable	RatePackageWindow		Instável mas utilizável
+Not specified	RatePackageWindow		Não especificado
 Active	PackageListView		Ativo
 Login or Create account	MainWindow		Autenticar-se ou Criar conta
 <Package contents not available for remote packages>	PackageContentsView		<Conteúdos de pacote não disponíveis para pacotes remotos>
@@ -26,7 +25,6 @@ Rate %Package%	RatePackageWindow		Avaliar %Package%
 Quit HaikuDepot	App		Fechar o Depósito Haiku
 Category	FilterView		Categoria
 Installed packages	MainWindow		Pacotes instalados
-Other users can see this rating	RatePackageWindow		Outros usuários podem ver esta avaliação
 Stable	RatePackageWindow		Estável
 Fatal error	PackageManager		Erro fatal
 Package action failed	PackageInfoView		Ação do pacote falhou
@@ -49,7 +47,6 @@ Start package daemon	App		Iniciar daemon de pacote
 The package action could not be scheduled: %Error%	PackageInfoView		A ação do pacote não pode ser agendada: %Error%
 Cancel	RatePackageWindow		Cancelar
 Inactive	PackageListView		Inativo
-{0, plural, one{# item} other{# items}}	PackageListView		{0, plural, um{# item} outro{# itens}}
 OK	PackageInfoView		OK
 Downloading:	PackageInfoView		Baixando:
 Success	UserLoginWindow		Sucesso

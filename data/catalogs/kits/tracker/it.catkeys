@@ -1,4 +1,4 @@
-1	italian	x-vnd.Haiku-libtracker	1551358313
+1	italian	x-vnd.Haiku-libtracker	3510417168
 Created	ContainerWindow		Creato
 Icon	AttributesView		Icona
 Open and make preferred	OpenWithWindow		Apri e rendi preferito
@@ -21,7 +21,6 @@ contains	FindPanel		contiene
 Open	FilePanelPriv		Apri
 Bitmap icon	AttributesView		Icona bitmap
 You can't replace a folder with one of its sub-folders.	FSUtils		Non è possibile sostituire una cartella con una delle sue sotto-cartelle.
-<%ld dates>	AttributesView		<%ld date>
 Select…	VirtualDirectoryWindow		Seleziona…
 Name	Default Query Columns		Nome
 Unmount	ContainerWindow		Smonta
@@ -38,9 +37,10 @@ Type	AttributesView		Tipo
 Prompt	FSUtils		Richiedi
 Error in regular expression:\n\n'%errstring'	PoseView		Errore nell'espressione regolare:\n\n'%errstring'
 Small bitmap icon	AttributesView		Icona bitmap ridotta
-Would you like to find a suitable application to open the file?	FSUtils		Cercare un'applicazione adatta per aprire il file?
+Would you like to find a suitable application to open the file?	FSUtils		Vuoi cercare un'applicazione adatta per aprire il file?
 64 x 64	ContainerWindow		64 × 64
 You cannot replace a folder or a symbolic link with a file.	FSUtils		Non è possibile sostituire una cartella o un collegamento simbolico con un file.
+{0, plural, other{<# dates>}}	AttributesView		{0, plural, other{<# date>}}
 Trailing \\.	libtracker		\\ alla fine.
 At %func \nfind_directory() failed. \nReason: %error	Email Query Columns		Su %func\nErrore su find_directory().\nMotivo: %error
 Handles any file	OpenWithWindow		Gestisce qualsiasi file
@@ -50,7 +50,6 @@ Preparing to move items…	StatusWindow		Preparazione allo spostamento degli ele
 Size	ContainerWindow		Dimensione
 Select…	ContainerWindow		Seleziona…
 Show shared volumes on Desktop	SettingsView		Mostra volumi condivisi sulla Scrivania
-<%ld values>	AttributesView		<%ld valori>
 Size	PoseView		Dimensione
 matches wildcard expression	SelectionWindow		espressione wildcard
 96 x 96	ContainerWindow		96 x 96
@@ -94,6 +93,7 @@ Atom	AttributesView		Atom
 %SizeProcessed of %TotalSize, %BytesPerSecond/s	StatusWindow		%SizeProcessed di %TotalSize, %BytesPerSecond/s
 Preparing to restore items…	StatusWindow		Preparazione al ripristino degli elementi…
 Mount	ContainerWindow		Monta
+{0, plural, other{<# rectangles>}}	AttributesView		{0, plural, other{<# rettangoli>}}
 Desktop	B_DESKTOP_DIRECTORY		Scrivania
 Corrupted pointers.	libtracker		Puntatori corrotti.
 Link to:	InfoWindow		Collegamento a:
@@ -111,6 +111,7 @@ Edit templates…	TemplatesMenu		Modifica modelli…
 {0, plural, one{# byte} other{# bytes}}	FSUtils		{0, plural, one{# byte} other{# byte}}
 8-bit integer	AttributesView		Intero a 8 bit
 8-bit unsigned integer	AttributesView		Intero senza segno a 8 bit
+%s info	InfoWindow	window title	Informazioni su %s
 %capacity (%used used -- %free free)	InfoWindow		%capacity (%used usato -- %free libero)
 Hide dotfiles	SettingsView		Nascondi i file .*
 Trash	Model		Cestino
@@ -124,7 +125,7 @@ List folders first	SettingsView		Elenca prima le cartelle
 Find	FSUtils		Trova
 An item named \"%name\" already exists in this folder. Would you like to replace it with the symbolic link you are creating?	FSUtils		Esiste già in questa cartella un elemento chiamato \"%name\". Vuoi sostituirlo con il collegamento simbolico che stai creando?
 List view	ContainerWindow		Vista a liste
-Temporary	FindPanel		Temporaneo
+Temporary	FindPanel		Temporanea
 Modified	QueryPoseView		Modificato
 Create relative link	ContainerWindow		Crea collegamenti relativi
 Owner	FilePermissionsView		Proprietario
@@ -132,10 +133,10 @@ Cancel	FSClipBoard		Annulla
 Modified	PoseView		Modificato
 Move to Trash	ContainerWindow		Sposta nel Cestino
 All files and folders	FindPanel		Tutti i file e cartelle
-Add-ons	ContainerWindow		Componenti aggiuntivi
+Add-ons	ContainerWindow		Componenti Aggiuntivi
 Too many parenthesis.	libtracker		Troppe parentesi.
 Increase size	ContainerWindow		Aumenta dimensioni
-\nShould this be fixed?	FSUtils		\nQuesto dovrebbe essere sistemato?
+\nShould this be fixed?	FSUtils		\nCorreggo il problema?
 URL	Bookmark Query Columns		URL
 Move	PoseView		Sposta
 Floating point number	AttributesView		Numero in virgola mobile
@@ -158,7 +159,7 @@ The target disk does not support creating links.	FSUtils		Il disco non supporta 
 develop	B_SYSTEM_DEVELOP_DIRECTORY		sviluppo
 64-bit integer	AttributesView		Intero a 64 bit
 Cut more	ContainerWindow		Taglia di più
-The Tracker must be running to see Info windows.	PoseView		Il Tracker deve essere aperto per vedere le finestre di Informazione.
+The Tracker must be running to see Info windows.	PoseView		Il Tracker deve essere aperto per vedere le finestre di informazioni.
 Tracker preferences	TrackerSettingsWindow		Preferenze del Tracker
 Read	FilePermissionsView		Lettura
 There was an error writing the attribute.	WidgetAttributeText		Si è presentato un errore nella scrittura dell'attributo.
@@ -182,6 +183,7 @@ MIME Type	AttributesView		Tipo MIME
 Show folder location in title tab	SettingsView		Mostra posizione cartella nella barra del titolo
 There was an error resolving the link.	Tracker		Si è presentato un errore nel risolvere il collegamento.
 There was a problem trying to save in the folder you specified. Please try another one.	FilePanelPriv		Si è presentato un problema durante il salvataggio della cartella specificata. Provarne un altra.
+{0, plural, other{<# values>}}	AttributesView		{0, plural, other{<# valori>}}
 Desktop	TrackerSettingsWindow		Scrivania
 Nested *?+.	libtracker		Annidamento tra *?+.
 Move	FSUtils	button label	Sposta
@@ -195,7 +197,6 @@ contains	SelectionWindow		contiene
 Replace	FilePanelPriv		Sostituisci
 is not	FindPanel		non è
 Icon view	DeskWindow		Visualizza icone
-<%ld rectangles>	AttributesView		<%ld rettangoli>
 Mount settings…	ContainerWindow		Impostazioni di mount
 Keywords	Bookmark Query Columns		Parole chiave
 Media parameter web	AttributesView		Parametro multimediale web
@@ -207,7 +208,7 @@ Location	ContainerWindow		Posizione
 Warning space color	SettingsView		Colore area di avvertimento
 Skip	FSUtils		Salta
 Text list	AttributesView		Lista di testo
-Used space color	SettingsView		Colore della spazio utilizzato
+Used space color	SettingsView		Colore spazio utilizzato
 Cancel	FSUtils		Annulla
 Original name	ContainerWindow		Nome originale
 Unknown	WidgetAttributeText		Sconosciuto
@@ -262,6 +263,7 @@ ends with	SelectionWindow		finisce con
 Open	OpenWithWindow		Apri
 You must have at least one attribute showing.	PoseView		Non si può avere meno di un attributo visibile.
 Cut	FilePanelPriv		Taglia
+Finish: after several years	StatusWindow		Completato: dopo diversi anni
 Favorites	FilePanelPriv		Preferiti
 Point	AttributesView		Punto
 home	B_USER_DIRECTORY		home
@@ -286,6 +288,7 @@ Error creating link to \"%name\".	FSUtils		Errore nella creazione del collegamen
 Unknown	FilePermissionsView		Sconosciuto
 Paste links	ContainerWindow		Incolla collegamenti
 Restoring: 	StatusWindow		Ripristino: 
+The Tracker must be running to set the default printer.	PoseView		Il Tracker deve essere in esecuzione per impostare la stampante predefinita.
 calculating…	InfoWindow		calcolo in corso...
 Preferred for file	OpenWithWindow		Preferito per file
 OK	AutoMounterSettings		OK
@@ -306,7 +309,6 @@ Delete	FSUtils		Elimina
 Edit name	ContainerWindow		Modifica nome
 Could not open \"%document\" (Missing symbol: %symbol). \n	FSUtils		Non è stato possibile aprire \"%document\" (Simbolo mancante: %symbol). \n
 ASCII Text	AttributesView		Testo ASCII
-More options	FindPanel		Altre opzioni
 Atom reference	AttributesView		Riferimento Atom
 config	B_USER_CONFIG_DIRECTORY		configurazione
 Error moving \"%name\".	FSUtils		Errore durante lo spostamento di \"%name\".
@@ -319,7 +321,7 @@ starts with	SelectionWindow		incomincia con
 Any	AttributesView		Qualsiasi
 New	DeskWindow		Nuovo
 Invert	SelectionWindow		Inverti
-Would you like to find some other suitable application?	FSUtils		Vuoi cercare qualche altra applicazione adatta?
+Would you like to find some other suitable application?	FSUtils		Vuoi cercare un'applicazione adatta?
 *+? operand may be empty.	libtracker		operando *+? potrebbe essere vuoto.
 (unknown)	AttributesView		(sconosciuto)
 Recent folders	FavoritesMenu		Cartelle recenti
@@ -327,7 +329,7 @@ Signed memory size	AttributesView		Dimemsione memoria con segno
 The specified name is illegal. Please choose another name.	FilePanelPriv		Il nome specificato è illegale. Sceglierne un altro.
 of %items	StatusWindow		di %items
 less than	FindPanel		meno di
-Error copying file \"%name\":\n\t%error\n\nWould you like to continue?	FSUtils		Errore durante la copia del file \"%name\":\n\t%error\n\nVolete continuare?
+Error copying file \"%name\":\n\t%error\n\nWould you like to continue?	FSUtils		Errore durante la copia del file \"%name\":\n\t%error\n\nVuoi continuare?
 Creating links: 	StatusWindow		Creazione collegamenti: 
 Could not open \"%document\" with application \"%app\" (%error). 	FSUtils		Non è stato possibile aprire \"%document\" con l'applicazione \"%app\" (%error). 
 Create %s clipping	PoseView		Crea l'appunto %s
@@ -340,15 +342,14 @@ Make active printer	ContainerWindow		Rendi la stampante attiva
 Copy to	ContainerWindow		Copia in
 Name	SelectionWindow		Nome
 by attribute	FindPanel		per attributo
- info	InfoWindow		 informazioni
 Write	FilePermissionsView		Scrittura
-<%ld bytes of data>	AttributesView		<%ld byte di dati>
 If you alter the system folder or its contents, you won't be able to boot %osName!\n\nAre you sure you want to do this?\n\nTo alter the system folder or its contents anyway, hold down the Shift key and click \"I know what I'm doing\".	FSUtils		Se modifichi la cartella di sistema o il suo contenuto, non sarai più in grado di avviare %osName!\n\nSei sicuro di voler procedere?\n\nPer modificare la cartella di sistema o il suo contenuto, tieni premuto il tasto Maiusc e clicca su \"So quello che faccio\".
 Save	FilePanelPriv		Salva
 Could not open \"%document\" with application \"%app\" (Missing libraries: %library). \n	FSUtils		Non è stato possibile aprire \"%document\" con l'applicazione \"%app\" (Librerie mancanti: %library). \n
 Finish: %time	StatusWindow		Fine: %time
 Messenger	AttributesView		Messenger
 after	FindPanel		dopo
+{0, plural, one{<# data byte>} other{<# bytes of data>}}	AttributesView		{0, plural, one{<# byte di dati>} other{<# byte di dati>}}
 Version	OpenWithWindow		Versione
 Some of the selected items cannot be moved to the Trash. Would you like to delete them instead? (This operation cannot be reverted.)	PoseView		Alcuni degli elementi selezionati non possono essere spostati nel Cestino. Si desidera eliminarli definitivamente? (Gli elementi non potranno essere recuperati.)
 Add printer…	ContainerWindow		Aggiungi stampante…
@@ -395,8 +396,7 @@ Proceed	FSUtils		Procedi
 Edit favorites…	FilePanelPriv		Modifica preferiti…
 You can't move a folder into itself or any of its own sub-folders.	FSUtils		Non è possibile spostare una cartella dentro a se stessa o a qualsiasi altra delle sue sotto-cartelle
 New	ContainerWindow		Nuovo
-Fewer options	FindPanel		Meno opzioni
-You must drop items on one of the disk icons in the \"Disks\" window.	FSClipBoard		Trascinare gli elementi su una delle icone dei dischi nella finestra \"Disks\".
+You must drop items on one of the disk icons in the \"Disks\" window.	FSClipBoard		Trascinare gli elementi su una delle icone dei dischi nella finestra \"Dischi\".
 If you alter %target, %osName may not behave properly!\n\nAre you sure you want to do this?	FSUtils		Se modifichi %target, %osName potrebbe non fuinzionare correttamente!\n\nSei sicuro di voler procedere?
 Sorry, you can't copy items to the Trash.	FSClipBoard		Non è possibile copiare elementi nel Cestino.
 Some items already exist in this folder with the same names as the items you are %verb.\n \nWould you like to replace them with the ones you are %verb or be prompted for each one?	FSUtils		Alcuni elementi esistono già in questa cartella con gli stessi nomi di quelli che si stanno %verb.\n \nSostituirli con quelli che si stanno %verb o richiedere per ciascuno di essi?
@@ -448,7 +448,6 @@ Rename	FSUtils	button label	Rinomina
 Clean up all	ContainerWindow		Ordina tutte le icone
 Add current folder	FilePanelPriv		Aggiungi cartella corrente
 Description:	InfoWindow		Descizione:
-The Tracker must be running to see set the default printer.	PoseView		Il Tracker deve essere aperto per poter impostare la stampante principale.
 Are you sure you want to delete the selected item(s)? This operation cannot be reverted.	FSUtils		Sei sicuro di voler eliminare gli elementi selezionati? Questa operazione non può essere annullata.
 Grayscale picture	AttributesView		Immagine in scala di grigio
 Mount	DeskWindow		Monta
@@ -456,6 +455,7 @@ ends with	FindPanel		finisce con
 Show Disks icon	SettingsView		Mostra icona dischi
 Outline selection rectangle only	SettingsView		Solo il rettangolo di selezione esterno
 by formula	FindPanel		per formula
+Resize to fit	VirtualDirectoryWindow		Ridimensiona e adatta
 Move to Trash	FilePanelPriv		Sposta nel Cestino
 is	FindPanel		è
 If you rename the system folder or its contents, you won't be able to boot %osName!\n\nAre you sure you want to do this?\n\nTo rename the system folder or its contents anyway, hold down the Shift key and click \"Rename\".	FSUtils		Se rinomini la cartella di sistema o il suo contenuto, non sarai più in grado di avviare %osName!\n\nSei sicuro di voler procedere?\n\nPer rinominare la cartella di sistema o il suo contenuto, tieni premuto il tasto Maiusc e clicca su \"Rinomina\".
@@ -466,7 +466,7 @@ New folder %ld	FSUtils		Nuova cartella %ld
 64 x 64	DeskWindow		64 × 64
 \"%name\" is a legacy executable. Please obtain an updated version or recompile the application.	FSUtils		\"%name\" usa un formato obsoleto di file eseguibile. Si prega di utilizzare una versione aggiornata dell'applicazione o di compilarla nuovamente.
 Only the boot disk	AutoMounterSettings		Solo il disco di boot
-That name is already taken. Please type another one.	WidgetAttributeText		Quel nome è già utilizzato. Scriverne un altro.
+That name is already taken. Please type another one.	WidgetAttributeText		Quel nome è già utilizzato. Per favore, scegline un altro.
 Message	AttributesView		Messaggio
 Modified	Default Query Columns		Modificato
 Default application	InfoWindow		Applicazione predefinita
@@ -492,14 +492,14 @@ The file \"%name\" already exists in the specified folder. Do you want to replac
 You must drop items on one of the disk icons in the \"Disks\" window.	PoseView		Devi trascinare e lasciare gli elementi su una delle icone del disco nella finestra \"Disks\".
 Version:	InfoWindow		Versione:
 OK	PoseView		OK
-Add-ons	DeskWindow		Componenti aggiuntivi
+Add-ons	DeskWindow		Componenti Aggiuntivi
 Are you sure you want to move or copy the selected item(s) to this folder?	PoseView		Sei sicuro di voler spostare o copiare gli elementi selezionati in questa cartella?
 Find	FindPanel		Trova
 Empty folder	NavMenu		Cartella vuota
 Defaults	TrackerSettingsWindow		Predefiniti
 Sorry, there is not enough free space on the destination volume to copy the selection.	FSUtils		Spiacenti, non c'è abbastanza spazio libero sul volume di destinazione per copiare gli elementi selezionati.
 True-color picture	AttributesView		Immagine True-color
-Add-ons	FilePanelPriv		Componenti aggiuntivi
+Add-ons	FilePanelPriv		Componenti Aggiuntivi
 96 x 96	DeskWindow		96 x 96
 Empty folder	SlowContextPopup		Cartella vuota
 Alignment	AttributesView		Allineamento

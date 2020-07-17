@@ -1,5 +1,5 @@
 1	turkish	x-vnd.Haiku-ShowImage	3998703664
-Use as background…	Menus		Arkaplan olarak kullan…
+Use as background…	Menus		Arka plan olarak kullan…
 File	Menus		Dosya
 Slide delay	Menus		Slayt gecikmesi
 Selection mode	Menus		Seçim kipi
@@ -45,7 +45,7 @@ Progress monitor	ProgressWindow		İlerleme monitörü
 Last page	Menus		Son sayfa
 Stretch to window	Menus		Pencereye gerdir
 Previous file	Menus		Önceki dosya
-ShowImage	System name		ShowImage
+ShowImage	System name		Resim Görüntüleyici
 Slide show	Menus		Slayt gösterisi
 Fit image to page	PrintOptionsWindow		Görseli sayfaya sığdır
 Flip top to bottom	Menus		Üstten alta doğru ters çevir

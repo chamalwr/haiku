@@ -1,92 +1,99 @@
-1	croatian	x-vnd.Haiku-HaikuDepot	1748292554
-Name	PackageListView		Ime
-Close	RatePackageWindow		Zatvori
-Changelog	PackageInfoView		Dnevnik promjena
-The passwords do not match.	UserLoginWindow		Lozinke se ne podudaraju.
-Log in…	MainWindow		Prijava...
-Rate %Package%	RatePackageWindow		Ocijeni %paket%
-Stability:	RatePackageWindow		Stabilnost:
-Click a package to view information	PackageInfoView		Klikni na paket da vidiš informacije
-Other users can see this rating	RatePackageWindow		Ostali korisnici mogu vidjeti ovo ocjenjivanje
-Stability	RatePackageWindow		Stabilnost
-Description	PackageListView		Opis
-Install	PackageManager		Instaliraj
-Source packages	MainWindow		 Izvorni paketi
-Authentication failed. The user does not exist or the wrong password was supplied.	UserLoginWindow		Neuspjela ovjera. Korisnik ne postoji ili je isporučena kriva lozinka.
-Account created successfully. You can now rate packages and do other useful things.	UserLoginWindow		Račun je uspješno napravljen. Sada možete ocijeniti pakete i raditi ostale korisne stvari.
-Tools	MainWindow		Alati
-Close	UserLoginWindow		Zatvori
-Rate package…	PackageInfoView		Ocijeni paket...
-Category	FilterView		Kategorija
+1	croatian	x-vnd.Haiku-HaikuDepot	4042118302
+Repository update error	LocalRepositoryUpdateProcess		Greška pri ažuriranju repozitorija
+An error occurred while refreshing the repository: %error%	LocalRepositoryUpdateProcess		Došlo je do greške prilikom osvježavanja repozitorija: %error%
+User Created	UserLoginWindow		Korisnik je napravljen
+Check for updates…	MainWindow		Provjeri za ažuriranja...
 Uninstall	PackageManager		Deinstaliraj
-An error occurred while obtaining the package list: %message%	MainWindow		Došlo je do greške kod pribavljanja liste paketa: %poruka%
-<no info>	PackageInfoView		<no info>
-An error occurred while initializing the package manager: %message%	MainWindow		Došlo je do greške pri iniciranju upravitelja paketima: %poruka%
-Email address:	UserLoginWindow		Adresa e-pošte:
-Very unstable	RatePackageWindow		Vrlo nestabilan
-The username is already taken. Please choose another.	UserLoginWindow		Korisničko ime je već zauzeto. Molim izaberite drugo.
-Close	PackageManager		Zatvori
-Not logged in	MainWindow		Niste prijavljeni
-The authentication was successful.	UserLoginWindow		Ovjera je bila uspješna.
-Status	PackageListView		Status
-Switch account…	MainWindow		Prebaci račun...
-Ignore	UserLoginWindow		Zanemari
-Language	UserLoginWindow		Jezik
-The password is too weak or invalid. Please use at least 8 characters with at least 2 numbers and 2 upper-case letters.	UserLoginWindow		Lozinka je preslaba ili neispravna. Molim koristite najmanje 8 znakova sa najmanje 2 broja i 2 velika slova.
-Rate package	RatePackageWindow		Ocijeni paket
-Development	Model		Razvoj
-Fatal error	PackageManager		Ozbiljna greška
-Log in	UserLoginWindow		Prijava
-Ratings	PackageInfoView		Ocjenjivanja
-Inactive	PackageListView		Neaktivan
-Science & Mathematics	Model		Znanost i matematika
-(%Votes%)	PackageInfoView		(%Glasovi%)
-Success	UserLoginWindow		Uspjeh
-Downloading:	PackageInfoView		Preuzimam:
-Mostly stable	RatePackageWindow		Uglavnom stabilan
-Log out	MainWindow		Odjava
-Education	Model		Obrazovanje
-Search terms:	FilterView		Pojmovi pretrage:
-%Version%	PackageInfoView		%Verzija%
-An error occurred while refreshing the repository: %error% (%details%)	MainWindow		Dogodila se greška kod osvježavanja repozitorija:%greška% (%pojedinosti%)
-Create account	UserLoginWindow		Napravi račun
-Productivity	Model		Produktivnost
-Authentication failed	UserLoginWindow		Neuspjela ovjera
-Logged in as %User%	MainWindow		Prijavljen kao %korisnik%
-Language	RatePackageWindow		Jezik
-User name:	UserLoginWindow		Korisničko ime:
-Unstable but usable	RatePackageWindow		Nestabilan ali može se koristiti
-The email address appears to be malformed.	UserLoginWindow		Email adresa je oštećena.
-Games	Model		Igre
-Rating	PackageListView		Ocjenjivanje
-(%Votes%)	FeaturedPackagesView		(%Glasovi%)
-Graphics	Model		Grafika
-Local	MainWindow		Lokalno
-Close	MainWindow		Zatvori
-Preferred language:	UserLoginWindow		Preferirani jezik:
-Internet & Network	Model		Internet i mreža
-Cancel	MainWindow		Otkaži
-Update	RatePackageWindow		Ažuriraj
-Video	Model		Video
-All categories	FilterView		Sve kategorije
-An error occurred while refreshing the repository: %error%	MainWindow		Dogodila se greška kod osvježavanja repozitorija: %greška%
-Login or Create account	MainWindow		Prijava ili napravi račun
-OK	PackageInfoView		U redu
 Uninstalled	PackageListView		Deinstalirani
-Stable	RatePackageWindow		Stabilno
-Unknown	PackageListView		Nepoznato
+It was not possible to create the new user.	UserLoginWindow		Nije bilo moguće stvoriti novog korisnika.
+Available packages	MainWindow		Dostupni paketi
+Create account	UserLoginWindow		Napravi račun
+Mostly stable	RatePackageWindow		Uglavnom stabilan
+OK	App		U redu
+Rate package…	PackageInfoView		Ocijeni paket...
+<no info>	PackageInfoView		<no info>
+Downloading package '%name%'	WorkStatusView		Preuzimam paket '%name%'
+Rating	PackageListView		Ocjenjivanje
+Synchronizing icons	ServerIconExportUpdateProcess		Sinkroniziram ikone
+Show	MainWindow		Pokaži
+An error occurred while obtaining the package list: %message%	LocalPkgDataLoadProcess		Došlo do greške prilikom pribavljanja liste paketa: %message%
+Unstable but usable	RatePackageWindow		Nestabilan ali može se koristiti
 Not specified	RatePackageWindow		Nije određeno
-Available	PackageListView		Dostupno
-Cancel	RatePackageWindow		Otkaži
-OK	UserLoginWindow		U redu
-Send	RatePackageWindow		Pošalji
-Category:	FilterView		Kategorija:
-Failed to create account	UserLoginWindow		Neuspjelo kreiranje računa
-There are problems with the data you entered:\n\n	UserLoginWindow		Ima problema sa podacima koje ste unijeli:\n\n
-Business	Model		Posao
-Audio	Model		Audio
-About	PackageInfoView		O programu
 Active	PackageListView		Aktivan
-It was not possible to contact the web service.	UserLoginWindow		Nije bilo moguće kontaktirati web servis.
-Failed to create account: %s\n	UserLoginWindow		Neuspjelo kreiranje računa: %s\n
+Login or Create account	MainWindow		Prijava ili napravi račun
+<Package contents not available for remote packages>	PackageContentsView		<Package contents not available for remote packages>
+Ratings	PackageInfoView		Ocjenjivanja
+Switch account…	MainWindow		Prebaci račun...
+Preferred language:	UserLoginWindow		Preferirani jezik:
+Name	PackageListView		Ime
+An error occurred while initializing the package manager: %message%	LocalPkgDataLoadProcess		Došlo je d ogreške prilikom iniciranja upravitelja paketima: %message%
+Category	FilterView		Kategorija
+Installed packages	MainWindow		Instalirani paketi
+Stable	RatePackageWindow		Stabilno
+Fatal error	PackageManager		Ozbiljna greška
+Error	App		Greška
+Version	PackageListView		Inačica
+Not logged in	MainWindow		Niste prijavljeni
+Available	PackageListView		Dostupno
 Cancel	UserLoginWindow		Otkaži
+Click a package to view information	PackageInfoView		Klikni na paket da vidiš informacije
+Contents	PackageInfoView		Sadržaj
+Close	PackageManager		Zatvori
+Changelog	PackageInfoView		Dnevnik promjena
+About	PackageInfoView		O programu
+Very unstable	RatePackageWindow		Vrlo nestabilan
+Password:	UserLoginWindow		Lozinka:
+All packages	PackageListView		Svi paketi
+Stability	RatePackageWindow		Stabilnost
+Send	RatePackageWindow		Pošalji
+Cancel	RatePackageWindow		Otkaži
+Inactive	PackageListView		Neaktivan
+Nickname:	UserLoginWindow		Nadimak:
+OK	MainWindow		U redu
+OK	PackageInfoView		U redu
+Downloading:	PackageInfoView		Preuzimam:
+Success	UserLoginWindow		Uspjeh
+(%Votes%)	PackageInfoView		(%Glasovi%)
+Repository	PackageListView		Repozitorij
+The email is malformed.	UserLoginWindow		Email je oštećen.
+Close	UserLoginWindow		Zatvori
+Close	RatePackageWindow		Zatvori
+Login issue	MainWindow		Problemi prijave
+Size	PackageListView		Veličina
+All categories	FilterView		Sve kategorije
+Repositories	MainWindow		Repozitoriji
+Cancel	MainWindow		Otkaži
+Refresh repositories	MainWindow		Osvježi repozitorije
+Tools	MainWindow		Alati
+Continue	App		Nastavi
+A password is required.	UserLoginWindow		Potrebna je lozinka.
+Language	RatePackageWindow		Jezik
+Log out	MainWindow		Odjava
+Status	PackageListView		Status
+Update	RatePackageWindow		Ažuriraj
+OK	ServerHelper		U redu
+Language	UserLoginWindow		Jezik
+OK	UserLoginWindow		U redu
+Stability:	RatePackageWindow		Stabilnost:
+The nickname is required.	UserLoginWindow		Potreban je nadimak.
+Source packages	MainWindow		Izvorni paketi
+-	no package size		-
+Try again	App		Pokušaj ponovno
+Rate package	RatePackageWindow		Ocijeni paket
+Unknown	PackageListView		Nepoznato
+I agree to the usage conditions	UserLoginWindow		Slažem se sa uvjetima korištenja
+Log in	UserLoginWindow		Prijava
+Logged in as %User%	MainWindow		Prijavljen kao %User%
+Email address:	UserLoginWindow		Adresa e-pošte:
+Screenshot	ScreenshotWindow		Snimka zaslona
+Search terms:	FilterView		Pojmovi pretrage:
+Category:	FilterView		Kategorija:
+Authentication failed	UserLoginWindow		Neuspjela ovjera
+Manage repositories…	MainWindow		Upravljaj repozitorijima…
+Description	PackageListView		Opis
+Open %DeskbarLink%	PackageManager		Otvori %DeskbarLink%
+Install	PackageManager		Instaliraj
+Log in…	MainWindow		Prijava...
+9999.99 KiB	PackageListView		9999.99 KiB
+Repeat password:	UserLoginWindow		Ponovi lozinku:
+All repositories	MainWindow		Svi repozitoriji

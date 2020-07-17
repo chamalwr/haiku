@@ -7,7 +7,7 @@ Rows:	Screen		Satırlar:
 The screen mode could not be set:\n\t%s\n	Screen		Ekran kipi ayarlanamıyor:\n\t%s\n
 Keep	Screen		Tut
 /other…	Screen		/diğer…
-Horizonal frequency:\t%lu - %lu kHz\nVertical frequency:\t%lu - %lu Hz\n\nMaximum pixel clock:\t%g MHz	Screen		Yatay frekans:\t%lu - %lu kHz\nDikey frekans:\t%lu - %lu Hz\n\nMaksimum piksel saati:\t%g MHz
+Horizonal frequency:\t%lu - %lu kHz\nVertical frequency:\t%lu - %lu Hz\n\nMaximum pixel clock:\t%g MHz	Screen		Yatay frekans:\t%lu - %lu kHz\nDikey frekans:\t%lu - %lu Hz\n\nEn hızlı piksel saati:\t%g MHz
 Refresh rate:	Screen		Yenileme hızı:
 Video format:	Screen		Video biçimi:
 Undo	Screen		Geri al
@@ -49,7 +49,7 @@ Resolution:	Screen		Çözünürlük:
 Apply	Screen		Uygula
 horizontally	Screen		yatay olarak
 disable	Screen		devre dışı bırak
-Set background…	Screen		Arkaplanı belirle…
+Set background…	Screen		Arka planı belirle…
 Type or use the left and right arrow keys.	Screen		Yazın, veya sağ ve sol ok tuşlarını kullanın.
 Screen	System name		Ekran
 Do you wish to keep these settings?	Screen		Bu ayarları tutmak istiyor musunuz?

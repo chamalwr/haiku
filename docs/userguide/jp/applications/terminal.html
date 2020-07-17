@@ -4,7 +4,7 @@
 <head>
 <!-- 
  *
- * Copyright 2008-2014, Haiku. All rights reserved.
+ * Copyright 2008-2020, Haiku. All rights reserved.
  * Distributed under the terms of the MIT License.
  *
  * Authors:
@@ -25,33 +25,33 @@
 <body>
 
 <div id="banner">
-<div><span>ユーザーガイド</span></div>
+<div><span>User guide</span></div>
 </div>
 
 <div class="nav">
 <div class="inner">
 <ul class="lang-menu">
-<li class="now"><img src="../../images/flags/jp.png" alt="" /> 日本語</li>
-<li><a href="../../id/applications/terminal.html"><img src="../../images/flags/id.png" alt="" />Bahasa Indonesia</a></li>
-<li><a href="../../ca/applications/terminal.html"><img src="../../images/flags/ca.png" alt="" />Català</a></li>
-<li><a href="../../de/applications/terminal.html"><img src="../../images/flags/de.png" alt="" />Deutsch</a></li>
-<li><a href="../../en/applications/terminal.html"><img src="../../images/flags/gb.png" alt="" />English</a></li>
-<li><a href="../../es/applications/terminal.html"><img src="../../images/flags/es.png" alt="" />Español</a></li>
-<li><a href="../../fr/applications/terminal.html"><img src="../../images/flags/fr.png" alt="" />Français</a></li>
-<li><a href="../../fur/applications/terminal.html"><img src="../../images/flags/fur.png" alt="" />Furlan</a></li>
-<li><a href="../../it/applications/terminal.html"><img src="../../images/flags/it.png" alt="" />Italiano</a></li>
-<li><a href="../../hu/applications/terminal.html"><img src="../../images/flags/hu.png" alt="" />Magyar</a></li>
-<li><a href="../../pl/applications/terminal.html"><img src="../../images/flags/pl.png" alt="" />Polski</a></li>
-<li><a href="../../pt_PT/applications/terminal.html"><img src="../../images/flags/pt_PT.png" alt="" />Português</a></li>
-<li><a href="../../pt_BR/applications/terminal.html"><img src="../../images/flags/pt_BR.png" alt="" />Português (Brazil)</a></li>
-<li><a href="../../ro/applications/terminal.html"><img src="../../images/flags/ro.png" alt="" />Română</a></li>
-<li><a href="../../sk/applications/terminal.html"><img src="../../images/flags/sk.png" alt="" />Slovenčina</a></li>
-<li><a href="../../fi/applications/terminal.html"><img src="../../images/flags/fi.png" alt="" />Suomi</a></li>
-<li><a href="../../sv_SE/applications/terminal.html"><img src="../../images/flags/sv_SE.png" alt="" />Svenska</a></li>
-<li><a href="../../tr/applications/terminal.html"><img src="../../images/flags/tr.png" alt="" />Türkçe</a></li>
-<li><a href="../../zh_CN/applications/terminal.html"><img src="../../images/flags/zh_CN.png" alt="" /> 中文 ［中文］</a></li>
-<li><a href="../../ru/applications/terminal.html"><img src="../../images/flags/ru.png" alt="" />Русский</a></li>
-<li><a href="../../uk/applications/terminal.html"><img src="../../images/flags/uk.png" alt="" />Українська</a></li>
+<li class="now">日本語&nbsp;<span class="dropdown-caret">&#9660;</span></li>
+<li><a href="../../id/applications/terminal.html">Bahasa Indonesia</a></li>
+<li><a href="../../ca/applications/terminal.html">Català</a></li>
+<li><a href="../../de/applications/terminal.html">Deutsch</a></li>
+<li><a href="../../en/applications/terminal.html">English</a></li>
+<li><a href="../../es/applications/terminal.html">Español</a></li>
+<li><a href="../../fr/applications/terminal.html">Français</a></li>
+<li><a href="../../fur/applications/terminal.html">Furlan</a></li>
+<li><a href="../../it/applications/terminal.html">Italiano</a></li>
+<li><a href="../../hu/applications/terminal.html">Magyar</a></li>
+<li><a href="../../pl/applications/terminal.html">Polski</a></li>
+<li><a href="../../pt_PT/applications/terminal.html">Português</a></li>
+<li><a href="../../pt_BR/applications/terminal.html">Português (Brazil)</a></li>
+<li><a href="../../ro/applications/terminal.html">Română</a></li>
+<li><a href="../../sk/applications/terminal.html">Slovenčina</a></li>
+<li><a href="../../fi/applications/terminal.html">Suomi</a></li>
+<li><a href="../../sv_SE/applications/terminal.html">Svenska</a></li>
+<li><a href="../../tr/applications/terminal.html">Türkçe</a></li>
+<li><a href="../../zh_CN/applications/terminal.html"> 中文 ［中文］</a></li>
+<li><a href="../../ru/applications/terminal.html">Русский</a></li>
+<li><a href="../../uk/applications/terminal.html">Українська</a></li>
 </ul>
 <span>
  «  <a href="stylededit.html">StyledEdit</a> 
@@ -113,20 +113,20 @@
 
 <h2>
 <a href="#"><img src="../../images/up.png" style="border:none;float:right" alt="index" /></a>
-<a id="customization" name="customization">Bash カスタマイズ</a></h2>
+<a id="customization" name="customization">Bash のカスタマイズ</a></h2>
 <p>bash は Unix 由来なので、カスタマイズする方法は数え切れないほどあります。ユーザーにとって重要なファイルは、<span class="cli">profile</span> と <span class="cli">.nputrc</span> の 2 つです。<br />
 ファイルは両方とも <span class="path">/boot/home/config/settings/</span> 内に作成でき、<span class="path">/boot/system/settings/etc/</span> で設定されたシステムデフォルトを上書きできます。</p>
 
 <h3>profile</h3>
-<p><span class="cli">profile</span> は新しいターミナルを開くたびにロードされます。bash の動作に影響するさまざまなエイリアスや変数を設定します。これについてのヘルプはオンラインで見つけられるでしょう。</p>
+<p><span class="cli">profile</span> は新しいターミナルを開くたびにロードされ、bash の動作に影響するさまざまなエイリアスや変数を設定します。これについてのヘルプはオンラインで見つけられるでしょう。</p>
 <p>The Haiku/BeOS Tip Server からいろいろなヘルプを見られます。たとえば、</p>
 <ul>
-<li><a href="http://betips.net/1997/09/09/customize-your-terminal-prompt/">ターミナルプロンプトをカスタマイズ</a></li>
-<li><a href="http://betips.net/1997/09/09/more-prompt-customizations/">さらに多くのプロンプトをカスタマイズ</a></li>
-<li><a href="http://betips.net/1997/09/09/enhancing-bash/">bash の強化</a></li>
-<li><a href="http://betips.net/1997/09/09/custom-keyboard-shortcuts/">カスタムキーボードショートカット</a></li>
+<li><a href="https://betips.net/?p=5">ターミナルプロンプトをカスタマイズ</a></li>
+<li><a href="https://betips.net/?p=66">さらにプロンプトをカスタマイズ</a></li>
+<li><a href="https://betips.net/?p=67">bash の拡張</a></li>
+<li><a href="https://betips.net/?p=105">カスタムキーボードショートカット</a></li>
 </ul>
-<p>追加のヘルプは、<a href="http://betips.net/index.php?s=.profile">こちらへ</a>。</p>
+<p>追加のヘルプは、<a href="https://betips.net/?s=profile">こちらへ</a>。</p>
 
 <h3>inputrc</h3>
 <p><span class="cli">inputrc</span> はキーバインドに対応します。Haiku は便利なデフォルトを提供するので、ユーザーが詳細設定を変更する必要はないでしょう。特別なキーバインドが必要な場合は、<a href="http://tiswww.case.edu/php/chet/readline/rluserman.html">The GNU Readline Library</a> などのオンラインリソースを見てください。</p>
@@ -143,7 +143,7 @@
 <tr><td><span class="menu">カレントディレクトリへ移動 (Move here)</span></td><td> </td><td>ドラッグされたファイルをカレントディレクトリへ移動。</td></tr>
 <tr><td><span class="menu">カレントディレクトリへコピー (Copy here)</span></td><td> </td><td>ドラッグされたファイルをカレントディレクトリにコピー。</td></tr>
 </table></li>
-<li><p><span class="cli">open <i>[filename]</i></span> コマンドでどのファイルも標準アプリケーションで開けます。これは現在 ("<span class="cli">.</span>") と親 ("<span class="cli">..</span>") フォルダーの表現でも動作可能で、Tracker ウィンドウで開かれます。現在作業中のディレクトリを開くには、</p>
+<li><p><span class="cli">open <i>[filename]</i></span> コマンドでどのファイルも標準アプリケーションで開けます。これは現在 ("<span class="cli">.</span>") と親 ("<span class="cli">..</span>") のフォルダー表現でも動作可能で、Tracker ウィンドウで開かれます。現在作業中のディレクトリを開くには、</p>
 <pre class="terminal">open .</pre> <p>と入力してください。</p>
 </li></ul>
 

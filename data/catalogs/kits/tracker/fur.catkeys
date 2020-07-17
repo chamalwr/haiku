@@ -1,11 +1,11 @@
-1	friulian	x-vnd.Haiku-libtracker	94919807
+1	friulian	x-vnd.Haiku-libtracker	2570961103
 Created	ContainerWindow		Creât
 Icon	AttributesView		Icone
 Open and make preferred	OpenWithWindow		Vierç e rint preferît
 Kind	ContainerWindow		Gjenar
 Open with…	ContainerWindow		Vierç cun…
 Error moving \"%name\" to Trash. (%error)	FSUtils		Erôr tal spostâ \"%name\" te Scovacere. (%error)
-Or	FindPanel		Opûr
+Or	FindPanel		O
 before	FindPanel		prime
 Volume icons	TrackerSettingsWindow		Iconis volums
 Ignore case	SelectionWindow		Ignore maiusculis/minusculis
@@ -21,7 +21,6 @@ contains	FindPanel		al conten
 Open	FilePanelPriv		Vierç
 Bitmap icon	AttributesView		Icone Bitmap
 You can't replace a folder with one of its sub-folders.	FSUtils		No si pues sostituî une cartele cuntune des sôs sot-cartelis.
-<%ld dates>	AttributesView		<%ld datis>
 Select…	VirtualDirectoryWindow		Selezione…
 Name	Default Query Columns		Non
 Unmount	ContainerWindow		Dismonte
@@ -50,7 +49,6 @@ Preparing to move items…	StatusWindow		Daûr a prontâ il spostament dai eleme
 Size	ContainerWindow		Dimension
 Select…	ContainerWindow		Selezione…
 Show shared volumes on Desktop	SettingsView		Mostre i volums condividûts sul Scritori
-<%ld values>	AttributesView		<%ld valôrs>
 Size	PoseView		Dimension
 matches wildcard expression	SelectionWindow		al coincît cu la espression cun matis (*)
 96 x 96	ContainerWindow		96 x 96
@@ -195,7 +193,6 @@ contains	SelectionWindow		al conten
 Replace	FilePanelPriv		Sostituìs
 is not	FindPanel		nol è
 Icon view	DeskWindow		Viodude a iconis
-<%ld rectangles>	AttributesView		<%ld retangui>
 Mount settings…	ContainerWindow		Impostazions di montaç…
 Keywords	Bookmark Query Columns		Peraulis clâf
 Media parameter web	AttributesView		Parametri multimediâl web
@@ -262,6 +259,7 @@ ends with	SelectionWindow		al finìs cun
 Open	OpenWithWindow		Vierç
 You must have at least one attribute showing.	PoseView		Si scugne vê almancul un atribût di mostrâ.
 Cut	FilePanelPriv		Taie
+Finish: after several years	StatusWindow		Finît: dopo tancj agns
 Favorites	FilePanelPriv		Preferîts
 Point	AttributesView		Pont
 home	B_USER_DIRECTORY		home
@@ -286,6 +284,7 @@ Error creating link to \"%name\".	FSUtils		Erôr tal creâ il colegament a \"%na
 Unknown	FilePermissionsView		No cognossût
 Paste links	ContainerWindow		Tache colegaments
 Restoring: 	StatusWindow		Ripristinament: 
+The Tracker must be running to set the default printer.	PoseView		Il Tracker al scugne jessi in esecuzion par stabilî la stampadore predefinide.
 calculating…	InfoWindow		daûr a calcolâ…
 Preferred for file	OpenWithWindow		Preferît par file
 OK	AutoMounterSettings		Va ben
@@ -306,7 +305,6 @@ Delete	FSUtils		Elimine
 Edit name	ContainerWindow		Modifiche non
 Could not open \"%document\" (Missing symbol: %symbol). \n	FSUtils		Nol è stât pussibil vierzi \"%document\" (Al mancje il simbul: %symbol). \n
 ASCII Text	AttributesView		Test ASCII
-More options	FindPanel		Altris opzions
 Atom reference	AttributesView		Riferiment Atom
 config	B_USER_CONFIG_DIRECTORY		configurazion
 Error moving \"%name\".	FSUtils		Erôr tal spostâ \"%name\".
@@ -340,13 +338,12 @@ Make active printer	ContainerWindow		Rint ative la stampadore
 Copy to	ContainerWindow		Copie su
 Name	SelectionWindow		Non
 by attribute	FindPanel		par atribût
- info	InfoWindow		 informazions
 Write	FilePermissionsView		Scriture
-<%ld bytes of data>	AttributesView		<%ld byte di dâts>
 If you alter the system folder or its contents, you won't be able to boot %osName!\n\nAre you sure you want to do this?\n\nTo alter the system folder or its contents anyway, hold down the Shift key and click \"I know what I'm doing\".	FSUtils		Se si modifiche la cartele di sisteme o i siei contignûts, no si rivarà plui inviâ %osName!\n\nContinuâ pardabon?\n\nPar modificâ distès la cartele di sisteme o i siei contignûts, ten fracât il tast Maiusc e fâs clic su \"O sai ce che o fâs\".
 Save	FilePanelPriv		Salve
 Could not open \"%document\" with application \"%app\" (Missing libraries: %library). \n	FSUtils		Nol è stât pussibil vierzi \"%document\" cu la aplicazion \"%app\" (Librariis che a mancjin: %library). \n
 Finish: %time	StatusWindow		Fin: %time
+Messenger	AttributesView		Messazîr
 after	FindPanel		dopo
 Version	OpenWithWindow		Version
 Some of the selected items cannot be moved to the Trash. Would you like to delete them instead? (This operation cannot be reverted.)	PoseView		Cualchidun dai elements selezionâts nol pues jessi spostât te Scovacere. Eliminâju dal dut? (Cheste operazion e sarà permanente.)
@@ -362,6 +359,7 @@ And	FindPanel		E
 Palette-indexed picture	AttributesView		Imagjin cun palete intabelade
 multiple disks	FindPanel		plui discs
 Drawing pattern	AttributesView		Trame
+File offset	AttributesView		Deviazion file
 Name = %name	FindPanel	FindResultTitle	Non = %name
 Subject	Email Query Columns		Ogjet
 Error copying folder \"%name\":\n\t%error\n\nWould you like to continue?	FSUtils		Erôr tal copiâ la cartele \"%name\":\n\t%error\n\nContinuâ?
@@ -393,7 +391,6 @@ Proceed	FSUtils		Procêt
 Edit favorites…	FilePanelPriv		Modifiche preferîts…
 You can't move a folder into itself or any of its own sub-folders.	FSUtils		No si pues spostâ une cartele dentri se stesse o cualsisei des sôs sot-cartelis. 
 New	ContainerWindow		Gnûf
-Fewer options	FindPanel		Mancul opzions
 You must drop items on one of the disk icons in the \"Disks\" window.	FSClipBoard		Si scugne strissinâ e molâ i elements suntune des iconis dai discs, tal barcon \"Disks\".
 If you alter %target, %osName may not behave properly!\n\nAre you sure you want to do this?	FSUtils		Se si modifiche %target, %osName al funzionarà mâl!\n\nContinuâ pardabon?
 Sorry, you can't copy items to the Trash.	FSClipBoard		No si pues copiâ i elements te Scovacere.
@@ -441,11 +438,11 @@ Sorry, saving more than one item is not allowed.	FilePanelPriv		Mi displâs, sal
 Move here	ContainerWindow		Sposte chi
 the config folder	FSUtils		la cartele di configurazion
 Sorry, could not create a new folder.	FSUtils		Nol è stât pussibil creâ une gnove cartele
+Select all	VirtualDirectoryWindow		Selezione dut
 Rename	FSUtils	button label	Cambie non
 Clean up all	ContainerWindow		Met a puest dut
 Add current folder	FilePanelPriv		Zonte cartele atuâl
 Description:	InfoWindow		Descizion:
-The Tracker must be running to see set the default printer.	PoseView		Il Tracker al à di jessi in esecuzion par podê configurâ la stampadore predefinide.
 Are you sure you want to delete the selected item(s)? This operation cannot be reverted.	FSUtils		Eliminâ pardabon i elements selezionâts? Cheste operazion e sarà permanente.
 Grayscale picture	AttributesView		Imagjin a scjale di grîs
 Mount	DeskWindow		Monte
@@ -453,6 +450,7 @@ ends with	FindPanel		al finìs cun
 Show Disks icon	SettingsView		Mostre icone discs
 Outline selection rectangle only	SettingsView		Dome il retangul di selezion dal contor
 by formula	FindPanel		par formule
+Resize to fit	VirtualDirectoryWindow		Ridimensione par adatâ
 Move to Trash	FilePanelPriv		Sposte te Scovacere
 is	FindPanel		al è
 If you rename the system folder or its contents, you won't be able to boot %osName!\n\nAre you sure you want to do this?\n\nTo rename the system folder or its contents anyway, hold down the Shift key and click \"Rename\".	FSUtils		Se si cambie non ae cartele di sisteme o al so contignût, no si rivarà plui a inviâ %osName!\n\nContinuâ pardabon?\n\nPar cambiâ non distès ae cartele di sisteme o al so contignût, ten fracât il tast Maiusc e fâs clic su \"Cambie non\".
@@ -482,7 +480,7 @@ Memory corruption.	libtracker		Coruzion de memorie.
 Expression too long.	libtracker		Espression masse lungje.
 Color	AttributesView		Colôr
 Copy layout	ContainerWindow		Copie disposizion
-Duplicate	ContainerWindow		Doplee
+Duplicate	ContainerWindow		Dupliche
 16-bit integer	AttributesView		Intîr a 16 bit
 Untitled clipping	PoseView		Ritai cence non
 The file \"%name\" already exists in the specified folder. Do you want to replace it?	FilePanelPriv		Il file \"%name\" al esist za te cartele specificade. Sostituîlu?

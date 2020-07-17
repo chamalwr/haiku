@@ -1,4 +1,4 @@
-1	german	x-vnd.Haiku-libtracker	3410222442
+1	german	x-vnd.Haiku-libtracker	297802322
 Created	ContainerWindow		Erstellt
 Icon	AttributesView		Icon
 Open and make preferred	OpenWithWindow		Öffnen und zur Bevorzugten machen
@@ -21,7 +21,6 @@ contains	FindPanel		enthält
 Open	FilePanelPriv		Öffnen
 Bitmap icon	AttributesView		Bitmap Icon
 You can't replace a folder with one of its sub-folders.	FSUtils		Ordner können nicht mit einem seiner Unterordner ersetzt werden.
-<%ld dates>	AttributesView		<%ld Daten>
 Select…	VirtualDirectoryWindow		Auswählen…
 Name	Default Query Columns		Name
 Unmount	ContainerWindow		Aushängen
@@ -50,7 +49,6 @@ Preparing to move items…	StatusWindow		Verschieben wird vorbereitet…
 Size	ContainerWindow		Größe
 Select…	ContainerWindow		Auswählen…
 Show shared volumes on Desktop	SettingsView		Netzwerk-Laufwerke auf dem Desktop zeigen
-<%ld values>	AttributesView		<%ld Werte>
 Size	PoseView		Größe
 matches wildcard expression	SelectionWindow		entspricht Platzhalter-Ausdruck
 96 x 96	ContainerWindow		96 x 96
@@ -109,6 +107,7 @@ Edit templates…	TemplatesMenu		Vorlagen bearbeiten…
 {0, plural, one{# byte} other{# bytes}}	FSUtils		{0, plural, one{(# Byte)} other{(# Bytes)}}
 8-bit integer	AttributesView		8 bit Integer
 8-bit unsigned integer	AttributesView		8 bit vorzeichenloser Integer
+%s info	InfoWindow	window title	%s Info
 %capacity (%used used -- %free free)	InfoWindow		%capacity (%used benutzt -- %free frei)
 Hide dotfiles	SettingsView		Mit \".\" beginnende Dateien ausblenden
 Trash	Model		Papierkorb
@@ -192,7 +191,6 @@ contains	SelectionWindow		enthält
 Replace	FilePanelPriv		Ersetzen
 is not	FindPanel		ist nicht
 Icon view	DeskWindow		Icon-Ansicht
-<%ld rectangles>	AttributesView		<%ld Rechtecke>
 Mount settings…	ContainerWindow		Einhänge-Einstellungen…
 Keywords	Bookmark Query Columns		Schlagwörter
 Media parameter web	AttributesView		Media Parametenetz
@@ -259,6 +257,7 @@ ends with	SelectionWindow		endet mit
 Open	OpenWithWindow		Öffnen
 You must have at least one attribute showing.	PoseView		Es muss mindestens ein Attribut angezeigt werden.
 Cut	FilePanelPriv		Ausschneiden
+Finish: after several years	StatusWindow		Fertig: in einigen Jahren
 Favorites	FilePanelPriv		Favoriten
 Point	AttributesView		Punkt
 home	B_USER_DIRECTORY		Home
@@ -283,6 +282,7 @@ Error creating link to \"%name\".	FSUtils		Fehler beim Erstellen der Verknüpfun
 Unknown	FilePermissionsView		Unbekannt
 Paste links	ContainerWindow		Verknüpfungen einfügen
 Restoring: 	StatusWindow		Wiederherstellen von:
+The Tracker must be running to set the default printer.	PoseView		Um einen Standarddrucker zu setzen, muss der Tracker laufen.
 calculating…	InfoWindow		Berechnung läuft…
 Preferred for file	OpenWithWindow		Bevorzugt für Datei
 OK	AutoMounterSettings		OK
@@ -302,7 +302,6 @@ Delete	FSUtils		Löschen
 Edit name	ContainerWindow		Umbenennen
 Could not open \"%document\" (Missing symbol: %symbol). \n	FSUtils		\"%document\" konnte nicht geöffnet werden (Fehlendes Symbol: %symbol).\n
 ASCII Text	AttributesView		ASCII Text
-More options	FindPanel		Weitere Optionen
 Atom reference	AttributesView		Atom Referenz
 Error moving \"%name\".	FSUtils		Fehler beim Verschieben von \"%name\".
 Select…	QueryContainerWindow		Auswählen…
@@ -335,9 +334,7 @@ Make active printer	ContainerWindow		Zum aktiven Drucker machen
 Copy to	ContainerWindow		Kopieren nach
 Name	SelectionWindow		Name:
 by attribute	FindPanel		nach Attribut
- info	InfoWindow		 Info
 Write	FilePermissionsView		Schreiben
-<%ld bytes of data>	AttributesView		<%ld Bytes an Daten>
 If you alter the system folder or its contents, you won't be able to boot %osName!\n\nAre you sure you want to do this?\n\nTo alter the system folder or its contents anyway, hold down the Shift key and click \"I know what I'm doing\".	FSUtils		Wird der System Ordner oder dessen Inhalt verändert, kann %osName nicht mehr gestartet werden!\n\nÄnderungen trotzdem durchführen?\n\nUm den System Ordner oder dessen Inhalt trotzdem zu ändern, Shift-Taste gedrückt halten und \"Ich bin sicher\" klicken.
 Save	FilePanelPriv		Speichern
 Could not open \"%document\" with application \"%app\" (Missing libraries: %library). \n	FSUtils		\"%document\" konnte nicht mit der Anwendung \"%app\" geöffnet werden (fehlende Bibliothek: %library.). \n
@@ -390,7 +387,6 @@ Proceed	FSUtils		Fortfahren
 Edit favorites…	FilePanelPriv		Favoriten bearbeiten…
 You can't move a folder into itself or any of its own sub-folders.	FSUtils		Ein Ordner kann nicht in sich selbst oder in einen seiner Unterordner verschoben werden.
 New	ContainerWindow		Neu
-Fewer options	FindPanel		Weniger Optionen
 You must drop items on one of the disk icons in the \"Disks\" window.	FSClipBoard		Objekte müssen auf eines der Icons im \"Datenträger\" Fenster fallengelassen werden.
 If you alter %target, %osName may not behave properly!\n\nAre you sure you want to do this?	FSUtils		Wird %target geändert, kann es sein dass %osName nicht mehr richtig funktioniert!\n\nTrotzdem ändern?\n
 Sorry, you can't copy items to the Trash.	FSClipBoard		Objekte können leider nicht in den Papierkorb kopiert werden.
@@ -443,7 +439,6 @@ Rename	FSUtils	button label	Umbenennen
 Clean up all	ContainerWindow		Icons ordnen
 Add current folder	FilePanelPriv		Aktuellen Ordner hinzufügen
 Description:	InfoWindow		Beschreibung:
-The Tracker must be running to see set the default printer.	PoseView		Um den Standarddrucker zu sehen, muss Tracker laufen.
 Are you sure you want to delete the selected item(s)? This operation cannot be reverted.	FSUtils		Sollen die ausgewählten Objekte wirklich gelöscht werden? Diese Aktion kann nicht rückgängig gemacht werden.
 Grayscale picture	AttributesView		Graustufen Bild
 Mount	DeskWindow		Einhängen

@@ -8,6 +8,7 @@
  */
 
 
+#include <algorithm>
 #include <ctype.h>
 
 #ifndef FS_SHELL
@@ -563,13 +564,12 @@ fs_read_link(fs_volume* _volume, fs_vnode* _node, char* buffer,
 		return B_BAD_VALUE;
 
 	size_t length = strlen(node->attr.slName);
-	if (length > *_bufferSize)
-		memcpy(buffer, node->attr.slName, *_bufferSize);
-	else {
-		memcpy(buffer, node->attr.slName, length);
-		*_bufferSize = length;
-	}
 
+	size_t bytesToCopy = std::min(length, *_bufferSize);
+
+	*_bufferSize = length;
+
+	memcpy(buffer, node->attr.slName, bytesToCopy);
 	return B_OK;
 }
 

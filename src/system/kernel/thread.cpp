@@ -78,7 +78,7 @@ static thread_id sNextThreadID = 2;
 	// ID 1 is allocated for the kernel by Team::Team() behind our back
 
 // some arbitrarily chosen limits -- should probably depend on the available
-// memory (the limit is not yet enforced)
+// memory
 static int32 sMaxThreads = 4096;
 static int32 sUsedThreads = 0;
 
@@ -1029,6 +1029,7 @@ thread_create_thread(const ThreadCreationAttributes& attributes, bool kernel)
 		thread->user_thread = NULL;
 
 		threadLocker.Unlock();
+		teamLocker.Unlock();
 
 		if (userThread != NULL)
 			team_free_user_thread(team, userThread);
@@ -2679,9 +2680,9 @@ thread_init(kernel_args *args)
 		panic("thread_init(): failed to init thread hash table!");
 
 	// create the thread structure object cache
-	sThreadCache = create_object_cache("threads", sizeof(Thread), 16, NULL,
+	sThreadCache = create_object_cache("threads", sizeof(Thread), 64, NULL,
 		NULL, NULL);
-		// Note: The x86 port requires 16 byte alignment of thread structures.
+		// Note: The x86 port requires 64 byte alignment of thread structures.
 	if (sThreadCache == NULL)
 		panic("thread_init(): failed to allocate thread object cache!");
 

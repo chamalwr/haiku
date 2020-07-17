@@ -47,6 +47,7 @@
 #include <PortLink.h>
 #include <ShapePrivate.h>
 #include <ServerProtocolStructs.h>
+#include <StackOrHeapArray.h>
 #include <ViewPrivate.h>
 #include <WindowInfo.h>
 #include <WindowPrivate.h>
@@ -3078,15 +3079,11 @@ ServerWindow::_DispatchViewDrawingMessage(int32 code,
 				break;
 			}
 
-			const ssize_t kMaxStackStringSize = 4096;
-			char stackString[kMaxStackStringSize];
-			char* string = stackString;
-			if (info.stringLength >= kMaxStackStringSize) {
-				// NOTE: Careful, the + 1 is for termination!
-				string = (char*)malloc((info.stringLength + 1 + 63) / 64 * 64);
-				if (string == NULL)
-					break;
-			}
+			// NOTE: Careful, the + 1 is for termination!
+			BStackOrHeapArray<char, 4096> string(
+				(info.stringLength + 1 + 63) / 64 * 64);
+			if (!string.IsValid())
+				break;
 
 			escapement_delta* delta = NULL;
 			if (code == AS_DRAW_STRING_WITH_DELTA) {
@@ -3094,11 +3091,9 @@ ServerWindow::_DispatchViewDrawingMessage(int32 code,
 				delta = &info.delta;
 			}
 
-			if (link.Read(string, info.stringLength) != B_OK) {
-				if (string != stackString)
-					free(string);
+			if (link.Read(string, info.stringLength) != B_OK)
 				break;
-			}
+
 			// Terminate the string, if nothing else, it's important
 			// for the DTRACE call below...
 			string[info.stringLength] = '\0';
@@ -3113,8 +3108,6 @@ ServerWindow::_DispatchViewDrawingMessage(int32 code,
 			fCurrentView->ScreenToPenTransform().Apply(&penLocation);
 			fCurrentView->CurrentState()->SetPenLocation(penLocation);
 
-			if (string != stackString)
-				free(string);
 			break;
 		}
 		case AS_DRAW_STRING_WITH_OFFSETS:
@@ -3127,27 +3120,12 @@ ServerWindow::_DispatchViewDrawingMessage(int32 code,
 			if (link.Read<int32>(&glyphCount) != B_OK || glyphCount <= 0)
 				break;
 
-			const ssize_t kMaxStackStringSize = 512;
-			char stackString[kMaxStackStringSize];
-			char* string = stackString;
-			BPoint stackLocations[kMaxStackStringSize];
-			BPoint* locations = stackLocations;
-			MemoryDeleter stringDeleter;
-			MemoryDeleter locationsDeleter;
-			if (stringLength >= kMaxStackStringSize) {
-				// NOTE: Careful, the + 1 is for termination!
-				string = (char*)malloc((stringLength + 1 + 63) / 64 * 64);
-				if (string == NULL)
-					break;
-				stringDeleter.SetTo(string);
-			}
-			if (glyphCount > kMaxStackStringSize) {
-				locations = (BPoint*)malloc(
-					((glyphCount * sizeof(BPoint)) + 63) / 64 * 64);
-				if (locations == NULL)
-					break;
-				locationsDeleter.SetTo(locations);
-			}
+			// NOTE: Careful, the + 1 is for termination!
+			BStackOrHeapArray<char, 512> string(
+				(stringLength + 1 + 63) / 64 * 64);
+			BStackOrHeapArray<BPoint, 512> locations(glyphCount);
+			if (!string.IsValid() || !locations.IsValid())
+				break;
 
 			if (link.Read(string, stringLength) != B_OK)
 				break;
@@ -3245,6 +3223,7 @@ ServerWindow::_DispatchPictureMessage(int32 code, BPrivate::LinkReceiver& link)
 			link.Read<float>(&x);
 			link.Read<float>(&y);
 
+			fCurrentView->SetDrawingOrigin(BPoint(x, y));
 			picture->WriteSetOrigin(BPoint(x, y));
 			break;
 		}
@@ -3259,12 +3238,14 @@ ServerWindow::_DispatchPictureMessage(int32 code, BPrivate::LinkReceiver& link)
 
 		case AS_VIEW_PUSH_STATE:
 		{
+			fCurrentView->PushState();
 			picture->WritePushState();
 			break;
 		}
 
 		case AS_VIEW_POP_STATE:
 		{
+			fCurrentView->PopState();
 			picture->WritePopState();
 			break;
 		}
@@ -3320,6 +3301,19 @@ ServerWindow::_DispatchPictureMessage(int32 code, BPrivate::LinkReceiver& link)
 
 			fWindow->GetDrawingEngine()->SetStrokeMode(info.lineCap,
 				info.lineJoin, info.miterLimit);
+			break;
+		}
+		case AS_VIEW_SET_FILL_RULE:
+		{
+			int32 fillRule;
+			if (link.Read<int32>(&fillRule) != B_OK)
+				break;
+
+			picture->WriteSetFillRule(fillRule);
+
+			fCurrentView->CurrentState()->SetFillRule(fillRule);
+			fWindow->GetDrawingEngine()->SetFillRule(fillRule);
+
 			break;
 		}
 		case AS_VIEW_SET_SCALE:
@@ -3526,6 +3520,193 @@ ServerWindow::_DispatchPictureMessage(int32 code, BPrivate::LinkReceiver& link)
 			break;
 		}
 
+		//case AS_STROKE_RECT_GRADIENT:
+		case AS_FILL_RECT_GRADIENT:
+		{
+			BRect rect;
+			link.Read<BRect>(&rect);
+			BGradient* gradient;
+			if (link.ReadGradient(&gradient) != B_OK)
+				break;
+			ObjectDeleter<BGradient> gradientDeleter(gradient);
+
+			picture->WriteDrawRectGradient(rect, *gradient, code == AS_FILL_RECT_GRADIENT);
+			break;
+		}
+
+		//case AS_STROKE_ARC_GRADIENT:
+		case AS_FILL_ARC_GRADIENT:
+		{
+			BRect rect;
+			link.Read<BRect>(&rect);
+			float startTheta, arcTheta;
+			link.Read<float>(&startTheta);
+			link.Read<float>(&arcTheta);
+			BGradient* gradient;
+			if (link.ReadGradient(&gradient) != B_OK)
+				break;
+			ObjectDeleter<BGradient> gradientDeleter(gradient);
+
+			BPoint radii((rect.Width() + 1) / 2, (rect.Height() + 1) / 2);
+			BPoint center = rect.LeftTop() + radii;
+
+			picture->WriteDrawArcGradient(center, radii, startTheta, arcTheta, *gradient,
+				code == AS_FILL_ARC_GRADIENT);
+			break;
+		}
+
+		//case AS_STROKE_BEZIER_GRADIENT:
+		case AS_FILL_BEZIER_GRADIENT:
+		{
+			BPoint points[4];
+			for (int32 i = 0; i < 4; i++) {
+				link.Read<BPoint>(&(points[i]));
+			}
+			BGradient* gradient;
+			if (link.ReadGradient(&gradient) != B_OK)
+				break;
+			ObjectDeleter<BGradient> gradientDeleter(gradient);
+
+			picture->WriteDrawBezierGradient(points, *gradient, code == AS_FILL_BEZIER_GRADIENT);
+			break;
+		}
+
+		//case AS_STROKE_ELLIPSE_GRADIENT:
+		case AS_FILL_ELLIPSE_GRADIENT:
+		{
+			BRect rect;
+			link.Read<BRect>(&rect);
+			BGradient* gradient;
+			if (link.ReadGradient(&gradient) != B_OK)
+				break;
+			ObjectDeleter<BGradient> gradientDeleter(gradient);
+
+			picture->WriteDrawEllipseGradient(rect, *gradient, code == AS_FILL_ELLIPSE_GRADIENT);
+			break;
+		}
+
+		//case AS_STROKE_ROUNDRECT_GRADIENT:
+		case AS_FILL_ROUNDRECT_GRADIENT:
+		{
+			BRect rect;
+			link.Read<BRect>(&rect);
+
+			BPoint radii;
+			link.Read<float>(&radii.x);
+			link.Read<float>(&radii.y);
+			BGradient* gradient;
+			if (link.ReadGradient(&gradient) != B_OK)
+				break;
+			ObjectDeleter<BGradient> gradientDeleter(gradient);
+
+			picture->WriteDrawRoundRectGradient(rect, radii, *gradient, code == AS_FILL_ROUNDRECT_GRADIENT);
+			break;
+		}
+
+		//case AS_STROKE_TRIANGLE_GRADIENT:
+		case AS_FILL_TRIANGLE_GRADIENT:
+		{
+			// There is no B_PIC_FILL/STROKE_TRIANGLE op,
+			// we implement it using B_PIC_FILL/STROKE_POLYGON
+			BPoint points[3];
+
+			for (int32 i = 0; i < 3; i++) {
+				link.Read<BPoint>(&(points[i]));
+			}
+
+			BRect rect;
+			link.Read<BRect>(&rect);
+			BGradient* gradient;
+			if (link.ReadGradient(&gradient) != B_OK)
+				break;
+			ObjectDeleter<BGradient> gradientDeleter(gradient);
+
+			picture->WriteDrawPolygonGradient(3, points,
+					true, *gradient, code == AS_FILL_TRIANGLE_GRADIENT);
+			break;
+		}
+
+		//case AS_STROKE_POLYGON_GRADIENT:
+		case AS_FILL_POLYGON_GRADIENT:
+		{
+			BRect polyFrame;
+			bool isClosed = true;
+			int32 pointCount;
+			const bool fill = (code == AS_FILL_POLYGON_GRADIENT);
+
+			link.Read<BRect>(&polyFrame);
+			if (code == AS_STROKE_POLYGON)
+				link.Read<bool>(&isClosed);
+			link.Read<int32>(&pointCount);
+
+			ArrayDeleter<BPoint> pointList(new(nothrow) BPoint[pointCount]);
+			if (link.Read(pointList.Get(), pointCount * sizeof(BPoint)) != B_OK)
+				break;
+
+			BGradient* gradient;
+			if (link.ReadGradient(&gradient) != B_OK)
+				break;
+			ObjectDeleter<BGradient> gradientDeleter(gradient);
+
+			picture->WriteDrawPolygonGradient(pointCount, pointList.Get(),
+				isClosed && pointCount > 2, *gradient, fill);
+			break;
+		}
+
+		//case AS_STROKE_SHAPE_GRADIENT:
+		case AS_FILL_SHAPE_GRADIENT:
+		{
+			BRect shapeFrame;
+			int32 opCount;
+			int32 ptCount;
+
+			link.Read<BRect>(&shapeFrame);
+			link.Read<int32>(&opCount);
+			link.Read<int32>(&ptCount);
+
+			ArrayDeleter<uint32> opList(new(std::nothrow) uint32[opCount]);
+			ArrayDeleter<BPoint> ptList(new(std::nothrow) BPoint[ptCount]);
+			if (opList.Get() == NULL || ptList.Get() == NULL
+				|| link.Read(opList.Get(), opCount * sizeof(uint32)) != B_OK
+				|| link.Read(ptList.Get(), ptCount * sizeof(BPoint)) != B_OK)
+				break;
+
+			BGradient* gradient;
+			if (link.ReadGradient(&gradient) != B_OK)
+				break;
+			ObjectDeleter<BGradient> gradientDeleter(gradient);
+
+			// This might seem a bit weird, but under BeOS, the shapes
+			// are always offset by the current pen location
+			BPoint penLocation
+				= fCurrentView->CurrentState()->PenLocation();
+			for (int32 i = 0; i < ptCount; i++) {
+				ptList.Get()[i] += penLocation;
+			}
+			const bool fill = (code == AS_FILL_SHAPE_GRADIENT);
+			picture->WriteDrawShapeGradient(opCount, opList.Get(), ptCount, ptList.Get(), *gradient, fill);
+
+			break;
+		}
+
+		case AS_FILL_REGION_GRADIENT:
+		{
+			// There is no B_PIC_FILL_REGION op, we have to
+			// implement it using B_PIC_FILL_RECT
+			BRegion region;
+			if (link.ReadRegion(&region) < B_OK)
+				break;
+
+			BGradient* gradient;
+			if (link.ReadGradient(&gradient) != B_OK)
+				break;
+			ObjectDeleter<BGradient> gradientDeleter(gradient);
+
+			for (int32 i = 0; i < region.CountRects(); i++)
+				picture->WriteDrawRectGradient(region.RectAt(i), *gradient, true);
+			break;
+		}
+
 		case AS_STROKE_LINE:
 		{
 			ViewStrokeLineInfo info;
@@ -3627,11 +3808,16 @@ ServerWindow::_DispatchPictureMessage(int32 code, BPrivate::LinkReceiver& link)
 
 			// We need to update the pen location
 			fCurrentView->PenToScreenTransform().Apply(&info.location);
-			BPoint penLocation = fWindow->GetDrawingEngine()->DrawStringDry(
-				string, info.stringLength, info.location, &info.delta);
+			DrawingEngine* drawingEngine = fWindow->GetDrawingEngine();
+			if (drawingEngine->LockParallelAccess()) {
+				BPoint penLocation = drawingEngine->DrawStringDry(
+					string, info.stringLength, info.location, &info.delta);
 
-			fCurrentView->ScreenToPenTransform().Apply(&penLocation);
-			fCurrentView->CurrentState()->SetPenLocation(penLocation);
+				fCurrentView->ScreenToPenTransform().Apply(&penLocation);
+				fCurrentView->CurrentState()->SetPenLocation(penLocation);
+
+				drawingEngine->UnlockParallelAccess();
+			}
 
 			free(string);
 			break;
@@ -3647,27 +3833,12 @@ ServerWindow::_DispatchPictureMessage(int32 code, BPrivate::LinkReceiver& link)
 			if (link.Read<int32>(&glyphCount) != B_OK || glyphCount <= 0)
 				break;
 
-			const ssize_t kMaxStackStringSize = 512;
-			char stackString[kMaxStackStringSize];
-			char* string = stackString;
-			BPoint stackLocations[kMaxStackStringSize];
-			BPoint* locations = stackLocations;
-			MemoryDeleter stringDeleter;
-			MemoryDeleter locationsDeleter;
-			if (stringLength >= kMaxStackStringSize) {
-				// NOTE: Careful, the + 1 is for termination!
-				string = (char*)malloc((stringLength + 1 + 63) / 64 * 64);
-				if (string == NULL)
-					break;
-				stringDeleter.SetTo(string);
-			}
-			if (glyphCount > kMaxStackStringSize) {
-				locations = (BPoint*)malloc(
-					((glyphCount * sizeof(BPoint)) + 63) / 64 * 64);
-				if (locations == NULL)
-					break;
-				locationsDeleter.SetTo(locations);
-			}
+			// NOTE: Careful, the + 1 is for termination!
+			BStackOrHeapArray<char, 512> string(
+				(stringLength + 1 + 63) / 64 * 64);
+			BStackOrHeapArray<BPoint, 512> locations(glyphCount);
+			if (!string.IsValid() || !locations.IsValid())
+				break;
 
 			if (link.Read(string, stringLength) != B_OK)
 				break;
@@ -3687,12 +3858,17 @@ ServerWindow::_DispatchPictureMessage(int32 code, BPrivate::LinkReceiver& link)
 			picture->WriteDrawString(string, stringLength, locations,
 				glyphCount);
 
-			// Update pen location
-			BPoint penLocation = fWindow->GetDrawingEngine()->DrawStringDry(
-				string, stringLength, locations);
+			DrawingEngine* drawingEngine = fWindow->GetDrawingEngine();
+			if (drawingEngine->LockParallelAccess()) {
+				// Update pen location
+				BPoint penLocation = drawingEngine->DrawStringDry(
+					string, stringLength, locations);
 
-			fCurrentView->ScreenToPenTransform().Apply(&penLocation);
-			fCurrentView->CurrentState()->SetPenLocation(penLocation);
+				fCurrentView->ScreenToPenTransform().Apply(&penLocation);
+				fCurrentView->CurrentState()->SetPenLocation(penLocation);
+
+				drawingEngine->UnlockParallelAccess();
+			}
 
 			break;
 		}
@@ -3708,24 +3884,16 @@ ServerWindow::_DispatchPictureMessage(int32 code, BPrivate::LinkReceiver& link)
 			link.Read<int32>(&opCount);
 			link.Read<int32>(&ptCount);
 
-			uint32* opList = new(std::nothrow) uint32[opCount];
-			BPoint* ptList = new(std::nothrow) BPoint[ptCount];
-			if (opList != NULL && ptList != NULL
-				&& link.Read(opList, opCount * sizeof(uint32)) >= B_OK
-				&& link.Read(ptList, ptCount * sizeof(BPoint)) >= B_OK) {
-				// This might seem a bit weird, but under BeOS, the shapes
-				// are always offset by the current pen location
-				BPoint penLocation
-					= fCurrentView->CurrentState()->PenLocation();
-				for (int32 i = 0; i < ptCount; i++) {
-					ptList[i] += penLocation;
-				}
-				const bool fill = (code == AS_FILL_SHAPE);
-				picture->WriteDrawShape(opCount, opList, ptCount, ptList, fill);
+			BStackOrHeapArray<uint32, 512> opList(opCount);
+			BStackOrHeapArray<BPoint, 512> ptList(ptCount);
+			if (!opList.IsValid() || !ptList.IsValid()
+				|| link.Read(opList, opCount * sizeof(uint32)) < B_OK
+				|| link.Read(ptList, ptCount * sizeof(BPoint)) < B_OK) {
+				break;
 			}
+			picture->WriteDrawShape(opCount, opList, ptCount,
+				ptList, code == AS_FILL_SHAPE);
 
-			delete[] opList;
-			delete[] ptList;
 			break;
 		}
 

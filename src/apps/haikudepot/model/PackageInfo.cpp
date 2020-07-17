@@ -1,19 +1,18 @@
 /*
  * Copyright 2013-2014, Stephan Aßmus <superstippi@gmx.de>.
  * Copyright 2013, Rene Gollent <rene@gollent.com>.
- * Copyright 2016-2019, Andrew Lindesay <apl@lindesay.co.nz>.
+ * Copyright 2016-2020, Andrew Lindesay <apl@lindesay.co.nz>.
  * All rights reserved. Distributed under the terms of the MIT License.
  */
 
 #include "PackageInfo.h"
-
-#include <stdio.h>
 
 #include <FindDirectory.h>
 #include <package/PackageDefs.h>
 #include <package/PackageFlags.h>
 #include <Path.h>
 
+#include "Logger.h"
 
 // #pragma mark - Language
 
@@ -471,6 +470,7 @@ PackageInfo::PackageInfo()
 	fPublisher(),
 	fShortDescription(),
 	fFullDescription(),
+	fHasChangelog(false),
 	fChangelog(),
 	fUserRatings(),
 	fCachedRatingSummary(),
@@ -501,6 +501,7 @@ PackageInfo::PackageInfo(const BPackageInfo& info)
 	fPublisher(),
 	fShortDescription(info.Summary()),
 	fFullDescription(info.Description()),
+	fHasChangelog(false),
 	fChangelog(),
 	fUserRatings(),
 	fCachedRatingSummary(),
@@ -547,6 +548,7 @@ PackageInfo::PackageInfo(const BString& name,
 	fPublisher(publisher),
 	fShortDescription(shortDescription),
 	fFullDescription(fullDescription),
+	fHasChangelog(false),
 	fChangelog(),
 	fCategories(),
 	fUserRatings(),
@@ -578,6 +580,7 @@ PackageInfo::PackageInfo(const PackageInfo& other)
 	fPublisher(other.fPublisher),
 	fShortDescription(other.fShortDescription),
 	fFullDescription(other.fFullDescription),
+	fHasChangelog(other.fHasChangelog),
 	fChangelog(other.fChangelog),
 	fCategories(other.fCategories),
 	fUserRatings(other.fUserRatings),
@@ -611,6 +614,7 @@ PackageInfo::operator=(const PackageInfo& other)
 	fPublisher = other.fPublisher;
 	fShortDescription = other.fShortDescription;
 	fFullDescription = other.fFullDescription;
+	fHasChangelog = other.fHasChangelog;
 	fChangelog = other.fChangelog;
 	fCategories = other.fCategories;
 	fUserRatings = other.fUserRatings;
@@ -642,6 +646,7 @@ PackageInfo::operator==(const PackageInfo& other) const
 		&& fPublisher == other.fPublisher
 		&& fShortDescription == other.fShortDescription
 		&& fFullDescription == other.fFullDescription
+		&& fHasChangelog == other.fHasChangelog
 		&& fChangelog == other.fChangelog
 		&& fCategories == other.fCategories
 		&& fUserRatings == other.fUserRatings
@@ -711,6 +716,13 @@ PackageInfo::SetIcon(const BitmapRef& icon)
 		fIcon = icon;
 		_NotifyListeners(PKG_CHANGED_ICON);
 	}
+}
+
+
+void
+PackageInfo::SetHasChangelog(bool value)
+{
+	fHasChangelog = value;
 }
 
 
@@ -1163,18 +1175,31 @@ DepotInfo::SyncPackages(const PackageList& otherPackages)
 			}
 		}
 		if (!found) {
-			printf("%s: new package: '%s'\n", fName.String(),
-				otherPackage->Name().String());
+			HDINFO("%s: new package: '%s'", fName.String(),
+				otherPackage->Name().String())
 			fPackages.Add(otherPackage);
 		}
 	}
 
 	for (int32 i = packages.CountItems() - 1; i >= 0; i--) {
 		const PackageInfoRef& package = packages.ItemAtFast(i);
-		printf("%s: removing package: '%s'\n", fName.String(),
-			package->Name().String());
+		HDINFO("%s: removing package: '%s'", fName.String(),
+			package->Name().String())
 		fPackages.Remove(package);
 	}
+}
+
+
+bool
+DepotInfo::HasAnyProminentPackages() const
+{
+	int32 count = fPackages.CountItems();
+	for (int32 i = 0; i < count; i++) {
+		const PackageInfoRef& package = fPackages.ItemAtFast(i);
+		if (package->IsProminent())
+			return true;
+	}
+	return false;
 }
 
 

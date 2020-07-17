@@ -278,8 +278,7 @@ BPoseView::BPoseView(Model* model, uint32 viewMode)
 	fDeskbarFrame(0, 0, -1, -1),
 	fTextWidgetToCheck(NULL)
 {
-	fListElemHeight = std::fmax(ListIconSize(),
-		ceilf(sFontHeight) < 20 ? 20 : ceilf(sFontHeight * 1.1f));
+	fListElemHeight = be_plain_font->Size() * 1.65f;
 
 	fViewState->SetViewMode(viewMode);
 	fShowSelectionWhenInactive
@@ -719,7 +718,7 @@ float
 BPoseView::StringWidth(const char* str) const
 {
 	return BPrivate::gWidthBuffer->StringWidth(str, 0, (int32)strlen(str),
-		&sCurrentFont);
+		be_plain_font);
 }
 
 
@@ -728,7 +727,7 @@ BPoseView::StringWidth(const char* str, int32 len) const
 {
 	ASSERT(strlen(str) == (uint32)len);
 
-	return BPrivate::gWidthBuffer->StringWidth(str, 0, len, &sCurrentFont);
+	return BPrivate::gWidthBuffer->StringWidth(str, 0, len, be_plain_font);
 }
 
 
@@ -986,14 +985,10 @@ BPoseView::AttachedToWindow()
 		kMsgMouseDragged));
 
 	fLastLeftTop = LeftTop();
-	BFont font(be_plain_font);
-	font.SetSpacing(B_BITMAP_SPACING);
-	SetFont(&font);
-	GetFont(&sCurrentFont);
 
 	// static - init just once
 	if (sFontHeight == -1) {
-		font.GetHeight(&sFontInfo);
+		be_plain_font->GetHeight(&sFontInfo);
 		sFontHeight = sFontInfo.ascent + sFontInfo.descent
 			+ sFontInfo.leading;
 	}
@@ -1905,8 +1900,8 @@ BPoseView::CreatePoses(Model** models, PoseInfo* poseInfoArray, int32 count,
 		Model* model = models[modelIndex];
 
 		// pose adopts model and deletes it when done
-		if (fInsertedNodes.find(*(model->NodeRef())) != fInsertedNodes.end()
-			|| FindZombie(model->NodeRef())) {
+		if (fInsertedNodes.Contains(*(model->NodeRef()))
+				|| FindZombie(model->NodeRef())) {
 			watch_node(model->NodeRef(), B_STOP_WATCHING, this);
 			delete model;
 			if (resultingPoses)
@@ -1914,7 +1909,7 @@ BPoseView::CreatePoses(Model** models, PoseInfo* poseInfoArray, int32 count,
 
 			continue;
 		} else
-			fInsertedNodes.insert(*(model->NodeRef()));
+			fInsertedNodes.Add(*(model->NodeRef()));
 
 		if ((clipboardMode = FSClipboardFindNodeMode(model, !clipboardLocked,
 				true)) != 0 && !HasPosesInClipboard()) {
@@ -8067,7 +8062,7 @@ BPoseView::DeletePose(const node_ref* itemNode, BPose* pose, int32 index)
 		pose = fPoseList->FindPose(itemNode, &index);
 
 	if (pose != NULL) {
-		fInsertedNodes.erase(fInsertedNodes.find(*itemNode));
+		fInsertedNodes.Remove(*itemNode);
 		if (pose->TargetModel()->IsSymLink()) {
 			fBrokenLinks->RemoveItem(pose->TargetModel());
 			StopWatchingParentsOf(pose->TargetModel()->EntryRef());
@@ -8430,7 +8425,7 @@ BPoseView::SwitchDir(const entry_ref* newDirRef, AttributeStreamNode* node)
 	// the new add_poses thread will then set fAddPosesThread to its ID and it
 	// will be allowed to add icons
 	fAddPosesThreads.clear();
-	fInsertedNodes.clear();
+	fInsertedNodes.Clear();
 
 	delete fModel;
 	fModel = model;
@@ -8511,14 +8506,12 @@ BPoseView::SwitchDir(const entry_ref* newDirRef, AttributeStreamNode* node)
 void
 BPoseView::Refresh()
 {
-	BEntry entry;
-
 	ASSERT(TargetModel());
 	if (TargetModel()->OpenNode() != B_OK)
 		return;
 
 	StopWatching();
-	fInsertedNodes.clear();
+	fInsertedNodes.Clear();
 	ClearPoses();
 	StartWatching();
 
@@ -8619,7 +8612,7 @@ BPoseView::SetDefaultPrinter()
 	BMessenger trackerMessenger(kTrackerSignature);
 	if (!trackerMessenger.IsValid()) {
 		BAlert* alert = new BAlert("",
-			B_TRANSLATE("The Tracker must be running to see set the default "
+			B_TRANSLATE("The Tracker must be running to set the default "
 			"printer."), B_TRANSLATE("Cancel"), NULL, NULL, B_WIDTH_AS_USUAL,
 			B_WARNING_ALERT);
 		alert->SetFlags(alert->Flags() | B_CLOSE_ON_ESCAPE);
@@ -10502,6 +10495,9 @@ TScrollBar::TScrollBar(const char* name, BView* target, float min, float max)
 	BScrollBar(name, target, min, max, B_HORIZONTAL),
 	fTitleView(NULL)
 {
+	// We always want to be at least the preferred scrollbar size,
+	// no matter what layout we get placed into.
+	SetExplicitMinSize(PreferredSize());
 }
 
 
@@ -10551,6 +10547,5 @@ TPoseViewFilter::Filter(BMessage* message, BHandler**)
 
 float BPoseView::sFontHeight = -1;
 font_height BPoseView::sFontInfo = { 0, 0, 0 };
-BFont BPoseView::sCurrentFont;
 OffscreenBitmap* BPoseView::sOffscreen = new OffscreenBitmap;
 BString BPoseView::sMatchString = "";

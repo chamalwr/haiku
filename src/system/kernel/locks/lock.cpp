@@ -56,9 +56,7 @@ recursive_lock_get_recursion(recursive_lock *lock)
 void
 recursive_lock_init(recursive_lock *lock, const char *name)
 {
-	mutex_init(&lock->lock, name != NULL ? name : "recursive lock");
-	RECURSIVE_LOCK_HOLDER(lock) = -1;
-	lock->recursion = 0;
+	recursive_lock_init_etc(lock, name, 0);
 }
 
 
@@ -66,7 +64,9 @@ void
 recursive_lock_init_etc(recursive_lock *lock, const char *name, uint32 flags)
 {
 	mutex_init_etc(&lock->lock, name != NULL ? name : "recursive lock", flags);
-	RECURSIVE_LOCK_HOLDER(lock) = -1;
+#if !KDEBUG
+	lock->holder = -1;
+#endif
 	lock->recursion = 0;
 }
 
@@ -144,6 +144,151 @@ recursive_lock_unlock(recursive_lock *lock)
 #endif
 		mutex_unlock(&lock->lock);
 	}
+}
+
+
+status_t
+recursive_lock_switch_lock(recursive_lock* from, recursive_lock* to)
+{
+#if KDEBUG
+	if (!gKernelStartup && !are_interrupts_enabled()) {
+		panic("recursive_lock_switch_lock(): called with interrupts "
+			"disabled for locks %p, %p", from, to);
+	}
+#endif
+
+	if (--from->recursion > 0)
+		return recursive_lock_lock(to);
+
+#if !KDEBUG
+	from->holder = -1;
+#endif
+
+	thread_id thread = thread_get_current_thread_id();
+
+	if (thread == RECURSIVE_LOCK_HOLDER(to)) {
+		to->recursion++;
+		mutex_unlock(&from->lock);
+		return B_OK;
+	}
+
+	status_t status = mutex_switch_lock(&from->lock, &to->lock);
+	if (status != B_OK) {
+		from->recursion++;
+#if !KDEBUG
+		from->holder = thread;
+#endif
+		return status;
+	}
+
+#if !KDEBUG
+	to->holder = thread;
+#endif
+	to->recursion++;
+	return B_OK;
+}
+
+
+status_t
+recursive_lock_switch_from_mutex(mutex* from, recursive_lock* to)
+{
+#if KDEBUG
+	if (!gKernelStartup && !are_interrupts_enabled()) {
+		panic("recursive_lock_switch_from_mutex(): called with interrupts "
+			"disabled for locks %p, %p", from, to);
+	}
+#endif
+
+	thread_id thread = thread_get_current_thread_id();
+
+	if (thread == RECURSIVE_LOCK_HOLDER(to)) {
+		to->recursion++;
+		mutex_unlock(from);
+		return B_OK;
+	}
+
+	status_t status = mutex_switch_lock(from, &to->lock);
+	if (status != B_OK)
+		return status;
+
+#if !KDEBUG
+	to->holder = thread;
+#endif
+	to->recursion++;
+	return B_OK;
+}
+
+
+status_t
+recursive_lock_switch_from_read_lock(rw_lock* from, recursive_lock* to)
+{
+#if KDEBUG
+	if (!gKernelStartup && !are_interrupts_enabled()) {
+		panic("recursive_lock_switch_from_read_lock(): called with interrupts "
+			"disabled for locks %p, %p", from, to);
+	}
+#endif
+
+	thread_id thread = thread_get_current_thread_id();
+
+	if (thread != RECURSIVE_LOCK_HOLDER(to)) {
+		status_t status = mutex_switch_from_read_lock(from, &to->lock);
+		if (status != B_OK)
+			return status;
+
+#if !KDEBUG
+		to->holder = thread;
+#endif
+	} else {
+#if KDEBUG_RW_LOCK_DEBUG
+		_rw_lock_write_unlock(from);
+#else
+		int32 oldCount = atomic_add(&from->count, -1);
+		if (oldCount >= RW_LOCK_WRITER_COUNT_BASE)
+			_rw_lock_read_unlock(from);
+#endif
+	}
+
+	to->recursion++;
+	return B_OK;
+}
+
+
+static int
+dump_recursive_lock_info(int argc, char** argv)
+{
+	if (argc < 2) {
+		print_debugger_command_usage(argv[0]);
+		return 0;
+	}
+
+	recursive_lock* lock = (recursive_lock*)parse_expression(argv[1]);
+
+	if (!IS_KERNEL_ADDRESS(lock)) {
+		kprintf("invalid address: %p\n", lock);
+		return 0;
+	}
+
+	kprintf("recrusive_lock %p:\n", lock);
+	kprintf("  mutex:           %p\n", &lock->lock);
+	kprintf("  name:            %s\n", lock->lock.name);
+	kprintf("  flags:           0x%x\n", lock->lock.flags);
+#if KDEBUG
+	kprintf("  holder:          %" B_PRId32 "\n", lock->lock.holder);
+#else
+	kprintf("  holder:          %" B_PRId32 "\n", lock->holder);
+#endif
+	kprintf("  recursion:       %d\n", lock->recursion);
+
+	kprintf("  waiting threads:");
+	mutex_waiter* waiter = lock->lock.waiters;
+	while (waiter != NULL) {
+		kprintf(" %" B_PRId32, waiter->thread->id);
+		waiter = waiter->next;
+	}
+	kputs("\n");
+
+	return 0;
 }
 
 
@@ -609,7 +754,6 @@ mutex_init_etc(mutex* lock, const char *name, uint32 flags)
 	lock->holder = -1;
 #else
 	lock->count = 0;
-	lock->ignore_unlock_count = 0;
 #endif
 	lock->flags = flags & MUTEX_FLAG_CLONE_NAME;
 
@@ -642,7 +786,9 @@ mutex_destroy(mutex* lock)
 		lock->waiters = waiter->next;
 
 		// unblock thread
-		thread_unblock(waiter->thread, B_ERROR);
+		Thread* thread = waiter->thread;
+		waiter->thread = NULL;
+		thread_unblock(thread, B_ERROR);
 	}
 
 	lock->name = NULL;
@@ -801,11 +947,6 @@ _mutex_unlock(mutex* lock)
 			thread_get_current_thread_id(), lock, lock->holder);
 		return;
 	}
-#else
-	if (lock->ignore_unlock_count > 0) {
-		lock->ignore_unlock_count--;
-		return;
-	}
 #endif
 
 	mutex_waiter* waiter = lock->waiters;
@@ -826,7 +967,7 @@ _mutex_unlock(mutex* lock)
 		// unblock thread
 		thread_unblock(waiter->thread, B_OK);
 	} else {
-		// Nobody is waiting to acquire this lock. Just mark it as released.
+		// There are no waiters, so mark the lock as released.
 #if KDEBUG
 		lock->holder = -1;
 #else
@@ -907,6 +1048,13 @@ _mutex_lock_with_timeout(mutex* lock, uint32 timeoutFlags, bigtime_t timeout)
 		ASSERT(lock->holder == waiter.thread->id);
 #endif
 	} else {
+		// If the lock was destroyed, our "thread" entry will be NULL.
+		if (waiter.thread == NULL)
+			return B_ERROR;
+
+		// TODO: There is still a race condition during mutex destruction,
+		// if we resume due to a timeout before our thread is set to NULL.
+
 		locker.Lock();
 
 		// If the timeout occurred, we must remove our waiter structure from
@@ -931,17 +1079,15 @@ _mutex_lock_with_timeout(mutex* lock, uint32 timeoutFlags, bigtime_t timeout)
 
 #if !KDEBUG
 			// we need to fix the lock count
-			if (atomic_add(&lock->count, 1) == -1) {
-				// This means we were the only thread waiting for the lock and
-				// the lock owner has already called atomic_add() in
-				// mutex_unlock(). That is we probably would get the lock very
-				// soon (if the lock holder has a low priority, that might
-				// actually take rather long, though), but the timeout already
-				// occurred, so we don't try to wait. Just increment the ignore
-				// unlock count.
-				lock->ignore_unlock_count++;
-			}
+			atomic_add(&lock->count, 1);
 #endif
+		} else {
+			// the structure is not in the list -- even though the timeout
+			// occurred, this means we own the lock now
+#if KDEBUG
+			ASSERT(lock->holder == waiter.thread->id);
+#endif
+			return B_OK;
 		}
 	}
 
@@ -1001,4 +1147,10 @@ lock_debug_init()
 		"<lock>\n"
 		"Prints info about the specified rw lock.\n"
 		"  <lock>  - pointer to the rw lock to print the info for.\n", 0);
+	add_debugger_command_etc("recursivelock", &dump_recursive_lock_info,
+		"Dump info about a recursive lock",
+		"<lock>\n"
+		"Prints info about the specified recursive lock.\n"
+		"  <lock>  - pointer to the recursive lock to print the info for.\n",
+		0);
 }

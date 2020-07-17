@@ -225,6 +225,9 @@ TabletDevice::DetectDevice(const DeviceReader* reader)
 		case 0xB2:
 			SetDevice(60960.0, 45720.0, DEVICE_INTUOS3);
 			break;
+		case 0xB7:  // Wacom PTZ-431W Intuos3 4x6
+			SetDevice(31496.0, 19685.0, DEVICE_INTUOS3);
+			break;
 		case 0xD0:	// Wacom Bamboo 2FG (from Linux Wacom Project)
 			SetDevice(14720.0, 9200.0, DEVICE_BAMBOO_PT);
 			break;
@@ -257,6 +260,9 @@ TabletDevice::DetectDevice(const DeviceReader* reader)
 			break;
 		case 0xDD:	// Wacom Bamboo Pen/Connect (CTL-470) (from Linux Wacom Project)
 			SetDevice(14720.0, 9200.0, DEVICE_BAMBOO_PT);
+			break;
+		case 0x037b: // One by Wacom CTL-672
+			SetDevice(21648.0, 13530.0, DEVICE_BAMBOO_PT);
 			break;
 		default:
 			status = B_BAD_VALUE;
@@ -867,6 +873,9 @@ TabletDevice::_GetName(uint16 productID, const char** name) const
 			break;
 		case 0xDD:
 			*name = "Wacom Bamboo Pen/Connect (CTL-470)";
+			break;
+		case 0x037b:
+			*name = "One by Wacom (CTL-672)";
 			break;
 
 		default:

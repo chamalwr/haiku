@@ -467,11 +467,11 @@ WorkerThread::_PerformInstall(partition_id sourcePartitionID,
 	if (entries != 0) {
 		BAlert* alert = new BAlert("", B_TRANSLATE("The target volume is not "
 			"empty. Are you sure you want to install anyway?\n\nNote: The "
-			"'system' folder will be a clean copy from the source volume but "
-			"will retain its settings folder, all other folders will be "
-			"merged, whereas files and links that exist on both the source "
-			"and target volume will be overwritten with the source volume "
-			"version."),
+			"'system' folder will be a clean copy from the source volume while "
+			"the existing 'settings' folder is retained. All other folders "
+			"will be merged, in which files and links that exist on both the "
+			"source and target volume will be overwritten with the source "
+			"volume version."),
 			B_TRANSLATE("Install anyway"), B_TRANSLATE("Cancel"), 0,
 			B_WIDTH_AS_USUAL, B_STOP_ALERT);
 		alert->SetShortcut(1, B_ESCAPE);
@@ -514,12 +514,14 @@ WorkerThread::_PerformInstall(partition_id sourcePartitionID,
 
 	// Collect selected packages also
 	if (fPackages) {
-		BPath pkgRootDir(srcDirectory.Path(), kPackagesDirectoryPath);
 		int32 count = fPackages->CountItems();
 		for (int32 i = 0; i < count; i++) {
 			Package *p = static_cast<Package*>(fPackages->ItemAt(i));
-			BPath packageDir(pkgRootDir.Path(), p->Folder());
-			err = engine.CollectTargets(packageDir.Path(), fCancelSemaphore);
+			const BPath& pkgPath = p->Path();
+			err = pkgPath.InitCheck();
+			if (err != B_OK)
+				return _InstallationError(err);
+			err = engine.CollectTargets(pkgPath.Path(), fCancelSemaphore);
 			if (err != B_OK)
 				return _InstallationError(err);
 		}
@@ -534,19 +536,31 @@ WorkerThread::_PerformInstall(partition_id sourcePartitionID,
 	reporter.StartTimer();
 
 	// copy source volume
-	err = engine.CopyFolder(srcDirectory.Path(), targetDirectory.Path(),
+	err = engine.Copy(srcDirectory.Path(), targetDirectory.Path(),
 		fCancelSemaphore);
 	if (err != B_OK)
 		return _InstallationError(err);
 
 	// copy selected packages
 	if (fPackages) {
-		BPath pkgRootDir(srcDirectory.Path(), kPackagesDirectoryPath);
 		int32 count = fPackages->CountItems();
+		// FIXME: find_directory doesn't return the folder in the target volume,
+		// so we are hard coding this for now.
+		BPath targetPkgDir(targetDirectory.Path(), "system/packages");
+		err = targetPkgDir.InitCheck();
+		if (err != B_OK)
+			return _InstallationError(err);
 		for (int32 i = 0; i < count; i++) {
 			Package *p = static_cast<Package*>(fPackages->ItemAt(i));
-			BPath packageDir(pkgRootDir.Path(), p->Folder());
-			err = engine.CopyFolder(packageDir.Path(), targetDirectory.Path(),
+			const BPath& pkgPath = p->Path();
+			err = pkgPath.InitCheck();
+			if (err != B_OK)
+				return _InstallationError(err);
+			BPath targetPath(targetPkgDir.Path(), pkgPath.Leaf());
+			err = targetPath.InitCheck();
+			if (err != B_OK)
+				return _InstallationError(err);
+			err = engine.Copy(pkgPath.Path(), targetPath.Path(),
 				fCancelSemaphore);
 			if (err != B_OK)
 				return _InstallationError(err);

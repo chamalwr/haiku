@@ -1,4 +1,4 @@
-1	hungarian	x-vnd.haiku-icon_o_matic	3554185674
+1	hungarian	x-vnd.haiku-icon_o_matic	1805671130
 None	Icon-O-Matic-Properties		Nincs
 Rotate Path Indices	Icon-O-Matic-RotatePathIndiciesCmd		Útvonal jelzőinek elforgatása
 Add empty	Icon-O-Matic-ShapesList		Hozzáadás
@@ -16,7 +16,7 @@ Rotate	Icon-O-Matic-TransformationBoxStates		Elforgatás
 Remove Control Points	Icon-O-Matic-RemovePointsCmd		Vezérlőpontok eltávolítása
 Shorten	Icon-O-Matic-PropertyNames		Rövidítés
 Unassign Path	Icon-O-Matic-UnassignPathCmd		Útvonal hozzárendelésének törlése
-The text you are trying to import is quite long, are you sure?	Icon-O-Matic-StyledTextImport		A szöveg, amit importálni kíván, nagyon hosszú. Biztos importálja?
+The text you are trying to import is quite long, are you sure?	Icon-O-Matic-StyledTextImport		A szöveg amit importálni kívánsz nagyon hosszú. Biztos importálod?
 Paste	Icon-O-Matic-Properties		Beillesztés
 Detect Orient.	Icon-O-Matic-PropertyNames		Tájolás árzékelése
 Click on a shape above	Empty transformers list - 1st line		Kattintson egy alakzatra
@@ -148,7 +148,6 @@ Caps	Icon-O-Matic-PropertyNames		Vonalvég
 OK	Icon-O-Matic-SVGImport		Rendben
 Append…	Icon-O-Matic-Menu-File		Hozzáfűzés…
 Scale Y	Icon-O-Matic-PropertyNames		Y skála
-Failed to open the file '%s' as an SVG document.\n\nError: %s	Icon-O-Matic-SVGImport		Nem sikerült SVG dokumentumként megnyitni ezt: '%s'.\n\nHiba: %s
 Export icon	Dialog title		Ikon exprotálása
 Color (#%02x%02x%02x)	Icon-O-Matic-StyledTextImport		Szín (#%02x%02x%02x)
 Edit Gradient	Icon-O-Matic-SetGradientCmd		Színátmenet szerkesztése
@@ -165,6 +164,7 @@ Untitled	Icon-O-Matic-Main		Névtelen
 Max LOD	Icon-O-Matic-PropertyNames		Max RSz
 Add Path	Icon-O-Matic-AddPathsCmd		Útvonal hozzáadása
 Save changes to current icon before closing?	Icon-O-Matic-Menu-Settings		Menti a változtatásokat a jelenlegi ikonba bezárás előtt?
+Failed to open the file '%s' as an SVG document.\n\n	Icon-O-Matic-SVGImport		Nem sikerült megnyit a fájlt (%s), mint SVG dokumentum.\n\n
 load error	Icon-O-Matic-SVGImport		betöltési hiba
 Transformation	Icon-O-Matic-TransformersList		Átalakítás
 Save as…	Icon-O-Matic-Menu-File		Mentés másként…

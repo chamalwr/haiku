@@ -1,13 +1,13 @@
 /*
- * Copyright 2019, Andrew Lindesay <apl@lindesay.co.nz>.
+ * Copyright 2019-2020, Andrew Lindesay <apl@lindesay.co.nz>.
  *
  * All rights reserved. Distributed under the terms of the MIT License.
  */
 #include "Captcha.h"
 
-#include <stdio.h>
-
 #include <DataIO.h>
+
+#include "Logger.h"
 
 // These are keys that are used to store this object's data into a BMessage
 // instance.
@@ -21,15 +21,16 @@ Captcha::Captcha(BMessage* from)
 	fToken(""),
 	fPngImageData(NULL)
 {
-	if (from->FindString(KEY_TOKEN, &fToken) != B_OK)
-		printf("expected key [%s] in the message data when creating a "
-			"Captcha\n", KEY_TOKEN);
+	if (from->FindString(KEY_TOKEN, &fToken) != B_OK) {
+		HDERROR("expected key [%s] in the message data when creating a "
+			"captcha", KEY_TOKEN)
+	}
 
 	const void* data;
 	ssize_t len;
 
 	if (from->FindData(KEY_PNG_IMAGE_DATA, B_ANY_TYPE, &data, &len) != B_OK)
-		printf("expected key [%s] in the message data\n", KEY_PNG_IMAGE_DATA);
+		HDERROR("expected key [%s] in the message data", KEY_PNG_IMAGE_DATA)
 	else
 		SetPngImageData(data, len);
 }
@@ -45,8 +46,7 @@ Captcha::Captcha()
 
 Captcha::~Captcha()
 {
-	if (fPngImageData != NULL)
-		delete fPngImageData;
+	delete fPngImageData;
 }
 
 

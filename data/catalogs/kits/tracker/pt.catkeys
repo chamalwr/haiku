@@ -1,4 +1,4 @@
-1	portuguese	x-vnd.Haiku-libtracker	2745737133
+1	portuguese	x-vnd.Haiku-libtracker	2570961103
 Created	ContainerWindow		Criado
 Icon	AttributesView		Ícone
 Open and make preferred	OpenWithWindow		Abrir e tornar preferida
@@ -21,7 +21,7 @@ contains	FindPanel		contém
 Open	FilePanelPriv		Abrir
 Bitmap icon	AttributesView		Ícone em mapa de bits
 You can't replace a folder with one of its sub-folders.	FSUtils		Não é possível substituir uma pasta com uma das suas subpastas.
-<%ld dates>	AttributesView		<%ld dates>
+Select…	VirtualDirectoryWindow		Selecionar…
 Name	Default Query Columns		Nome
 Unmount	ContainerWindow		Desmontar
 Eject when unmounting	AutoMounterSettings		Ejetar ao desmontar
@@ -49,7 +49,6 @@ Preparing to move items…	StatusWindow		A preparar para mover itens…
 Size	ContainerWindow		Tamanho
 Select…	ContainerWindow		Selecionar…
 Show shared volumes on Desktop	SettingsView		Mostrar volumes partilhados na Área de Trabalho
-<%ld values>	AttributesView		<%ld values>
 Size	PoseView		Tamanho
 matches wildcard expression	SelectionWindow		tem correspondência com expressão de caracteres genéricos
 96 x 96	ContainerWindow		96 x 96
@@ -81,7 +80,7 @@ Select	InfoWindow		Selecionar
 OK	OpenWithWindow		OK
 Include trash	FindPanel		Incluir lixo
 GiB	WidgetAttributeText		GiB
-Clean up	ContainerWindow		Limpar
+Clean up	ContainerWindow		Arrumar
 Modified	FindPanel		Modificado
 Select all	QueryContainerWindow		Selecionar tudo
 Select…	FilePanelPriv		Selecionar…
@@ -150,7 +149,7 @@ Replace other file	WidgetAttributeText		Substituir outro ficheiro
 OK	Email Query Columns		OK
 Location	QueryPoseView		Localização
 Edit query	ContainerWindow		Editar consulta
-{0, plural, one{(# byte)} other{(# bytes)}}	InfoWindow		{0, plural, one{(# byte)} other{(# bytes)}}
+{0, plural, one{(# byte)} other{(# bytes)}}	InfoWindow		{0, plural, zero{(# bytes)} one{(# byte)} other{(# bytes)}}
 Previously mounted disks	AutoMounterSettings		Discos montados anteriormente
 You cannot replace a file with a folder or a symbolic link.	FSUtils		Não pode substituir um ficheiro por uma pasta ou uma ligação simbólica.
 The target disk does not support creating links.	FSUtils		O disco de destino não suporta a criação de atalhos.
@@ -164,7 +163,7 @@ There was an error writing the attribute.	WidgetAttributeText		Ocorreu um erro a
 Path	Default Query Columns		Caminho
 If you rename %target, %osName may not behave properly!\n\nAre you sure you want to do this?	FSUtils		Se alterar o nome de %target, %osName poderá não funcionar corretamente!\n\nTem a certeza de que quer fazer isto?
 Could not open \"%name\" (%error). 	FSUtils		Não foi possível abrir \"%name\" (%error). 
-Media parameter group	AttributesView		Grupo de parâmetros de média
+Media parameter group	AttributesView		Grupo de parâmetros de multimédia
 %name info	InfoWindow	InfoWindow Title	Informações de %name
 If you move the home folder, %osName may not behave properly!\n\nAre you sure you want to do this?\n\nTo move the home folder anyway, hold down the Shift key and click \"Move\".	FSUtils		Se mover a pasta pessoal, o %osName poderá não funcionar corretamente!\n\nTem a certeza de quer quer fazer isto?\n\nPara mover de qualquer modo a pasta pessoal, mantenha premida a tecla Maiúsculas (Shift) e clique \"Mover\".
 Property info	AttributesView		Informação sobre a propriedade
@@ -184,7 +183,7 @@ There was a problem trying to save in the folder you specified. Please try anoth
 Desktop	TrackerSettingsWindow		Área de Trabalho
 Nested *?+.	libtracker		*?+ aninhados.
 Move	FSUtils	button label	Mover
-Clean up	DeskWindow		Limpar
+Clean up	DeskWindow		Arrumar
 Group	FilePermissionsView		Grupo
 Could not find an application to open \"%name\" (%error). 	FSUtils		Não foi possível encontrar uma aplicação para abrir \"%name\" (%error). 
 Internal error.	libtracker		Erro interno.
@@ -194,10 +193,9 @@ contains	SelectionWindow		contém
 Replace	FilePanelPriv		Substituir
 is not	FindPanel		não é
 Icon view	DeskWindow		Vista de ícones
-<%ld rectangles>	AttributesView		<%ld rectângulos>
 Mount settings…	ContainerWindow		Definições de montagem…
 Keywords	Bookmark Query Columns		Palavras-chave
-Media parameter web	AttributesView		Rede de parâmetros de média
+Media parameter web	AttributesView		Rede de parâmetros de multimédia
 Copy more	ContainerWindow		Copiar mais
 by name	FindPanel		por nome
 Sorry, you can't save things at the root of your system.	FilePanelPriv		Desculpe, mas não é possível guardar coisas na raiz do sistema.
@@ -261,6 +259,7 @@ ends with	SelectionWindow		termina com
 Open	OpenWithWindow		Abrir
 You must have at least one attribute showing.	PoseView		Deve ter pelo menos um atributo visível.
 Cut	FilePanelPriv		Cortar
+Finish: after several years	StatusWindow		Fim: após vários anos
 Favorites	FilePanelPriv		Favoritos
 Point	AttributesView		Ponto
 home	B_USER_DIRECTORY		pessoal
@@ -285,6 +284,7 @@ Error creating link to \"%name\".	FSUtils		Erro ao criar atalho para \"%name\".
 Unknown	FilePermissionsView		Desconhecido
 Paste links	ContainerWindow		Colar atalhos
 Restoring: 	StatusWindow		A restaurar: 
+The Tracker must be running to set the default printer.	PoseView		O Tracker deve estar em execução para especificar a impressora predefinida.
 calculating…	InfoWindow		a calcular…
 Preferred for file	OpenWithWindow		Preferida para ficheiro
 OK	AutoMounterSettings		OK
@@ -292,7 +292,7 @@ copying	FSUtils		a copiar
 Get info	FilePanelPriv		Obter informações
 MIME String	AttributesView		MIME String
 Delete	ContainerWindow		Apagar
-Execute	FilePermissionsView		Executar
+Execute	FilePermissionsView		Execução
 Show volumes on Desktop	SettingsView		Mostrar volumes na Área de Trabalho
 no	AttributesView		não
 Recent folders	ContainerWindow		Pastas recentes
@@ -305,7 +305,6 @@ Delete	FSUtils		Apagar
 Edit name	ContainerWindow		Editar nome
 Could not open \"%document\" (Missing symbol: %symbol). \n	FSUtils		Não foi possível abrir \"%document\" (Símbolo em falta: %symbol). \n
 ASCII Text	AttributesView		Texto ASCII
-More options	FindPanel		Mais opções
 Atom reference	AttributesView		Referência Atom
 config	B_USER_CONFIG_DIRECTORY		configuração
 Error moving \"%name\".	FSUtils		Erro ao mover \"%name\".
@@ -339,9 +338,7 @@ Make active printer	ContainerWindow		Tornar impressora ativa
 Copy to	ContainerWindow		Copiar para
 Name	SelectionWindow		Nome
 by attribute	FindPanel		por atributo
- info	InfoWindow		 informação
 Write	FilePermissionsView		Escrita
-<%ld bytes of data>	AttributesView		<%ld bytes de dados>
 If you alter the system folder or its contents, you won't be able to boot %osName!\n\nAre you sure you want to do this?\n\nTo alter the system folder or its contents anyway, hold down the Shift key and click \"I know what I'm doing\".	FSUtils		Se alterar a pasta de sistema ou o seu conteúdo, é possível que não consiga arrancar o %osName!\n\nTem a certeza de que quer fazer isso?\n\nPara alterar a pasta de sistema ou o seu conteúdo, mantenha premida a tecla Maiúsculas (Shift) e clique \"Eu sei o que estou a fazer\".
 Save	FilePanelPriv		Guardar
 Could not open \"%document\" with application \"%app\" (Missing libraries: %library). \n	FSUtils		Não foi possível abrir \"%document\" com a aplicação \"%app\" (Bibliotecas em falta: %library). \n
@@ -357,6 +354,7 @@ Size:	InfoWindow		Tamanho:
 The selected item cannot be moved to the Trash. Would you like to delete it instead? (This operation cannot be reverted.)	PoseView		O item selecionado não pode ser movido para o Lixo. Pretende, em vez disso, apagá-lo diretamente? (Esta operação não poderá ser anulada.)
 Copy	ContainerWindow		Copiar
 Sorry, the 'Character' attribute cannot store a multi-byte glyph.	WidgetAttributeText		Desculpe, o atributo "Caráter" não pode armazenar um pictograma multi-bytes.
+Open parent	VirtualDirectoryWindow		Abrir pasta superior
 And	FindPanel		E
 Palette-indexed picture	AttributesView		Imagem de paleta indexada
 multiple disks	FindPanel		múltiplos discos
@@ -393,7 +391,6 @@ Proceed	FSUtils		Prosseguir
 Edit favorites…	FilePanelPriv		Editar favoritos…
 You can't move a folder into itself or any of its own sub-folders.	FSUtils		Não é possível mover uma pasta para dentro de si mesma ou para uma das suas subpastas.
 New	ContainerWindow		Novo
-Fewer options	FindPanel		Menos opções
 You must drop items on one of the disk icons in the \"Disks\" window.	FSClipBoard		Deve arrastar itens para um dos ícones de disco na janela \"Discos\".
 If you alter %target, %osName may not behave properly!\n\nAre you sure you want to do this?	FSUtils		Se alterar %target, o %osName poderá não funcionar corretamente!\n\nTem a certeza de que quer fazer isso?
 Sorry, you can't copy items to the Trash.	FSClipBoard		Desculpe, não é possível copiar itens para o Lixo.
@@ -441,11 +438,11 @@ Sorry, saving more than one item is not allowed.	FilePanelPriv		Desculpe, não �
 Move here	ContainerWindow		Mover para aqui
 the config folder	FSUtils		a pasta de configuração
 Sorry, could not create a new folder.	FSUtils		Desculpe, não foi possível criar uma nova pasta.
+Select all	VirtualDirectoryWindow		Selecionar tudo
 Rename	FSUtils	button label	Alterar nome
-Clean up all	ContainerWindow		Limpar tudo
+Clean up all	ContainerWindow		Arrumar tudo
 Add current folder	FilePanelPriv		Adicionar a pasta atual
 Description:	InfoWindow		Descrição:
-The Tracker must be running to see set the default printer.	PoseView		O Tracker deve estar em execução para ver alterar a impressora predefinida.
 Are you sure you want to delete the selected item(s)? This operation cannot be reverted.	FSUtils		Tem certeza de que deseja apagar o(s) item(ns) selecionado(s)? Esta operação não pode ser revertida.
 Grayscale picture	AttributesView		Imagem em escala de cinzentos
 Mount	DeskWindow		Montar
@@ -453,6 +450,7 @@ ends with	FindPanel		termina com
 Show Disks icon	SettingsView		Mostrar ícone Discos
 Outline selection rectangle only	SettingsView		Mostrar apenas contorno do retângulo de seleção
 by formula	FindPanel		por fórmula
+Resize to fit	VirtualDirectoryWindow		Redimensionar para caber
 Move to Trash	FilePanelPriv		Mover para o Lixo
 is	FindPanel		é
 If you rename the system folder or its contents, you won't be able to boot %osName!\n\nAre you sure you want to do this?\n\nTo rename the system folder or its contents anyway, hold down the Shift key and click \"Rename\".	FSUtils		Se alterar o nome da pasta de sistema ou do seu conteúdo, deixará de conseguir arrancar o %osName!\n\nTem a certeza de que pretende fazer isso?\n\nPara alterar de qualquer modo o nome da pasta de sistema ou do seu conteúdo, mantenha premida a tecla  Maiúsculas (Shift) e clique  \"Alterar nome\".
@@ -470,6 +468,7 @@ Default application	InfoWindow		Aplicação predefinida
 Untitled bitmap	PoseView		Mapa de bits sem título
 matches regular expression	SelectionWindow		corresponde à expressão regular
 Invert selection	ContainerWindow		Inverter seleção
+Close	VirtualDirectoryWindow		Fechar
 Monochrome picture	AttributesView		Imagem monocromática
 Real name	ContainerWindow		Nome verdadeiro
 Could not open \"%name\". The file is mistakenly marked as executable. 	FSUtils		Não foi possível abrir \"%name\". O ficheiro está incorretamente marcado como executável. 
@@ -503,9 +502,10 @@ Move to Trash	FSUtils		Mover para o Lixo
 Handles %type	OpenWithWindow		Suporta %tipo
 Cancel	PoseView		Cancelar
 Delete	PoseView		Apagar
-Media parameter	AttributesView		Parâmetro de média
+Media parameter	AttributesView		Parâmetro de multimédia
 If you alter the home folder, %osName may not behave properly!\n\nAre you sure you want to do this?\n\nTo alter the home folder anyway, hold down the Shift key and click \"I know what I'm doing\".	FSUtils		Se alterar a pasta pessoal, o %osName poderá não funcionar corretamente!\n\nTem a certeza de que quer fazer isso?\n\nPara alterar de qualquer modo a pasta pessoal, mantenha premida a tecla Maiúsculas (Shift) e clique \"Eu sei o que estou a fazer\".
 Sorry, you can't copy items to the Trash.	PoseView		Desculpe, não é possível copiar itens para o Lixo.
+Invert selection	VirtualDirectoryWindow		Inverter seleção
 New folder	FilePanelPriv		Nova pasta
 {0, plural, one{# item} other{# items}}	CountView	Number of selected items: \"1 item\" or \"2 items\"	{0, plural, one{# item} other{# itens}}
 Name	AttributesView		Nome

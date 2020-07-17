@@ -1,5 +1,5 @@
 /*
- * Copyright 2019, Andrew Lindesay <apl@lindesay.co.nz>.
+ * Copyright 2019-2020, Andrew Lindesay <apl@lindesay.co.nz>.
  * All rights reserved. Distributed under the terms of the MIT License.
  */
 #include "LanguageModel.h"
@@ -33,7 +33,7 @@ LanguagesCompareFn(const LanguageRef& l1, const LanguageRef& l2)
 LanguageModel::LanguageModel()
 	:
 	fSupportedLanguages(LanguagesCompareFn, NULL),
-	fPreferredLanguage(LANGUAGE_DEFAULT)
+	fPreferredLanguage(LanguageRef(new Language(LANGUAGE_DEFAULT)))
 {
 	const Language defaultLanguage = _DeriveDefaultLanguage();
 	fSupportedLanguages.Add(LanguageRef(
@@ -69,9 +69,8 @@ LanguageModel::AddSupportedLanguages(const LanguageList& languages)
 void
 LanguageModel::_SetPreferredLanguage(const Language& language)
 {
-	fPreferredLanguage = language;
-	if(Logger::IsDebugEnabled())
-		printf("set preferred language [%s]\n", language.Code());
+	fPreferredLanguage = LanguageRef(new Language(language));
+	HDDEBUG("set preferred language [%s]", language.Code())
 }
 
 
@@ -98,11 +97,7 @@ Language
 LanguageModel::_DeriveDefaultLanguage() const
 {
 	Language defaultLanguage = _DeriveSystemDefaultLanguage();
-
-	if(Logger::IsDebugEnabled()) {
-		printf("derived system default language [%s]\n",
-			defaultLanguage.Code());
-	}
+	HDDEBUG("derived system default language [%s]", defaultLanguage.Code())
 
 	// if there are no supported languages; as is the case to start with as the
 	// application starts, the default language from the system is used anyway.
@@ -119,15 +114,15 @@ LanguageModel::_DeriveDefaultLanguage() const
 		defaultLanguage.Code());
 
 	if (foundSupportedLanguage == NULL) {
-		printf("unable to find the language [%s] - looking for app default",
-			defaultLanguage.Code());
+		HDERROR("unable to find the language [%s] - looking for app default",
+			defaultLanguage.Code())
 		foundSupportedLanguage = _FindSupportedLanguage(
 			LANGUAGE_DEFAULT.Code());
 	}
 
 	if (foundSupportedLanguage == NULL) {
-		printf("unable to find the app default language - using the first "
-			"supported language");
+		HDERROR("unable to find the app default language - using the first "
+			"supported language")
 		foundSupportedLanguage = fSupportedLanguages.ItemAt(0);
 	}
 

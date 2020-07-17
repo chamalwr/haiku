@@ -1,11 +1,11 @@
-1	turkish	x-vnd.Haiku-MediaPlayer	1313616492
+1	turkish	x-vnd.Haiku-MediaPlayer	1961774506
 Remove Entry into Trash	MediaPlayer-RemovePLItemsCmd		Girdiyi Çöp'e taşı
 Close	MediaPlayer-PlaylistWindow		Kapat
-Volume of background clips	MediaPlayer-SettingsWindow		Arkaplan kliplerinin ses düzeyi
+Volume of background clips	MediaPlayer-SettingsWindow		Arka plan kliplerinin ses düzeyi
 Use hardware video overlays if available	MediaPlayer-SettingsWindow		Olanaklıysa video donanım bindirmelerini kullan
 Audio	MediaPlayer-InfoWin		Ses
 Subtitle placement:	MediaPlayer-SettingsWindow		Altyazı konumu:
-MediaPlayer	System name		Ortam Oynatıcısı
+MediaPlayer	System name		Ortam Oynatıcı
 Audio track	MediaPlayer-Main		Ses parçası
 Muted	MediaPlayer-SettingsWindow		Sessiz
 OK	MediaPlayer-RemovePLItemsCmd		Tamam
@@ -35,6 +35,7 @@ Full volume	MediaPlayer-SettingsWindow		Tam ses
 Start media server	MediaPlayer-Main		Ortam sunucusu başlat
 It appears the media server is not running.\nWould you like to start it ?	MediaPlayer-Main		Ortam sunucusu çalışmıyor gibi görünüyor.\nBaşlatılsın mı?
 Location	MediaPlayer-InfoWin		Konum
+Opening '%s'.	MediaPlayer-Main		'%s' açılıyor.
 Medium	MediaPlayer-SettingsWindow		Orta
 Play mode	MediaPlayer-SettingsWindow		Oynatma kipi
 Playlist	MediaPlayer-PlaylistWindow		Oynatma Listesi
@@ -44,7 +45,7 @@ Close	MediaPlayer-Main		Kapat
 Save error	MediaPlayer-PlaylistWindow		Kaydetme hatası
 Attributes	MediaPlayer-Main		Öznitelikler
 Bottom of screen	MediaPlayer-SettingsWindow		Ekranın alt kısmı
-MediaPlayer settings	MediaPlayer-SettingsWindow		Ortam Oynatıcısı Ayarları
+MediaPlayer settings	MediaPlayer-SettingsWindow		Ortam Oynatıcı Ayarları
 Copyright	MediaPlayer-InfoWin		Telif hakkı
 Invalid URL inserted!	MediaPlayer-NetworkStream		Geçersiz URL girildi!
 Aspect ratio	MediaPlayer-Main		En boy oranı
@@ -61,8 +62,8 @@ Cancel	MediaPlayer-NetworkStream		İptal
 Nothing to Play	MediaPlayer-Main		Oynatacak bir şey yok
 OK	MediaPlayer-SettingsWindow		Tamam
 Remove Entries	MediaPlayer-RemovePLItemsCmd		Girdileri kaldır
-never	MediaPlayer-SettingsWindow		hiçbir zaman
-Loop audio	MediaPlayer-SettingsWindow		Sürekli ses çal
+never	MediaPlayer-SettingsWindow		Hiçbir zaman
+Loop audio	MediaPlayer-SettingsWindow		Sesi sürekli çal
 Internal error (malformed message). Saving the playlist failed.	MediaPlayer-PlaylistWindow		İç hata (bozuk ileti). Oynatma listesi kaydedilemedi.
 Open…	MediaPlayer-PlaylistWindow		Aç…
 Revert	MediaPlayer-SettingsWindow		Eski haline döndür
@@ -90,8 +91,8 @@ Edit	MediaPlayer-PlaylistWindow		Düzen
 Copy Entries	MediaPlayer-CopyPLItemsCmd		Girdileri kopyala
 Always on top	MediaPlayer-Main		Her zaman üstte
 Open	MediaPlayer-PlaylistWindow		Aç
-always	MediaPlayer-SettingsWindow		her zaman
-Loop video	MediaPlayer-SettingsWindow		Sürekli video oynat
+always	MediaPlayer-SettingsWindow		Her zaman
+Loop video	MediaPlayer-SettingsWindow		Videoyu sürekli oynat
 Stream URL:	MediaPlayer-NetworkStream		Akış URL'si:
 <unknown>	PlaylistItem-album		<bilinmeyen>
 Stream settings	MediaPlayer-Main		Akış ayarları
@@ -145,7 +146,7 @@ Save as…	MediaPlayer-PlaylistWindow		Farklı kaydet…
 Error: 	MediaPlayer-RemovePLItemsCmd		Hata: 
 300% scale	MediaPlayer-Main		%300 ölçek
 Open	MediaPlayer-Main		Aç
-ask every time	MediaPlayer-SettingsWindow		her zaman sor
+ask every time	MediaPlayer-SettingsWindow		Her zaman sor
 (not supported)	MediaPlayer-InfoWin		(desteklenmiyor)
 Randomize	MediaPlayer-PlaylistWindow		Rastgele yap
 %.3f fps	MediaPlayer-InfoWin		%.3f fps
